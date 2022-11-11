@@ -1,12 +1,17 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import React, { useRef, useState, useEffect } from 'react';
 
 import axios from '../../api/axios';
+import useAuth from '../../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const LOGIN_URL = '/auth/login';
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   const usernameRef = useRef();
   const errorRef = useRef();
@@ -15,7 +20,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [loginSuccesfull, setLoginSuccesfull] = useState(false);
 
   useEffect(() => {
     usernameRef.current.focus();
@@ -49,7 +53,8 @@ const Login = () => {
 
       setUsername('');
       setPassword('');
-      setLoginSuccesfull(true);
+
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrorMessage('No server response');
@@ -63,63 +68,68 @@ const Login = () => {
     }
   };
 
+  const mockHandleSubmit = (e) => {
+    e.preventDefault();
+
+    const roles = ['regularUser'];
+    const accessToken = ['123123123asd'];
+
+    setAuth({ username, password, roles, accessToken });
+
+    console.log(setAuth);
+
+    setUsername('');
+    setPassword('');
+
+    navigate(from, { replace: true });
+  };
+
   return (
-    <>
-      <section>
-        {loginSuccesfull ? (
-          <>Congratulations, you succesfully logged in!</>
-        ) : (
-          <>
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col items-center space-y-2">
-                <p
-                  ref={errorRef}
-                  className={errorMessage ? 'text-base' : 'hidden'}
-                >
-                  {errorMessage}
-                </p>
-                <div>
-                  <h1 className="text-2xl">Sign in</h1>
-                </div>
-                <div>
-                  <label className="block" for="username">
-                    Username:
-                  </label>
-                  <input
-                    className=""
-                    type="text"
-                    id="username"
-                    ref={usernameRef}
-                    autoComplete="off"
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block" for="password">
-                    Password:
-                  </label>
-                  <input
-                    className=""
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    required
-                  />
-                </div>
-                <div className="py-2">
-                  <button className="border-blue-400 border-2 rounded-xl px-3 py-2">
-                    Sign in
-                  </button>
-                </div>
-              </div>
-            </form>
-          </>
-        )}
-      </section>
-    </>
+    <section>
+      <form onSubmit={mockHandleSubmit}>
+        <div className="flex flex-col items-center space-y-2">
+          <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
+            {errorMessage}
+          </p>
+          <div>
+            <h1 className="text-2xl">Sign in</h1>
+          </div>
+          <div>
+            <label className="block" htmlFor="username">
+              Username:
+            </label>
+            <input
+              className=""
+              type="text"
+              id="username"
+              ref={usernameRef}
+              autoComplete="off"
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              required
+            />
+          </div>
+          <div>
+            <label className="block" htmlFor="password">
+              Password:
+            </label>
+            <input
+              className=""
+              type="password"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              required
+            />
+          </div>
+          <div className="py-2">
+            <button className="border-blue-400 border-2 rounded-xl px-3 py-2">
+              Sign in
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
   );
 };
 
