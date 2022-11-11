@@ -4,6 +4,8 @@ import axios from '../../api/axios';
 import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
+import USER_ROLES from '../../Utils/Roles/authRoles';
+
 const LOGIN_URL = '/auth/login';
 
 const Login = () => {
@@ -71,12 +73,12 @@ const Login = () => {
   const mockHandleSubmit = (e) => {
     e.preventDefault();
 
-    const roles = ['regularUser'];
+    const roles = [USER_ROLES.regularUser, USER_ROLES.adminUser];
     const accessToken = ['123123123asd'];
 
     setAuth({ username, password, roles, accessToken });
 
-    console.log(setAuth);
+    console.log(username, password, roles, accessToken);
 
     setUsername('');
     setPassword('');
