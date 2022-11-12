@@ -73,7 +73,7 @@ const Login = () => {
   const mockHandleSubmit = (e) => {
     e.preventDefault();
 
-    const roles = [USER_ROLES.regularUser, USER_ROLES.adminUser];
+    const roles = [USER_ROLES.regularUser];
     const accessToken = ['123123123asd'];
 
     setAuth({ username, password, roles, accessToken });
@@ -125,9 +125,15 @@ const Login = () => {
             />
           </div>
           <div className="py-2">
-            <button className="border-blue-400 border-2 rounded-xl px-3 py-2">
+            <button className="border-blue-400 border-2 rounded-xl px-3 py-2 hover:bg-blue-300 transition">
               Sign in
             </button>
+          </div>
+          <div>
+            Don't have an account? &nbsp;
+            <span className="font-bold underline">
+              <Link to="/register">Sign up</Link>
+            </span>
           </div>
         </div>
       </form>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { USERNAME_REGEX, PASSWORD_REGEX } from '../../Utils/Regexes/userRegex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Registration = () => {
   // refs
@@ -64,7 +65,7 @@ const Registration = () => {
 
   return (
     <section>
-      <form className="text-xl w-4/5 mx-auto">
+      <form className="text-xl w-1/4 mx-auto bg-blue-300 border-blue-500 border-2 rounded-md">
         <div className="flex flex-col items-center space-y-4">
           <h1 className="text-center text-4xl pt-2">Register</h1>
           <p
@@ -119,6 +120,12 @@ const Registration = () => {
             <button className="text-white bg-blue-400 px-3 border-blue-400 border-2 rounded-xl hover:bg-blue-300 transition">
               Sign up
             </button>
+          </div>
+          <div>
+            Already have an account? &nbsp;
+            <span className="font-bold underline">
+              <Link to="/login">Sign in</Link>
+            </span>
           </div>
         </div>
       </form>
