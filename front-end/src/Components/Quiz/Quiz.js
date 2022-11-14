@@ -16,11 +16,13 @@ const Quiz = () => {
   const { quizState, setQuizState } = useQuiz();
 
   useEffect(() => {
+    const isQuizContextEmpty = Object.keys(quizState).length === 0;
+
     // emulate loading questions
     // this should be called when currently the quizState is empty (from context)
-    let firstQuestion = getStartingQuestion();
-
-    console.log(firstQuestion);
+    let firstQuestion = isQuizContextEmpty
+      ? getStartingQuestion()
+      : quizState.currentQuestion;
 
     setCurrentQuestion(() => ({
       ...firstQuestion,
@@ -28,15 +30,11 @@ const Quiz = () => {
 
     setAnswers(firstQuestion.answers);
 
+    !isQuizContextEmpty && setSelectedAnswer(quizState.selectedAnswer);
+
     console.log('current question:');
     console.log(currentQuestion.answers);
   }, []);
-
-  const loadQuestionsFromContext = () => {
-    if (!quizState) {
-      return;
-    }
-  };
 
   useEffect(() => {
     setQuizState((quizState) => ({
@@ -45,12 +43,14 @@ const Quiz = () => {
       answers: answers,
       selectedAnswer: selectedAnswer,
     }));
-  }, [currentQuestion, answers, selectedAnswer]);
+  }, [selectedAnswer]);
 
   const answerClickHandler = (answerId) => {
+    setIsNextQuestionFocused(false);
     setSelectedAnswer(answerId);
     console.log('Current selected answer: ');
     console.log(selectedAnswer);
+    console.log('is next question focused ' + isNextQuestionFocused);
   };
 
   const nextQuestionClickedHandler = () => {
@@ -60,6 +60,8 @@ const Quiz = () => {
       ...currentQuestion,
       ...nextQuestion,
     }));
+
+    setSelectedAnswer('');
 
     setAnswers(nextQuestion.answers);
   };
@@ -83,18 +85,15 @@ const Quiz = () => {
         ))}
       </div>
       <button
-        className={`self-end  border-2 px-3 py-2 rounded-l ${
-          isNextQuestionFocused && selectedAnswer
-            ? 'bg-gray-500 border-white'
-            : 'bg-blue-500 border-blue-700'
+        className={`self-end  border-2 px-3 py-2 rounded-l bg-blue-500 ${
+          selectedAnswer ? 'border-blue-700' : ''
         }`}
         onClick={nextQuestionClickedHandler}
         onMouseOver={() => {
           setIsNextQuestionFocused(true);
+          console.log(isNextQuestionFocused);
         }}
-        onBlur={() => {
-          setIsNextQuestionFocused(false);
-        }}
+        disabled={!selectedAnswer && 'true'}
       >
         Next question
       </button>
