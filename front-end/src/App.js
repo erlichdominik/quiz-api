@@ -9,6 +9,7 @@ import RequireAuth from './Components/Security/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import USER_ROLES from './Utils/Roles/authRoles';
 import Unauthorized from './Components/MainComponents/Unauthorized';
+import { QuizProvider } from './context/QuizProvider';
 
 const App = () => {
   return (
