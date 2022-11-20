@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import {
   getStartingQuestion,
   getNextQuestion,
-} from '../../Utils/Mock-data/mock-quiz';
+} from '../../utils/mock-data/mock-quiz';
 import useQuiz from '../../hooks/useQuiz';
 
 const Quiz = () => {
@@ -86,7 +86,7 @@ const Quiz = () => {
       </div>
       <button
         className={`self-end  border-2 px-3 py-2 rounded-l bg-blue-500 ${
-          selectedAnswer ? 'border-blue-700' : ''
+          !selectedAnswer && 'opacity-75'
         }`}
         onClick={nextQuestionClickedHandler}
         onMouseOver={() => {

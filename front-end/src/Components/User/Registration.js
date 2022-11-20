@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { USERNAME_REGEX, PASSWORD_REGEX } from '../../Utils/Regexes/userRegex';
+import { USERNAME_REGEX, PASSWORD_REGEX } from '../../utils/regexes/userRegex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';

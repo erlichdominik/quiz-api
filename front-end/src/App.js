@@ -1,15 +1,16 @@
-import Login from './Components/User/Login';
-import Registration from './Components/User/Registration';
-import AdminPanel from './Components/MainComponents/AdminPanel';
-import Quiz from './Components/Quiz/Quiz';
-import Home from './Components/MainComponents/Home';
-import Layout from './Components/MainComponents/Layout';
-import MissingPath from './Components/MainComponents/MissingPath';
-import RequireAuth from './Components/Security/RequireAuth';
-import { Routes, Route } from 'react-router-dom';
-import USER_ROLES from './Utils/Roles/authRoles';
-import Unauthorized from './Components/MainComponents/Unauthorized';
-import { QuizProvider } from './context/QuizProvider';
+import { Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Layout from './components/main-components/Layout';
+import Unauthorized from './components/main-components/Unauthorized';
+import Registration from './components/user/Registration';
+import MissingPath from './components/main-components/MissingPath';
+import RequireAuth from './components/security/RequireAuth';
+import USER_ROLES from './utils/roles/authRoles';
+import Home from './components/main-components/Home';
+import Login from './components/user/Login';
+import Quiz from './components/quiz/Quiz';
+import AdminPanel from './components/main-components/AdminPanel';
+import QuizHistory from './components/quiz/QuizHistory';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         >
           <Route path="/" element={<Home />} />
           <Route path="quiz" element={<Quiz />} />
+          <Route path="quizHistory" element={<QuizHistory />} />
         </Route>
         {/* Admin routes */}
         <Route element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}>
