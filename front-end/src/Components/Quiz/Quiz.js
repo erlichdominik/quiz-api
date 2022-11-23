@@ -16,12 +16,12 @@ const Quiz = () => {
   const { quizState, setQuizState } = useQuiz();
 
   useEffect(() => {
-    const isQuizContextEmpty = Object.keys(quizState).length === 0;
+    const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
 
     // emulate loading questions
     // this should be called when currently the quizState is empty (from context)
     let firstQuestion = isQuizContextEmpty
-      ? getStartingQuestion()
+      ? getStartingQuestion() /* this will be an API call to initialize the quiz */
       : quizState.currentQuestion;
 
     setCurrentQuestion(() => ({

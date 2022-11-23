@@ -11,9 +11,9 @@ const QuizHistory = () => {
   }, []);
 
   return (
-    <div className="text-xl">
-      QuizHistory
-      <table className="table-auto border border-slate-400 border-spacing-3 border-separate">
+    <div className="text-xl text-center">
+      Quiz History
+      <table className="table-auto border border-slate-400 border-spacing-3 border-separate mx-auto mt-5 ">
         <thead>
           <tr>
             <th>Quiz name</th>

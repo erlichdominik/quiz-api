@@ -73,7 +73,7 @@ const Login = () => {
   const mockHandleSubmit = (e) => {
     e.preventDefault();
 
-    const roles = [USER_ROLES.regularUser];
+    const roles = [USER_ROLES.regularUser, USER_ROLES.adminUser];
     const accessToken = ['123123123asd'];
 
     setAuth({ username, password, roles, accessToken });
