@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useQuiz from '../../hooks/useQuiz';
+import Navbar from '../ui/Navbar';
 
 const QuizStarter = () => {
   const { quizState, setQuizState } = useQuiz();
-
-  const isQuizContextEmpty = Object.keys(quizState).length === 0;
 
   const startNewQuizHandler = () => {
     setQuizState(() => ({}));
@@ -13,30 +12,14 @@ const QuizStarter = () => {
 
   return (
     <>
-      {isQuizContextEmpty ? (
-        <>
-          <div>Start new Quiz</div>
-          <button>
-            <Link to="/quiz">Start</Link>
-          </button>
-        </>
-      ) : (
-        <>
-          <div className="text-center">
-            There is already a quiz in progress, continue?
-            <div>
-              <button>
-                <Link to="/quiz">Yes</Link>
-              </button>
-            </div>
-            <div>
-              <button onClick={startNewQuizHandler}>
-                <Link to="/quiz">No, start new</Link>
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      <Navbar />
+      <div className="text-2xl text-center">
+        <div className="text-2xl text-center pt-10">
+          <Link to="/quiz">
+            <button onClick={startNewQuizHandler}>Start new quiz</button>
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

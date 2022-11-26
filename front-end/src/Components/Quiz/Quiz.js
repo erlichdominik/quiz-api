@@ -6,6 +6,7 @@ import {
   getNextQuestion,
 } from '../../utils/mock-data/mock-quiz';
 import useQuiz from '../../hooks/useQuiz';
+import Navbar from '../ui/Navbar';
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState({});
@@ -27,13 +28,9 @@ const Quiz = () => {
     setCurrentQuestion(() => ({
       ...firstQuestion,
     }));
-
     setAnswers(firstQuestion.answers);
 
     !isQuizContextEmpty && setSelectedAnswer(quizState.selectedAnswer);
-
-    console.log('current question:');
-    console.log(currentQuestion.answers);
   }, []);
 
   useEffect(() => {
@@ -48,9 +45,6 @@ const Quiz = () => {
   const answerClickHandler = (answerId) => {
     setIsNextQuestionFocused(false);
     setSelectedAnswer(answerId);
-    console.log('Current selected answer: ');
-    console.log(selectedAnswer);
-    console.log('is next question focused ' + isNextQuestionFocused);
   };
 
   const nextQuestionClickedHandler = () => {
@@ -67,38 +61,41 @@ const Quiz = () => {
   };
 
   return (
-    <section className="text-2xl flex flex-col bg-blue-300 border-blue-500 border-2 w-1/3 items-center mx-auto">
-      <div>{currentQuestion.questionName}</div>
-      <div>
-        {answers.map((answer) => (
-          <div
-            className={
-              answer.id === selectedAnswer ? 'border-blue-700 border-2' : ''
-            }
-            key={answer.id}
-            onClick={() => {
-              answerClickHandler(answer.id);
-            }}
-          >
-            {answer.answerText}
-          </div>
-        ))}
-      </div>
-      <button
-        className={`self-end  border-2 px-3 py-2 rounded-l bg-blue-500 ${
-          !selectedAnswer && 'opacity-75'
-        }`}
-        onClick={nextQuestionClickedHandler}
-        onMouseOver={() => {
-          setIsNextQuestionFocused(true);
-          console.log(isNextQuestionFocused);
-        }}
-        disabled={!selectedAnswer && 'true'}
-      >
-        Next question
-      </button>
-      <div className="self-end border-red-500"></div>
-    </section>
+    <>
+      <Navbar />
+      <section className="text-2xl flex flex-col bg-blue-300 border-blue-500 border-2 w-1/3 items-center mx-auto">
+        <div>{currentQuestion.questionName}</div>
+        <div>
+          {answers?.map((answer) => (
+            <div
+              className={
+                answer.id === selectedAnswer ? 'border-blue-700 border-2' : ''
+              }
+              key={answer.id}
+              onClick={() => {
+                answerClickHandler(answer.id);
+              }}
+            >
+              {answer.answerText}
+            </div>
+          ))}
+        </div>
+        <button
+          className={`self-end  border-2 px-3 py-2 rounded-l bg-blue-500 ${
+            !selectedAnswer && 'opacity-75'
+          }`}
+          onClick={nextQuestionClickedHandler}
+          onMouseOver={() => {
+            setIsNextQuestionFocused(true);
+            console.log(isNextQuestionFocused);
+          }}
+          disabled={!selectedAnswer && true}
+        >
+          Next question
+        </button>
+        <div className="self-end border-red-500"></div>
+      </section>
+    </>
   );
 };
 

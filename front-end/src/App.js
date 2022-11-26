@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/main-components/Home';
-import AdminPanel from './components/main-components/AdminPanel';
 import Layout from './components/main-components/Layout';
 import Unauthorized from './components/main-components/Unauthorized';
 import MissingPath from './components/main-components/MissingPath';
@@ -34,9 +33,9 @@ const App = () => {
           <Route path="quizHistory" element={<QuizHistory />} />
         </Route>
         {/* Admin routes */}
-        <Route element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}>
-          <Route path="adminPanel" element={<AdminPanel />} />
-        </Route>
+        <Route
+          element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}
+        ></Route>
       </Route>
     </Routes>
   );

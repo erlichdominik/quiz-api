@@ -73,7 +73,7 @@ const Login = () => {
   const mockHandleSubmit = (e) => {
     e.preventDefault();
 
-    const roles = [USER_ROLES.regularUser, USER_ROLES.adminUser];
+    const roles = [USER_ROLES.regularUser];
     const accessToken = ['123123123asd'];
 
     setAuth({ username, password, roles, accessToken });
@@ -89,7 +89,7 @@ const Login = () => {
   return (
     <section>
       <form onSubmit={mockHandleSubmit}>
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-2 border border-black rounded w-1/5 min-w-min mt-10 mx-auto">
           <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
             {errorMessage}
           </p>
@@ -101,7 +101,7 @@ const Login = () => {
               Username:
             </label>
             <input
-              className=""
+              className="rounded-xl pl-2"
               type="text"
               id="username"
               ref={usernameRef}
@@ -116,7 +116,7 @@ const Login = () => {
               Password:
             </label>
             <input
-              className=""
+              className="rounded-xl pl-2"
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}

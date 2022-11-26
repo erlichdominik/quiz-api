@@ -65,9 +65,9 @@ const Registration = () => {
 
   return (
     <section>
-      <form className="text-xl w-1/4 mx-auto bg-blue-300 border-blue-500 border-2 rounded-md">
-        <div className="flex flex-col items-center space-y-4">
-          <h1 className="text-center text-4xl pt-2">Register</h1>
+      <form className="">
+        <div className="flex flex-col items-center space-y-2 border border-black rounded w-1/5 min-w-min mt-10 mx-auto">
+          <h1 className="text-center text-2xl pt-2">Register</h1>
           <p
             className={
               errorMessage
