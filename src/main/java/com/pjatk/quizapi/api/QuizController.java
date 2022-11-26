@@ -1,10 +1,13 @@
 package com.pjatk.quizapi.api;
 
-import com.pjatk.quizapi.api.command.DeleteQuizCommand;
-import com.pjatk.quizapi.api.dto.QuizName;
-import com.pjatk.quizapi.domain.QuizFacade;
-import com.pjatk.quizapi.domain.QuizFinder;
-import com.pjatk.quizapi.domain.QuizUploader;
+import com.pjatk.quizapi.cqrs.command.Gate;
+import com.pjatk.quizapi.quiz.application.commands.DeleteCurrentWalkthroughCommand;
+import com.pjatk.quizapi.quiz.application.commands.DeleteQuizCommand;
+import com.pjatk.quizapi.quiz.application.commands.InitQuizCommand;
+import com.pjatk.quizapi.quiz.application.commands.UpdateWalkthroughCommand;
+import com.pjatk.quizapi.quiz.domain.quiz.QuizMode;
+import com.pjatk.quizapi.quiz.domain.quiz.QuizUploader;
+import com.pjatk.quizapi.quiz.readmodel.*;
 import com.pjatk.quizapi.security.ApplicationSecurity;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,20 +26,24 @@ import java.util.Objects;
 @Log4j2
 @SecurityRequirement(name = ApplicationSecurity.SECURITY_CONFIG_NAME)
 class QuizController {
-    private final QuizFacade quizFacade;
-    private final QuizFinder quizFinder;
+    private final QuizNameFinder quizNameFinder;
+    private final QuestionFinder questionFinder;
+    private final QuizStateFinder quizStateFinder;
     private final QuizUploader quizUploader;
+    private final Gate gate;
 
-    public QuizController(QuizFacade quizFacade, QuizFinder quizFinder, QuizUploader quizUploader) {
-        this.quizFacade = quizFacade;
-        this.quizFinder = quizFinder;
+    QuizController(QuizNameFinder quizNameFinder, QuestionFinder questionFinder, QuizStateFinder quizStateFinder, QuizUploader quizUploader, Gate gate) {
+        this.quizNameFinder = quizNameFinder;
+        this.questionFinder = questionFinder;
+        this.quizStateFinder = quizStateFinder;
         this.quizUploader = quizUploader;
+        this.gate = gate;
     }
 
     @ApiResponse(description = "get all quiz names")
     @GetMapping("/names")
     public ResponseEntity<List<QuizName>> getQuizNames() {
-        return ResponseEntity.ok(quizFinder.fetchQuizNames());
+        return ResponseEntity.ok(quizNameFinder.find());
     }
 
     @GetMapping("/download")
@@ -67,10 +74,41 @@ class QuizController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/init")
+    public ResponseEntity<?> initQuiz(@RequestParam QuizMode quizMode, @RequestParam  long quizId) {
+        var command = new InitQuizCommand(quizMode, quizId);
+        Long walkthroughId = (Long) gate.dispatch(command);
+
+        return ResponseEntity.ok(questionFinder.find(new QuestionDataRequest(walkthroughId)));
+    }
+
+    @GetMapping("/next")
+    ResponseEntity<QuestionDataResponse> goNext(@RequestParam long walkthroughId) {
+        return ResponseEntity.ok(questionFinder.find(new QuestionDataRequest(walkthroughId)));
+    }
+
+    @PostMapping("/submit")
+    ResponseEntity<QuizState> submitAnswer(@RequestParam long walkthroughId, @RequestParam long answerId) {
+        var command = new UpdateWalkthroughCommand(walkthroughId, answerId);
+
+        gate.dispatch(command);
+
+        return ResponseEntity.ok(quizStateFinder.find(new QuizStateRequest(walkthroughId)));
+    }
+
+    @DeleteMapping("/walkthrough/{id}")
+    ResponseEntity<Void> deleteWalkthrough(@PathVariable long id) {
+        var command = new DeleteCurrentWalkthroughCommand(id);
+
+        gate.dispatch(command);
+
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("")
     public ResponseEntity<List<QuizName>> deleteQuizName(@RequestBody DeleteQuizCommand command) {
-        quizFacade.deleteQuiz(command);
+        gate.dispatch(command);
 
-        return ResponseEntity.ok(quizFinder.fetchQuizNames());
+        return ResponseEntity.ok(quizNameFinder.find());
     }
 }

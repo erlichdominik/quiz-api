@@ -8,82 +8,112 @@
 insert into app_user (id, email, password) values (1, 'test@gmail.com', '$2a$10$M9WSIbp/oBUQfVsQkCjw/uQQ3zFXPgSFRmH4gqSr/v3YcOTpkoi4e')
 
 insert into QUIZ(id, name) values (1, 'default')
-insert into QUIZ(id, name) values (2, 'easy')
+-- insert into QUIZ(id, name) values (2, 'easy')
 -- insert into quiz (id, name) values ('fed1de10-5d35-11ed-a94e-4d3f065c0f7x', 'easy')
 -- insert into quiz (id, name) values ('fed1de10-5d35-11ed-a94e-4d3f065c0f7d', 'hard')
 
-insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (1, 1, 3, 'pathway1', 1 )
-insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (2, 2, 3, 'pathway2', 1 )
-insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (3, 3, null, 'final pathway', 1)
+insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (1, 1, 2, 'pathway1', 1 )
+-- insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (2, 2, 3, 'pathway2', 1 )
+-- insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (3, 3, null, 'final pathway', 1)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (1, 'lorem', 'Mięśnie gładkie większości naczyć unerwiane są przez', 1, null)
+
+insert into answer(id, text, is_true, question_id) values(1, 'Wyłącznie układ współczulny', true, 1)
+insert into answer(id, text, is_true, question_id) values(2, 'Wyłącznie układ przywspółczulny', false, 1)
+insert into answer(id, text, is_true, question_id) values(3, 'Oba układy razem', false, 1)
+
+insert into subpathway(id, pathway_id) values (1, 1)
+
+-- subpathway 1's questions
+insert into question(id, comment, text, pathway_id, subpathway_id) values (2, 'lorem', 'Mięśnie gładkie tętnic posiadają receptory', null, 1)
+
+insert into answer(id, text, is_true, question_id) values(4, 'alfa 1 i beta 2', true, 2)
+insert into answer(id, text, is_true, question_id) values(5, 'alfa 2 i beta 1', false, 2)
+insert into answer(id, text, is_true, question_id) values(6, 'beta 1 i beta 2', false, 2)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (3, 'lorem', 'Zaznacz efekt pobudzenia receptorów alfa 1 i beta 2', null, 1)
+
+insert into answer(id, text, is_true, question_id) values(7, 'alfa 1 powoduje wzrost napięcia mięsni gładkich tętnic, beta 2 spadek ich napięcia', true, 3)
+insert into answer(id, text, is_true, question_id) values(8, 'alfa 1 powoduje wzrost napięcia mięsni gładkich tętnic, beta 2 także wzrost ich napięcia', false, 3)
+insert into answer(id, text, is_true, question_id) values(9, 'alfa 1 powoduje spadek napięcia mięsni gładkich tętnic, beta 2 wzrost ich napięcia', false, 3)
 
 
--- pathway 1 questions
-insert into question (id, question_number, comment, text, pathway_id) values (1, 1, null, 'question one', 1)
-insert into question (id, question_number, comment, text, pathway_id) values (2, 2, null, 'question two', 1)
-insert into question (id, question_number, comment, text, pathway_id) values (3,3, null, 'question three', 1)
-insert into question (id, question_number, comment, text, pathway_id) values (4, 4,null, 'question four', 1)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (4, 'lorem', 'Skutkiem pobudzenia receptorów alfa 1 i beta 2 jest', null, 1)
 
--- pathway 2 questions
-insert into question (id, question_number, comment, text, pathway_id) values (5, 1, null, 'question one - pathway 2', 2)
-insert into question (id, question_number, comment, text, pathway_id) values (6, 2, null, 'question two - pathway 2', 2)
-insert into question (id, question_number, comment, text, pathway_id) values (7, 3, null, 'question three - pathway 2', 2)
-insert into question (id, question_number, comment, text, pathway_id) values (8, 4, null, 'question four - pathway 2', 2)
+insert into answer(id, text, is_true, question_id) values(10, 'Wzrost napięcia mm gładkich i zweżenie średnic tętnic', true, 4)
+insert into answer(id, text, is_true, question_id) values(11, 'Spadek napięcia mm gładkich i zwiekszenie średnic tętnic', false, 4)
+insert into answer(id, text, is_true, question_id) values(12, 'Utrzymanie dotychczasowego napięcia i średnic tętnic', false, 4)
 
--- pathway 3 questions
-insert into question (id, question_number, comment, text, pathway_id) values (9, 1, null, 'question one', 3)
-insert into question (id, question_number, comment, text, pathway_id) values (10, 2, null, 'question two', 3)
-insert into question (id, question_number, comment, text, pathway_id) values (11, 3, null, 'question three', 3)
-insert into question (id, question_number, comment, text, pathway_id) values (12, 4, null, 'question four', 3)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (5, 'lorem', 'Efektem wzrostu napięcia mm gładkich i zweżenia średnic tętnic jest', null, 1)
 
--- Pathway 1
-insert into answer (id, text, is_true, question_id) values (1, 'answer 1', true, 1)
-insert into answer (id, text, is_true, question_id) values (2, 'answer 2', false, 1)
-insert into answer (id, text, is_true, question_id) values (3, 'answer 3', false, 1)
+insert into answer(id, text, is_true, question_id) values(13, 'wzrost TPR', true, 5)
+insert into answer(id, text, is_true, question_id) values(14, 'spadek TPR', false, 5)
+insert into answer(id, text, is_true, question_id) values(15, 'nie wpływa na TPR', false, 5)
 
-insert into answer (id, text, is_true, question_id) values (4, 'answer 1', true, 2)
-insert into answer (id, text, is_true, question_id) values (5, 'answer 2', false, 2)
-insert into answer (id, text, is_true, question_id) values (6, 'answer 3', false, 2)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (6, 'lorem', 'Wzrost TPR spowoduje', null, 1)
 
-insert into answer (id, text, is_true, question_id) values (7, 'answer 1', true, 3)
-insert into answer (id, text, is_true, question_id) values (8, 'answer 2', false, 3)
-insert into answer (id, text, is_true, question_id) values (9, 'answer 3', false , 3)
+insert into answer(id, text, is_true, question_id) values(16, 'Wzrost MAP', true, 6)
+insert into answer(id, text, is_true, question_id) values(17, 'Spadek MAP', false, 6)
+insert into answer(id, text, is_true, question_id) values(18, 'nie ma wpływu na MAP', false, 6)
 
-insert into answer (id, text, is_true, question_id) values (10, 'answer 1', true, 4)
-insert into answer (id, text, is_true, question_id) values (11, 'answer 2', true, 4)
-insert into answer (id, text, is_true, question_id) values (12, 'answer 3', true, 4)
+insert into subpathway(id, pathway_id) values (2, 1)
 
--- Pathway 2
-insert into answer (id, text, is_true, question_id) values (13, 'answer 1', true, 5)
-insert into answer (id, text, is_true, question_id) values (14, 'answer 2', true, 5)
-insert into answer (id, text, is_true, question_id) values (15, 'answer 3', true, 5)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (7, 'lorem', 'Mieśnie gładkie żył posiadają receptory', null, 2)
 
-insert into answer (id, text, is_true, question_id) values (16, 'answer 1', true, 6)
-insert into answer (id, text, is_true, question_id) values (17, 'answer 2', true, 6)
-insert into answer (id, text, is_true, question_id) values (18, 'answer 3', true, 6)
+insert into answer(id, text, is_true, question_id) values(19, 'alfa 1', true, 7)
+insert into answer(id, text, is_true, question_id) values(20, 'beta 2', false, 7)
+insert into answer(id, text, is_true, question_id) values(21, 'beta 2', false, 7)
 
-insert into answer (id, text, is_true, question_id) values (19, 'answer 1', true, 7)
-insert into answer (id, text, is_true, question_id) values (20, 'answer 2', true, 7)
-insert into answer (id, text, is_true, question_id) values (21, 'answer 3', true, 7)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (8, 'lorem', 'Zaznacz efekt pobudzenia receptorów alfa 1', null, 2)
 
-insert into answer (id, text, is_true, question_id) values (22, 'answer 1', true, 8)
-insert into answer (id, text, is_true, question_id) values (23, 'answer 2', true, 8)
-insert into answer (id, text, is_true, question_id) values (24, 'answer 3', true, 8)
+insert into answer(id, text, is_true, question_id) values(22, 'Wzrost napięcia mm gładkich i zweżenie średnic żył', false, 8)
+insert into answer(id, text, is_true, question_id) values(23, 'Wzrost napięcia mm gładkich i zmniejszenie podatności ścian naczyń żylnych', true, 8)
+insert into answer(id, text, is_true, question_id) values(24, 'Spadek napięcia mm gładkich i zwiększenie podatności ścian naczyń żylnych', false, 8)
 
--- Pathway 3
-insert into answer (id, text, is_true, question_id) values (25, 'answer 1', true, 9)
-insert into answer (id, text, is_true, question_id) values (26, 'answer 2', true, 9)
-insert into answer (id, text, is_true, question_id) values (27, 'answer 3', true, 9)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (9, 'lorem', 'Efektem zmniejszenie podatności ścian naczyń żylnych', null, 2)
 
-insert into answer (id, text, is_true, question_id) values (28, 'answer 1', true, 10)
-insert into answer (id, text, is_true, question_id) values (29, 'answer 2', true, 10)
-insert into answer (id, text, is_true, question_id) values (30, 'answer 3', true, 10)
+insert into answer(id, text, is_true, question_id) values(25, 'Wzrost ciśnienia w żyłach obwodowych', true, 9)
+insert into answer(id, text, is_true, question_id) values(26, 'Spadek ciśnienia w żyłach obwodowych', false, 9)
+insert into answer(id, text, is_true, question_id) values(27, 'Utrzymanie dotychczasowego ciśnienia w żyłach', false, 9)
 
-insert into answer (id, text, is_true, question_id) values (31, 'answer 1', true, 11)
-insert into answer (id, text, is_true, question_id) values (32, 'answer 2', true, 11)
-insert into answer (id, text, is_true, question_id) values (33, 'answer 3', true, 11)
+insert into question(id, comment, text, pathway_id, subpathway_id) values (10, 'lorem', 'Wzrost ciśnienia w żyłach obwodowych spowoduje', null, 2)
 
-insert into answer (id, text, is_true, question_id) values (34, 'answer 1', true, 12)
-insert into answer (id, text, is_true, question_id) values (35, 'answer 2', true, 12)
-insert into answer (id, text, is_true, question_id) values (36, 'answer 3', true, 12)
+insert into answer(id, text, is_true, question_id) values(28, 'Spadek powrotu żylnego', false, 10)
+insert into answer(id, text, is_true, question_id) values(29, 'Wzrost powrotu żylnego', true, 10)
+insert into answer(id, text, is_true, question_id) values(30, 'Nie wpłynie na wielkośc poworotu żylnego', false, 10)
 
--- insert into answer (id, text, is_true) values('fed1de10-5d35-11ed-a94e-4d3f065c0f7c', )
+insert into question(id, comment, text, pathway_id, subpathway_id) values (11, 'lorem', 'Wzrost powrotu żylnego', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(31, 'Zwiększa ciśnienie w PP', true, 11)
+insert into answer(id, text, is_true, question_id) values(32, 'Zmniejsza ciśnienie w PP', false, 11)
+insert into answer(id, text, is_true, question_id) values(33, 'Nie ma wpływu na ciśnienie w PP', false, 11)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (12, 'lorem', 'Wzrost ciśnienia w PP powoduje', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(34, 'Zwiększenie objętności późnorozkurczowej serca', true, 12)
+insert into answer(id, text, is_true, question_id) values(35, 'Zmniejszenie objętności późnorozkurczowej serca', false, 12)
+insert into answer(id, text, is_true, question_id) values(36, 'Zmniejszenie szybkości skurczu komór serca', false, 12)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (13, 'lorem', 'Wpływ objętości późnorozkurczowej na siłe skurczu opisuje', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(37, 'Prawo Franka-Starlinga', true, 13)
+insert into answer(id, text, is_true, question_id) values(38, 'Prawo Laplace''a', false, 13)
+insert into answer(id, text, is_true, question_id) values(39, 'Prawo Hilla', false, 13)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (14, 'lorem', 'Zgodnie z prawem Franka-Starlinga wzrost objętości późnorozkurczowej skutkuje ', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(40, 'Wzrostem objętosi wyrzutowej serca', true, 14)
+insert into answer(id, text, is_true, question_id) values(41, 'Spadkiem objętości wyrzutowej serca', false, 14)
+insert into answer(id, text, is_true, question_id) values(42, 'Wzrostem kurczliwości mięśni roboczych komór', false, 14)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (15, 'lorem', 'Zwiększenie objętości wyrzutowej serca powoduje wzrost', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(43, 'CO', true, 15)
+insert into answer(id, text, is_true, question_id) values(44, 'HR', false, 15)
+insert into answer(id, text, is_true, question_id) values(45, 'TPR', false, 15)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (16, 'lorem', 'Wzrost CO powoduje', null, 2)
+
+insert into answer(id, text, is_true, question_id) values(46, 'Wzrost MAP', true, 16)
+insert into answer(id, text, is_true, question_id) values(47, 'Spadek MAP', false, 16)
+insert into answer(id, text, is_true, question_id) values(48, 'utrzymanie MAP na dotychczasowym poziomie', false, 16)

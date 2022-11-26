@@ -1,4 +1,5 @@
 package com.pjatk.quizapi.api.dto;
 
-public record AuthResponse(String email, String accessToken) {
+public record AuthResponse(String email, String accessToken, String refreshToken) {
+    
 }
