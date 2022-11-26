@@ -47,9 +47,11 @@ const Login = () => {
       console.log(JSON.stringify(response));
 
       const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
+      const refreshToken = response?.data?.refreshToken;
 
-      setAuth({ username, password, roles, accessToken });
+      const roles = [USER_ROLES.regularUser];
+
+      setAuth({ username, password, roles, accessToken, refreshToken });
 
       console.log(setAuth);
 
@@ -88,7 +90,7 @@ const Login = () => {
 
   return (
     <section>
-      <form onSubmit={mockHandleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center space-y-2 border border-black rounded w-1/5 min-w-min mt-10 mx-auto">
           <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
             {errorMessage}
