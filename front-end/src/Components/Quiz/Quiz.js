@@ -134,53 +134,64 @@ const Quiz = () => {
   };
 
   return (
-    <>
+    <div className="bg-secondaryblue h-screen">
       <Navbar />
       {!isQuizOver ? (
         <>
-          <section className="text-2xl flex flex-col bg-blue-300 border-blue-500 border-2 w-1/3 items-center mx-auto">
-            <div>{currentQuestion.questionName}</div>
-            <div>
+          <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
+            {/* <div>{currentQuestion.questionName}</div> */}
+            <div className="my-4">Question one </div>
+            <div className="flex flex-col space-y-5 w-full">
               {answers?.map((answer) => (
                 <div
-                  className={
-                    answer.answerId === selectedAnswer
-                      ? 'border-blue-700 border-2'
-                      : ''
-                  }
+                  className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition
+                  ${answer.answerId === selectedAnswer ? '' : ''} `}
                   key={answer.answerId}
                   onClick={() => {
                     answerClickHandler(answer.answerId);
                   }}
                 >
-                  {answer.answer}
+                  <input
+                    className="w-5 h-5 mr-2"
+                    type="radio"
+                    id={answer.answerId}
+                    name="answer"
+                    value={answer.answer}
+                    checked={answer.answerId === selectedAnswer}
+                  ></input>
+                  <label className="" htmlFor={answer.answerId}>
+                    {answer.answer}
+                  </label>
                 </div>
               ))}
+
+              <button
+                className={`w-full 
+                ${
+                  selectedAnswer
+                    ? `rounded hover:bg-secondaryblue hover:text-white transition`
+                    : `opacity-75`
+                }`}
+                onClick={nextQuestionClickedHandler}
+                onMouseOver={() => {
+                  setIsNextQuestionFocused(true);
+                  console.log(isNextQuestionFocused);
+                }}
+                disabled={!selectedAnswer && true}
+              >
+                Next question
+              </button>
             </div>
-            <button
-              className={`self-end  border-2 px-3 py-2 rounded-l bg-blue-500 ${
-                !selectedAnswer && 'opacity-75'
-              }`}
-              onClick={nextQuestionClickedHandler}
-              onMouseOver={() => {
-                setIsNextQuestionFocused(true);
-                console.log(isNextQuestionFocused);
-              }}
-              disabled={!selectedAnswer && true}
-            >
-              Next question
-            </button>
-            <div className="self-end border-red-500"></div>
           </section>
         </>
       ) : (
         <>
-          <h3 className="text-center text-3xl text-red-500">
+          <h3 className="text-center text-3xl ">
             Thank you for completing the quiz!
           </h3>
         </>
       )}
-    </>
+    </div>
   );
 };
 

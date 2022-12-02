@@ -13,31 +13,34 @@ const Navbar = () => {
 
   const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
 
+  const listItemStyle =
+    'border-t border-white w-48 text-center py-3 hover:bg-darkclLighter';
+
   return (
     <aside>
       <nav>
         <div className="">
-          <ul className="flex flex-col absolute p-2 space-y-5 items-center h-screen w-60 text-white text-xl bg-black">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/quizStart">Start new quiz</Link>
-            </li>
+          <ul className="flex flex-col absolute pt-8 items-center h-screen text-white text-xl bg-darkcl">
+            <Link to="/">
+              <li className={listItemStyle}>Home</li>
+            </Link>
+            <Link to="/quizStart">
+              <li className={listItemStyle}>Start new quiz</li>
+            </Link>
             {!isQuizContextEmpty && (
-              <li>
-                <Link to="/quiz">Continue quiz</Link>
-              </li>
+              <Link to="/quiz">
+                <li className={listItemStyle}>Continue quiz</li>
+              </Link>
             )}
-            <li>
-              <Link to="/quizHistory">Quiz History</Link>
-            </li>
+            <Link to="/quizHistory">
+              <li className={listItemStyle}>Quiz History</li>
+            </Link>
             {canAccessAdmin && (
-              <li>
-                <Link to="/adminPanel">Admin panel</Link>
-              </li>
+              <Link to="/adminPanel">
+                <li className={listItemStyle}>Admin panel</li>
+              </Link>
             )}
-            <li>
+            <li className={`${listItemStyle}`}>
               <Link
                 to="/login"
                 onClick={() => {

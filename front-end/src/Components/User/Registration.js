@@ -3,6 +3,9 @@ import { USERNAME_REGEX, PASSWORD_REGEX } from '../../utils/regexes/userRegex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from '../../api/axios';
+
+const REGISTER_URL = '/auth/register';
 
 const Registration = () => {
   // refs
@@ -63,9 +66,29 @@ const Registration = () => {
     setErrorMessage('');
   }, [username, password, arePasswordsMatching]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const postObj = JSON.stringify({ email: username, password: password });
+
+    try {
+      await axios
+        .put(REGISTER_URL, postObj, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+        });
+    } catch (err) {
+      console.err(err);
+    }
+  };
+
   return (
     <section>
-      <form className="">
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center space-y-2 border border-black rounded w-1/5 min-w-min mt-10 mx-auto">
           <h1 className="text-center text-2xl pt-2">Register</h1>
           <p
