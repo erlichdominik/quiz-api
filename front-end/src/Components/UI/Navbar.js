@@ -7,7 +7,7 @@ import USER_ROLES from '../../utils/roles/authRoles';
 
 const Navbar = () => {
   const { auth } = useAuth();
-  const { quizState } = useQuiz();
+  const { quizState, setQuizState } = useQuiz();
 
   const canAccessAdmin = auth?.roles?.includes(USER_ROLES.adminUser) ?? false;
 
@@ -38,7 +38,14 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <Link to="/login">Log out</Link>
+              <Link
+                to="/login"
+                onClick={() => {
+                  setQuizState({});
+                }}
+              >
+                Log out
+              </Link>
             </li>
           </ul>
         </div>

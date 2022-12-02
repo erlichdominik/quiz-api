@@ -23,6 +23,16 @@ const Quiz = () => {
   const { quizState, setQuizState } = useQuiz();
   const { auth } = useAuth();
 
+  const setQuizContextState = () => {
+    setQuizState((quizState) => ({
+      ...quizState,
+      walkthroughId: walkthroughId,
+      currentQuestion: currentQuestion,
+      answers: answers,
+      selectedAnswer: selectedAnswer,
+    }));
+  };
+
   const mapResponseToCurrentState = (responseData) => {
     const { walkthroughId, questionDto } = responseData;
     setWalkthroughId(walkthroughId);
@@ -44,6 +54,8 @@ const Quiz = () => {
         .then((resp) => {
           mapResponseToCurrentState(resp.data);
         });
+
+      setQuizContextState();
     } catch (err) {
       console.log(err);
     }
@@ -105,13 +117,7 @@ const Quiz = () => {
   }, []);
 
   useEffect(() => {
-    setQuizState((quizState) => ({
-      ...quizState,
-      walkthroughId: walkthroughId,
-      currentQuestion: currentQuestion,
-      answers: answers,
-      selectedAnswer: selectedAnswer,
-    }));
+    setQuizContextState();
   }, [selectedAnswer]);
 
   const answerClickHandler = (answerId) => {
