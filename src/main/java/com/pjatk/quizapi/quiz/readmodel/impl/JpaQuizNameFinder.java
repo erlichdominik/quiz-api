@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Finder
-public class JpaQuizNameFinder implements QuizNameFinder {
+class JpaQuizNameFinder implements QuizNameFinder {
     @PersistenceContext
     private EntityManager entityManager;
 

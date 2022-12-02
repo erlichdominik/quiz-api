@@ -29,13 +29,15 @@ class QuizController {
     private final QuizNameFinder quizNameFinder;
     private final QuestionFinder questionFinder;
     private final QuizStateFinder quizStateFinder;
+    private final UserHistoryFinder userHistoryFinder;
     private final QuizUploader quizUploader;
     private final Gate gate;
 
-    QuizController(QuizNameFinder quizNameFinder, QuestionFinder questionFinder, QuizStateFinder quizStateFinder, QuizUploader quizUploader, Gate gate) {
+    QuizController(QuizNameFinder quizNameFinder, QuestionFinder questionFinder, QuizStateFinder quizStateFinder, UserHistoryFinder userHistoryFinder, QuizUploader quizUploader, Gate gate) {
         this.quizNameFinder = quizNameFinder;
         this.questionFinder = questionFinder;
         this.quizStateFinder = quizStateFinder;
+        this.userHistoryFinder = userHistoryFinder;
         this.quizUploader = quizUploader;
         this.gate = gate;
     }
@@ -75,7 +77,7 @@ class QuizController {
     }
 
     @GetMapping("/init")
-    public ResponseEntity<?> initQuiz(@RequestParam QuizMode quizMode, @RequestParam  long quizId) {
+    public ResponseEntity<QuestionDataResponse> initQuiz(@RequestParam QuizMode quizMode, @RequestParam  long quizId) {
         var command = new InitQuizCommand(quizMode, quizId);
         Long walkthroughId = (Long) gate.dispatch(command);
 
@@ -103,6 +105,11 @@ class QuizController {
         gate.dispatch(command);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/history")
+    ResponseEntity<List<UserHistoryDto>> fetchUserHistory() {
+        return ResponseEntity.ok(userHistoryFinder.find());
     }
 
     @DeleteMapping("")

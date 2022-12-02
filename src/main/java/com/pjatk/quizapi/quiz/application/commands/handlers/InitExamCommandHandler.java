@@ -35,12 +35,11 @@ class InitExamCommandHandler implements CommandHandler<InitQuizCommand, Long> {
 
         walkthrough.setAppUser(applicationUser);
 
-        long id = walkthroughRepository.save(walkthrough).getId();
-        return id;
+        return walkthroughRepository.save(walkthrough).getId();
     }
 
     private ApplicationUser getOrInitApplicationUser(User user) {
-        return user.getApplicationUser()
+        return applicationUserRepository.findByUserId(user.getId())
                 .orElseGet(() -> applicationUserRepository.save(new ApplicationUser(user)));
     }
 }

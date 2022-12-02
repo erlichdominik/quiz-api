@@ -3,7 +3,6 @@ package com.pjatk.quizapi.security;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "app_user")
-@ToString
 @Getter
 @Setter
 public class User implements UserDetails {
@@ -25,7 +23,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
     private ApplicationUser applicationUser;
 
     public User(String email, String password) {

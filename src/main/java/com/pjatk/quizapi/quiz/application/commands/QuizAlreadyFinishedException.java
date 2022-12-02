@@ -1,4 +1,4 @@
-package com.pjatk.quizapi.quiz.application.commands.handlers;
+package com.pjatk.quizapi.quiz.application.commands;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

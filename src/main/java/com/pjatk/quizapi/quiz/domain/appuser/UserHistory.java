@@ -13,7 +13,7 @@ public class UserHistory extends AbstractEntity {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "userHistory", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userHistory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Statistic> statistics = new HashSet<>();
 
     @ManyToOne
@@ -30,8 +30,19 @@ public class UserHistory extends AbstractEntity {
     }
 
     void assignApplicationUser(ApplicationUser applicationUser) {
-       this.applicationUser = applicationUser;
+        this.applicationUser = applicationUser;
     }
 
-    protected UserHistory() {}
+    protected UserHistory() {
+    }
+
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public Set<Statistic> getStatistics() {
+        return new HashSet<>(statistics);
+    }
 }
+

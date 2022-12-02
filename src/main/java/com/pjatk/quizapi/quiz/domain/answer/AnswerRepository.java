@@ -1,10 +1,10 @@
 package com.pjatk.quizapi.quiz.domain.answer;
 
-import org.springframework.data.repository.Repository;
+import com.pjatk.quizapi.ddd.annotations.domain.DomainRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
-interface AnswerRepository extends Repository<Answer, UUID> {
+@DomainRepository
+public interface AnswerRepository {
     Optional<Answer> findById(long id);
 }

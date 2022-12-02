@@ -5,7 +5,7 @@
 -- insert into user_roles (user_id, roles) values ('3d82975d-9953-440b-95ad-bdb1ff6699ec', 'ADMIN')
 --
 
-insert into app_user (id, email, password) values (1, 'test@gmail.com', '$2a$10$M9WSIbp/oBUQfVsQkCjw/uQQ3zFXPgSFRmH4gqSr/v3YcOTpkoi4e')
+-- insert into app_user (id, email, password) values (1, 'test@gmail.com', '$2a$10$M9WSIbp/oBUQfVsQkCjw/uQQ3zFXPgSFRmH4gqSr/v3YcOTpkoi4e')
 
 insert into QUIZ(id, name) values (1, 'default')
 -- insert into QUIZ(id, name) values (2, 'easy')

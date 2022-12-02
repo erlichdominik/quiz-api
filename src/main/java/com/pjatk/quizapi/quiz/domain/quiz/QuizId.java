@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class QuizId{
+public class QuizId {
     private long value;
 
     public QuizId(long value) {
@@ -17,6 +17,10 @@ public class QuizId{
 
     public long getValue() {
         return value;
+    }
+
+    void setValue(long value) {
+        this.value = value;
     }
 
     @Override

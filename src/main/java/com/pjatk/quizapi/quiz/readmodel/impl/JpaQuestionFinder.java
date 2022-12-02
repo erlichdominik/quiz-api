@@ -1,7 +1,7 @@
 package com.pjatk.quizapi.quiz.readmodel.impl;
 
 import com.pjatk.quizapi.ddd.annotations.application.Finder;
-import com.pjatk.quizapi.quiz.application.commands.handlers.QuizAlreadyFinishedException;
+import com.pjatk.quizapi.quiz.application.commands.QuizAlreadyFinishedException;
 import com.pjatk.quizapi.quiz.domain.answer.Answer;
 import com.pjatk.quizapi.quiz.domain.question.Question;
 import com.pjatk.quizapi.quiz.domain.question.QuestionId;
@@ -27,7 +27,9 @@ class JpaQuestionFinder implements QuestionFinder {
         String jpql = "select w from Walkthrough w where w.id = ?1";
         TypedQuery<Walkthrough> query = entityManager.createQuery(jpql, Walkthrough.class).setParameter(1, request.walkthroughId());
 
-        Walkthrough walkThrough = query.getSingleResult();
+        Walkthrough walkThrough = query.getResultStream()
+                .findFirst()
+                .orElseThrow(GameNotInitialized::new);
 
         if (walkThrough.isWalkthroughOver()) throw new QuizAlreadyFinishedException();
 

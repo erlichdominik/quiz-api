@@ -19,14 +19,14 @@ public class Walkthrough extends AbstractEntity {
     protected Walkthrough() {
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @OrderColumn(name = "walkthrough_index", nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "walkthrough")
     private List<QuestionsIndex> questionsIndices = new ArrayList<>();
 
     private int currentIndex = 0;
     private int currentQuestionIndex = 0;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @Getter
     private Set<Stat> stats = new HashSet<>();
 
     @Getter
@@ -47,11 +47,12 @@ public class Walkthrough extends AbstractEntity {
     public Walkthrough(List<QuestionsIndex> questionsIndices, QuizId quizId) {
         state = State.INIT;
         this.questionsIndices = new ArrayList<>(questionsIndices);
+        this.questionsIndices.forEach(it -> it.setWalkthrough(this));
         this.quizId = quizId;
     }
 
     void createNewStatistic(boolean isAnswerCorrect) {
-        var statistic = new Stat(getCurrentQuestionId().questionId(), isAnswerCorrect, this);
+        var statistic = new Stat(getCurrentQuestionId().questionId(), isAnswerCorrect, this, questionsIndices.get(currentIndex).getPathwayId());
         stats.add(statistic);
     }
 
@@ -64,19 +65,13 @@ public class Walkthrough extends AbstractEntity {
     }
 
     public boolean hasNext(boolean isAnswerCorrect) {
-        if (isAnswerCorrect) {
-            return hasNextQuestion();
-        } else {
-            return hasNextQuestionSet();
-        }
+        if (isAnswerCorrect) return hasNextQuestion();
+        else return hasNextQuestionSet();
     }
 
     public void next(boolean isAnswerCorrect) {
-        if (isAnswerCorrect) {
-            nextQuestion(isAnswerCorrect);
-        } else {
-            nextQuestionSet(isAnswerCorrect);
-        }
+        if (isAnswerCorrect) nextQuestion();
+        else nextQuestionSet();
     }
 
     private boolean hasNextQuestion() {
@@ -100,17 +95,18 @@ public class Walkthrough extends AbstractEntity {
 
     }
 
-    private void nextQuestion(boolean isAnswerCorrect) {
+    private void nextQuestion() {
+        if (state == State.FINISHED) throw new NoSuchElementException();
         boolean hasNext = hasNextQuestion();
 
         if (hasNext) {
             state = State.IN_GAME;
             if (doesNextQuestionInCurrentQuestionsExists()) {
-                createNewStatistic(isAnswerCorrect);
+                createNewStatistic(true);
                 currentQuestionIndex++;
             } else {
                 if (doesNextQuestionsExists()) {
-                    createNewStatistic(isAnswerCorrect);
+                    createNewStatistic(true);
                     ++currentIndex;
                     currentQuestionIndex = 0;
                 } else {
@@ -118,24 +114,21 @@ public class Walkthrough extends AbstractEntity {
                     throw new NoSuchElementException();
                 }
             }
-        } else {
-            throw new NoSuchElementException();
-        }
+        } else throw new NoSuchElementException();
     }
 
     private boolean hasNextQuestionSet() {
         boolean hasNext = questionsIndices.size() > currentIndex + 1;
-        if (!hasNext) {
-            state = State.FINISHED;
-        }
+
+        if (!hasNext) state = State.FINISHED;
+
         return hasNext;
     }
 
-    private void nextQuestionSet(boolean isAnswerCorrect) {
-        if (!hasNextQuestionSet()) {
-            throw new NoSuchElementException();
-        }
-        createNewStatistic(isAnswerCorrect);
+    private void nextQuestionSet() {
+        if (!hasNextQuestionSet()) throw new NoSuchElementException();
+
+        createNewStatistic(false);
         currentIndex++;
         currentQuestionIndex = 0;
         QuestionId.of(questionsIndices.get(currentIndex).getQuestionsId().get(currentQuestionIndex));

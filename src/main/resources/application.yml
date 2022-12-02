@@ -13,3 +13,8 @@ app:
     secret: abcdefghijklmnOPQRSTUVWXYZ
     refreshTokenExpTime: 86400000
     jwtExpirationExpTime: 3600000
+server:
+  error:
+    include-message: always
+    include-binding-errors: never
+    include-stacktrace: never

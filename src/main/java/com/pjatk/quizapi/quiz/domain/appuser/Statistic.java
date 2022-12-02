@@ -9,13 +9,13 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Statistic extends AbstractEntity {
     private String pathName;
-    private long completedPercentage;
+    private double completedPercentage;
 
     @ManyToOne
     @JoinColumn(name = "userhistory_id")
     private UserHistory userHistory;
 
-    public Statistic(String pathName, long completedPercentage) {
+    public Statistic(String pathName, double completedPercentage) {
         this.pathName = pathName;
         this.completedPercentage = completedPercentage;
     }
@@ -25,5 +25,13 @@ public class Statistic extends AbstractEntity {
 
     void assignUserHistory(UserHistory userHistory) {
         this.userHistory = userHistory;
+    }
+
+    public String getPathName() {
+        return pathName;
+    }
+
+    public double getCompletedPercentage() {
+        return completedPercentage;
     }
 }

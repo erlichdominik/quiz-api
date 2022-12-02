@@ -14,11 +14,12 @@ import java.util.Set;
 public class ApplicationUser extends AbstractEntity {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Walkthrough currentWalkthrough;
-    @OneToMany(mappedBy = "applicationUser")
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
     @Getter
     private Set<UserHistory> userHistories = new HashSet<>();
 
-    @OneToOne(mappedBy = "applicationUser")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public ApplicationUser(Walkthrough currentWalkthrough, Set<UserHistory> userHistories) {
@@ -35,10 +36,17 @@ public class ApplicationUser extends AbstractEntity {
         userHistory.assignApplicationUser(this);
     }
 
+    public void setWalkthrough(Walkthrough walkthrough) {
+        currentWalkthrough = walkthrough;
+        walkthrough.setAppUser(this);
+    }
+
     public Optional<Walkthrough> getCurrentWalkthrough() {
         return Optional.ofNullable(currentWalkthrough);
     }
 
     protected ApplicationUser() {}
+
+
 
 }

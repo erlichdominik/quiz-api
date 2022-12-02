@@ -36,45 +36,57 @@ public class ExamQuizCreationPolicy implements QuizCreationPolicy {
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new QuizNotFoundException(quizId));
 
-        List<QuestionsIndex> questionsIndices = new ArrayList<>();
-
         Set<Pathway> pathways = quiz.getPathways();
 
-        user.getCurrentWalkthrough().ifPresent(it -> {
-            walkthroughRepository.deleteById(it.getId());
-            applicationUserRepository.save(user);
-        });
+        user.getCurrentWalkthrough().ifPresent(it -> deleteWalkthrough(user, it));
 
+        List<QuestionsIndex> questionsIndices = mapPathwaysToIndices(pathways);
+
+        var walkthrough = new Walkthrough(questionsIndices, new QuizId(quizId));
+
+
+//        Walkthrough savedWalkthrough = walkthroughRepository.save(walkthrough);
+
+        user.setWalkthrough(walkthrough);
+
+        applicationUserRepository.save(user);
+        return user.getCurrentWalkthrough().orElseThrow(IllegalStateException::new);
+    }
+
+    private void deleteWalkthrough(ApplicationUser user, Walkthrough walkthrough) {
+        walkthroughRepository.deleteById(walkthrough.getId());
+        applicationUserRepository.save(user);
+    }
+
+    private static List<QuestionsIndex> mapPathwaysToIndices(Set<Pathway> pathways) {
+        List<QuestionsIndex> questionsIndices = new ArrayList<>();
 
         for (Pathway pathway :
                 pathways) {
-            QuestionsIndex questionsIndex = new QuestionsIndex(
+            QuestionsIndex indicesFromPathway = new QuestionsIndex(
                     pathway.getQuestions()
                             .stream()
                             .map(AbstractEntity::getId)
-                            .toList()
+                            .toList(), pathway.getId()
             );
 
-            questionsIndices.add(questionsIndex);
+            questionsIndices.add(indicesFromPathway);
 
-            List<QuestionsIndex> indices = new ArrayList<>(pathway.getSubPathways()
+            List<QuestionsIndex> indicesFromSubPathways = new ArrayList<>(pathway.getSubPathways()
                     .stream()
                     .map(SubPathway::getQuestions)
                     .map(it -> it
                             .stream()
                             .map(AbstractEntity::getId)
                     )
-                    .map(it -> new QuestionsIndex(it.toList())).toList());
+                    .map(it -> new QuestionsIndex(it.toList(), pathway.getId())).toList());
 
-            Collections.shuffle(indices);
+            Collections.shuffle(indicesFromSubPathways);
 
-            questionsIndices.addAll(indices);
+            questionsIndices.addAll(indicesFromSubPathways);
 
         }
-
-        var walkthrough = new Walkthrough(questionsIndices, new QuizId(quizId));
-
-        return walkthroughRepository.save(walkthrough);
+        return questionsIndices;
     }
 
 }

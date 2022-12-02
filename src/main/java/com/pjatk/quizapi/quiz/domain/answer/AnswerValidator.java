@@ -5,7 +5,7 @@ import com.pjatk.quizapi.api.dto.QuestionNotFoundException;
 public class AnswerValidator {
     private final AnswerRepository answerRepository;
 
-    AnswerValidator(AnswerRepository answerRepository) {
+    public AnswerValidator(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
 

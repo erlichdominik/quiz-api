@@ -1,5 +1,7 @@
-package com.pjatk.quizapi.quiz.domain.quiz;
+package com.pjatk.quizapi.quiz.infrastructure;
 
+import com.pjatk.quizapi.quiz.domain.quiz.QuizRepository;
+import com.pjatk.quizapi.quiz.domain.quiz.QuizUploader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
