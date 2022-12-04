@@ -55,7 +55,6 @@ public class ExamQuizCreationPolicy implements QuizCreationPolicy {
 
     private void deleteWalkthrough(ApplicationUser user, Walkthrough walkthrough) {
         walkthroughRepository.deleteById(walkthrough.getId());
-        applicationUserRepository.save(user);
     }
 
     private static List<QuestionsIndex> mapPathwaysToIndices(Set<Pathway> pathways) {
