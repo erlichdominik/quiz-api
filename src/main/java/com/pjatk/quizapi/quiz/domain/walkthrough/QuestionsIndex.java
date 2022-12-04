@@ -30,11 +30,6 @@ public class QuestionsIndex extends AbstractEntity {
 
     protected QuestionsIndex() {}
 
-    @PrePersist
-    private void prePersist() {
-
-    }
-
     public List<Long> getQuestionsId() {
         return new ArrayList<>(questionsId);
     }
