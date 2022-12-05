@@ -70,7 +70,7 @@ class SecurityController {
 
         Cookie refreshToken = Arrays.stream(request.getCookies())
                 .filter(it -> it.getName().equals("refreshToken"))
-                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
 
         RefreshTokenResponse refreshTokenResponse = refreshTokenManager.refreshToken(refreshToken.getValue());
 
