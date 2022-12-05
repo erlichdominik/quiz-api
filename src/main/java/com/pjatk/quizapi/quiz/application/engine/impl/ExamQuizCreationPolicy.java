@@ -38,14 +38,11 @@ public class ExamQuizCreationPolicy implements QuizCreationPolicy {
 
         Set<Pathway> pathways = quiz.getPathways();
 
-        user.getCurrentWalkthrough().ifPresent(it -> deleteWalkthrough(user, it));
+        user.getCurrentWalkthrough().ifPresent(this::deleteWalkthrough);
 
         List<QuestionsIndex> questionsIndices = mapPathwaysToIndices(pathways);
 
         var walkthrough = new Walkthrough(questionsIndices, new QuizId(quizId));
-
-
-//        Walkthrough savedWalkthrough = walkthroughRepository.save(walkthrough);
 
         user.setWalkthrough(walkthrough);
 
@@ -53,7 +50,7 @@ public class ExamQuizCreationPolicy implements QuizCreationPolicy {
         return user.getCurrentWalkthrough().orElseThrow(IllegalStateException::new);
     }
 
-    private void deleteWalkthrough(ApplicationUser user, Walkthrough walkthrough) {
+    private void deleteWalkthrough(Walkthrough walkthrough) {
         walkthroughRepository.deleteById(walkthrough.getId());
     }
 

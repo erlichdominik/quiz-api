@@ -2,7 +2,6 @@ package com.pjatk.quizapi.api;
 
 import com.pjatk.quizapi.api.dto.AuthRequest;
 import com.pjatk.quizapi.api.dto.AuthResponse;
-import com.pjatk.quizapi.api.dto.RefreshTokenCommand;
 import com.pjatk.quizapi.api.dto.RefreshTokenResponse;
 import com.pjatk.quizapi.security.*;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @RestController
 class SecurityController {
@@ -33,7 +37,7 @@ class SecurityController {
 
 
     @PostMapping("/auth/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request, HttpServletResponse httpServletResponse) {
         try {
             Authentication authentication = manager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -45,6 +49,8 @@ class SecurityController {
             RefreshToken refreshToken = refreshTokenManager.createRefreshToken(user.getId());
 
             AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken());
+
+            httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
 
             return ResponseEntity.ok().body(response);
 
@@ -60,8 +66,13 @@ class SecurityController {
     }
 
     @PostMapping("/auth/refreshtoken")
-    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody RefreshTokenCommand command) {
-        RefreshTokenResponse refreshTokenResponse = refreshTokenManager.refreshToken(command.refreshToken());
+    public ResponseEntity<RefreshTokenResponse> refreshToken(HttpServletRequest request) {
+
+        Cookie refreshToken = Arrays.stream(request.getCookies())
+                .filter(it -> it.getName().equals("refreshToken"))
+                .findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        RefreshTokenResponse refreshTokenResponse = refreshTokenManager.refreshToken(refreshToken.getValue());
 
         return ResponseEntity.ok(refreshTokenResponse);
     }
