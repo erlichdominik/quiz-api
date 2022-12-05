@@ -139,8 +139,7 @@ const Quiz = () => {
       {!isQuizOver ? (
         <>
           <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
-            {/* <div>{currentQuestion.questionName}</div> */}
-            <div className="my-4">Question one </div>
+            <div>{currentQuestion.questionName}</div>
             <div className="flex flex-col space-y-5 w-full">
               {answers?.map((answer) => (
                 <div

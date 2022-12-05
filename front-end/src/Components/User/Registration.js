@@ -73,7 +73,7 @@ const Registration = () => {
 
     try {
       await axios
-        .put(REGISTER_URL, postObj, {
+        .post(REGISTER_URL, postObj, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -131,13 +131,21 @@ const Registration = () => {
             <label htmlFor="password" className="block pl-1">
               Password:
             </label>
-            <input className=" w-full rounded-xl pl-2" type="password" />
+            <input
+              className=" w-full rounded-xl pl-2"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className="">
             <label htmlFor="re-enter password" className="block pl-1">
               Re-enter password:
             </label>
-            <input type="password" className=" w-full rounded-xl pl-2" />
+            <input
+              type="password"
+              className=" w-full rounded-xl pl-2"
+              onChange={(e) => setRePassword(e.target.value)}
+            />
           </div>
           <div>
             <button className="text-white bg-blue-400 px-3 border-blue-400 border-2 rounded-xl hover:bg-blue-300 transition">
