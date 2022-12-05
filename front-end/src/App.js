@@ -22,7 +22,6 @@ const App = () => {
         {/* 404 page */}
         <Route path="*" element={<MissingPath />} />
 
-        {/* Protected routes */}
         {/* Regular user routes*/}
         <Route
           element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}

@@ -53,8 +53,6 @@ const Login = () => {
 
       setAuth({ username, password, roles, accessToken, refreshToken });
 
-      document.cookie = `${refreshToken}`;
-
       console.log(setAuth);
 
       setUsername('');
