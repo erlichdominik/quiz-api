@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    tryToAuthenticate();
+    console.log(tryToAuthenticate());
   }, []);
 
   useEffect(() => {
