@@ -5,6 +5,7 @@ import useQuiz from '../../hooks/useQuiz';
 import Navbar from '../ui/Navbar';
 import axios from '../../api/axios';
 import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const QUIZ_INIT_URL = '/quiz/init';
 const QUIZ_SUBMIT_URL = '/quiz/submit';
@@ -16,14 +17,18 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [isNextQuestionFocused, setIsNextQuestionFocused] = useState(false);
   const [walkthroughId, setWalkthroughId] = useState();
-  const [isQuizOver, setIsQuizOver] = useState(false);
 
-  const { quizState, setQuizState } = useQuiz();
-  const { auth } = useAuth();
+  const { quizState, setQuizState, isQuizOver, setIsQuizOver } = useQuiz();
+
+  const axiosPrivate = useAxiosPrivate();
 
   const setQuizContextState = () => {
+    console.log('setting context state, props:');
+    console.log(walkthroughId);
+    console.log(currentQuestion);
+    console.log(answers);
+    console.log(selectedAnswer);
     setQuizState((quizState) => ({
       ...quizState,
       walkthroughId: walkthroughId,
@@ -31,9 +36,27 @@ const Quiz = () => {
       answers: answers,
       selectedAnswer: selectedAnswer,
     }));
+    console.log('quiz state', quizState);
+  };
+
+  const setQuizContextStateFromObj = (quizObj) => {
+    console.log('setting context state from obj, props:');
+    console.log(quizObj.walkthroughId);
+    console.log(quizObj.currentQuestion);
+    console.log(quizObj.answers);
+    console.log(quizObj.selectedAnswer);
+    setQuizState((quizState) => ({
+      ...quizState,
+      walkthroughId: quizObj.walkthroughId,
+      currentQuestion: quizObj.currentQuestion,
+      answers: quizObj.answers,
+      selectedAnswer: quizObj.selectedAnswer,
+    }));
+    console.log('quiz state', quizState);
   };
 
   const mapResponseToCurrentState = (responseData) => {
+    console.log('response data: ', responseData);
     const { walkthroughId, questionDto } = responseData;
     setWalkthroughId(walkthroughId);
     setCurrentQuestion(() => ({
@@ -43,19 +66,27 @@ const Quiz = () => {
     setAnswers(questionDto.answerDtos);
   };
 
+  const getQuizStateFromResponseData = (responseData) => {
+    return {
+      walkthroughId: responseData.walkthroughId,
+      currentQuestion: {
+        questionId: responseData.questionDto.questionId,
+        questionName: responseData.questionDto.question,
+      },
+      answers: responseData.questionDto.answerDtos,
+    };
+  };
+
   const quizData = async () => {
     try {
-      await axios
-        .get(`${QUIZ_INIT_URL}?quizMode=${QUIZ_MODE}&quizId=${QUIZ_ID}`, {
-          headers: {
-            Authorization: `Bearer ${auth.accessToken}`,
-          },
-        })
+      await axiosPrivate
+        .get(`${QUIZ_INIT_URL}?quizMode=${QUIZ_MODE}&quizId=${QUIZ_ID}`)
         .then((resp) => {
           mapResponseToCurrentState(resp.data);
+          const qState = getQuizStateFromResponseData(resp.data);
+          setQuizContextStateFromObj(qState);
+          setIsQuizOver(false);
         });
-
-      setQuizContextState();
     } catch (err) {
       console.log(err);
     }
@@ -63,12 +94,8 @@ const Quiz = () => {
 
   const loadNextQuestion = async () => {
     try {
-      await axios
-        .get(`${QUIZ_NEXT_QUESTION_URL}?walkthroughId=${walkthroughId}`, {
-          headers: {
-            Authorization: `Bearer ${auth.accessToken}`,
-          },
-        })
+      await axiosPrivate
+        .get(`${QUIZ_NEXT_QUESTION_URL}?walkthroughId=${walkthroughId}`)
         .then((resp) => {
           mapResponseToCurrentState(resp.data);
         });
@@ -78,22 +105,12 @@ const Quiz = () => {
   };
 
   const submitQuestion = async () => {
-    console.log('walkthroughid: ', walkthroughId);
-    console.log('selected answer: ', walkthroughId);
     try {
-      await axios
+      await axiosPrivate
         .post(
-          `${QUIZ_SUBMIT_URL}?walkthroughId=${walkthroughId}&answerId=${selectedAnswer}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${auth.accessToken}`,
-            },
-          }
+          `${QUIZ_SUBMIT_URL}?walkthroughId=${walkthroughId}&answerId=${selectedAnswer}`
         )
         .then((resp) => {
-          console.log(resp.data.isQuizOver);
-
           setIsQuizOver(resp.data.isQuizOver);
         });
     } catch (err) {
@@ -121,7 +138,6 @@ const Quiz = () => {
   }, [selectedAnswer]);
 
   const answerClickHandler = (answerId) => {
-    setIsNextQuestionFocused(false);
     setSelectedAnswer(answerId);
   };
 
@@ -131,12 +147,14 @@ const Quiz = () => {
       .catch(() => {
         console.log('wyjebalo sie');
       });
+
+    setSelectedAnswer('');
   };
 
   return (
     <div className="bg-secondaryblue h-screen">
       <Navbar />
-      {!isQuizOver ? (
+      {isQuizOver === false ? (
         <>
           <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
             <div>{currentQuestion.questionName}</div>
@@ -173,10 +191,9 @@ const Quiz = () => {
                 }`}
                 onClick={nextQuestionClickedHandler}
                 onMouseOver={() => {
-                  setIsNextQuestionFocused(true);
-                  console.log(isNextQuestionFocused);
+                  console.log('is quiz over?', isQuizOver);
                 }}
-                disabled={!selectedAnswer && true}
+                disabled={selectedAnswer === '' ? true : false}
               >
                 Next question
               </button>

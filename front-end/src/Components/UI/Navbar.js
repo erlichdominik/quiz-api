@@ -44,7 +44,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => {
-                  setQuizState({});
+                  setQuizState(() => ({}));
                 }}
               >
                 Log out

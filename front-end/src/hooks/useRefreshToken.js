@@ -3,11 +3,13 @@ import React from 'react';
 import axios from '../api/axios';
 import useAuth from './useAuth';
 
+const REFRESH_URL = 'auth/refreshtoken';
+
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const response = await axios.post('/refresh', {
+    const response = await axios.get(REFRESH_URL, {
       withCredentials: true,
     });
 
@@ -17,7 +19,7 @@ const useRefreshToken = () => {
       return { ...prev, accessToken: response.data.accessToken };
     });
 
-    return response.data;
+    return response.data.accessToken;
   };
 
   return refresh;
