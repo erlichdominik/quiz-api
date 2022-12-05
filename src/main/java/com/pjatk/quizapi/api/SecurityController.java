@@ -51,8 +51,8 @@ class SecurityController {
 
             AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken());
 
-//            if (Arrays.stream(httpServletRequest.getCookies()).filter(it -> it.getName().equals("refreshToken"))
-//                    .map(it -> ))
+            if (Arrays.stream(httpServletRequest.getCookies()).filter(it -> it.getName().equals("refreshToken"))
+                    .)
 
 
             httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
