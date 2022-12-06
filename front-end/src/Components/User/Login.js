@@ -96,21 +96,21 @@ const Login = () => {
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col items-center space-y-2 border border-black rounded w-1/5 min-w-min mt-10 mx-auto">
+    <section className="bg-secondaryblue w-screen h-screen">
+      <form onSubmit={handleSubmit} className="pt-16">
+        <div className="flex flex-col space-y-4 border w-5/12 mx-auto border-darkcl shadow rounded-md bg-white">
           <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
             {errorMessage}
           </p>
-          <div>
-            <h1 className="text-2xl">Sign in</h1>
+          <div className="text-center">
+            <h1 className="text-2xl pt-2">Sign in</h1>
           </div>
-          <div>
+          <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">
               Username:
             </label>
             <input
-              className="rounded-xl pl-2"
+              className="rounded-xl pl-2 border shadow w-full h-8"
               type="text"
               id="username"
               ref={usernameRef}
@@ -120,12 +120,12 @@ const Login = () => {
               required
             />
           </div>
-          <div>
+          <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="password">
               Password:
             </label>
             <input
-              className="rounded-xl pl-2"
+              className="rounded-xl pl-2 border shadow w-full h-8"
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -133,12 +133,12 @@ const Login = () => {
               required
             />
           </div>
-          <div className="py-2">
-            <button className="border-blue-400 border-2 rounded-xl px-3 py-2 hover:bg-blue-300 transition">
+          <div className="py-2 text-center">
+            <button className="border border-darkcl px-4 py-2 rounded-xl shadow">
               Sign in
             </button>
           </div>
-          <div>
+          <div className="text-center">
             Don't have an account? &nbsp;
             <span className="font-bold underline">
               <Link to="/register">Sign up</Link>

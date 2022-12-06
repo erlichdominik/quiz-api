@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api/axios';
 
+import { USERNAME_REGEX, PASSWORD_REGEX } from '../../utils/regexes/userRegex';
+
 const REGISTER_URL = '/auth/register';
 
 const Registration = () => {
@@ -34,7 +36,7 @@ const Registration = () => {
 
   return (
     <>
-      <div className="bg-secondaryblue w-screen h-screen">
+      <section className="bg-secondaryblue w-screen h-screen">
         <form onSubmit={handleSubmit} className="pt-16">
           <div className="flex flex-col space-y-4 border w-5/12 mx-auto border-darkcl shadow rounded-md bg-white">
             <div className="text-center">
@@ -74,7 +76,10 @@ const Registration = () => {
               ></input>
             </div>
             <div className="py-2 text-center">
-              <button className="border border-darkcl px-4 py-2 rounded-xl shadow">
+              <button
+                className="border border-darkcl px-4 py-2 rounded-xl shadow"
+                disabled={true}
+              >
                 Sign up
               </button>
             </div>
@@ -86,7 +91,7 @@ const Registration = () => {
             </div>
           </div>
         </form>
-      </div>
+      </section>
     </>
   );
 };

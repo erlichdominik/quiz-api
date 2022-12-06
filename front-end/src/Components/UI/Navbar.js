@@ -13,43 +13,41 @@ const Navbar = () => {
 
   const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
 
-  const listItemStyle =
-    'border-t border-white w-48 text-center py-3 hover:bg-darkclLighter';
-
   return (
     <aside>
       <nav>
         <div className="">
-          <ul className="flex flex-col absolute pt-8 items-center h-screen text-white text-xl bg-darkcl">
-            <Link to="/">
-              <li className={listItemStyle}>Home</li>
+          <ul className="flex flex-col float-left pt-8 space-y-4 items-center w-32 h-screen text-white text-xl bg-darkcl">
+            <Link className="w-max h-max" to="/">
+              <div className="w-24 h-24">asd</div>
             </Link>
-            <Link to="/quizStart">
-              <li className={listItemStyle}>Start new quiz</li>
-            </Link>
+            <div>
+              <Link to="/quizStart">
+                <li className="px-2 ">Start new quiz</li>
+              </Link>
+            </div>
             {!isQuizContextEmpty && (
-              <Link to="/quiz">
-                <li className={listItemStyle}>Continue quiz</li>
-              </Link>
+              <div>
+                <Link to="/quiz">
+                  <li className="px-2 ">Continue quiz</li>
+                </Link>
+              </div>
             )}
-            <Link to="/quizHistory">
-              <li className={listItemStyle}>Quiz History</li>
-            </Link>
-            {canAccessAdmin && (
-              <Link to="/adminPanel">
-                <li className={listItemStyle}>Admin panel</li>
+            <div>
+              <Link to="/quizHistory">
+                <li className="px-2 ">Quiz History</li>
               </Link>
-            )}
-            <li className={`${listItemStyle}`}>
+            </div>
+            <div>
               <Link
                 to="/login"
                 onClick={() => {
                   setQuizState(() => ({}));
                 }}
               >
-                Log out
+                <li className="px-2 ">Log out</li>
               </Link>
-            </li>
+            </div>
           </ul>
         </div>
       </nav>

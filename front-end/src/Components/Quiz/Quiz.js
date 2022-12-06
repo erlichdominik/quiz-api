@@ -152,7 +152,7 @@ const Quiz = () => {
   };
 
   return (
-    <div className="bg-secondaryblue h-screen">
+    <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
       {isQuizOver === false ? (
         <>

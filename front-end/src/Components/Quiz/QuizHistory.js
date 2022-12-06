@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
+import { axiosPrivate } from '../../api/axios';
+
 import { mockQuizHistoryItems } from '../../utils/mock-data/mock-quiz-history';
 import Navbar from '../ui/Navbar';
+
+const QUIZ_HISTORY_URL = '/quiz/history';
 
 const QuizHistory = () => {
   const [quizHistoryItems, setQuizHistoryItems] = useState([]);
 
+  const getQuizHistoryData = async () => {
+    try {
+      const response = await axiosPrivate
+        .get(QUIZ_HISTORY_URL)
+        .then((responseData) => {
+          console.log('response data: ', responseData);
+        });
+    } catch (err) {
+      console.log('error', err);
+    }
+  };
+
   useEffect(() => {
-    // simulate getting data from api
-    setQuizHistoryItems(() => [...mockQuizHistoryItems]);
+    getQuizHistoryData();
   }, []);
 
   const getPercentageValueFromAccuracy = (accuracy) => {
