@@ -10,6 +10,7 @@ const Registration = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ const Registration = () => {
           console.log(response.data);
         });
     } catch (err) {
-      console.log(err);
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -75,10 +76,13 @@ const Registration = () => {
                 onChange={(e) => setRePassword(e.target.value)}
               ></input>
             </div>
+            <div className="text-center">
+              <p>{errorMessage}</p>
+            </div>
             <div className="py-2 text-center">
               <button
                 className="border border-darkcl px-4 py-2 rounded-xl shadow"
-                disabled={true}
+                disabled={false}
               >
                 Sign up
               </button>

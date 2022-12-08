@@ -1,51 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
 import useQuiz from '../../hooks/useQuiz';
 
-import USER_ROLES from '../../utils/roles/authRoles';
-
 const Navbar = () => {
-  const { auth } = useAuth();
   const { quizState, setQuizState } = useQuiz();
-
-  const canAccessAdmin = auth?.roles?.includes(USER_ROLES.adminUser) ?? false;
-
-  const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
 
   return (
     <aside>
       <nav>
         <div className="">
-          <ul className="flex flex-col float-left pt-8 space-y-4 items-center w-32 h-screen text-white text-xl bg-darkcl">
-            <Link className="w-max h-max" to="/">
-              <div className="w-24 h-24">asd</div>
-            </Link>
-            <div>
+          <ul className="flex flex-col float-left pt-8 space-y-4 items-center w-32 min-w-fit h-screen text-white text-xl bg-darkcl">
+            <div className="w-full hover:bg-darkclLighter transition">
               <Link to="/quizStart">
-                <li className="px-2 ">Start new quiz</li>
+                <li className="px-2 py-2 w-full">Start new quiz</li>
               </Link>
             </div>
-            {!isQuizContextEmpty && (
-              <div>
+            {quizState.isQuizOver && (
+              <div className="w-full hover:bg-darkclLighter transition">
                 <Link to="/quiz">
-                  <li className="px-2 ">Continue quiz</li>
+                  <li className="px-2 py-2 w-full">Continue quiz</li>
                 </Link>
               </div>
             )}
-            <div>
+            <div className="w-full hover:bg-darkclLighter transition">
               <Link to="/quizHistory">
-                <li className="px-2 ">Quiz History</li>
+                <li className="px-2 py-2 w-full">Quiz History</li>
               </Link>
             </div>
-            <div>
+            <div className="w-full hover:bg-darkclLighter transition">
               <Link
                 to="/login"
                 onClick={() => {
                   setQuizState(() => ({}));
                 }}
               >
-                <li className="px-2 ">Log out</li>
+                <li className="px-2 py-2 w-full">Log out</li>
               </Link>
             </div>
           </ul>

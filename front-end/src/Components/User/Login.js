@@ -99,9 +99,6 @@ const Login = () => {
     <section className="bg-secondaryblue w-screen h-screen">
       <form onSubmit={handleSubmit} className="pt-16">
         <div className="flex flex-col space-y-4 border w-5/12 mx-auto border-darkcl shadow rounded-md bg-white">
-          <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
-            {errorMessage}
-          </p>
           <div className="text-center">
             <h1 className="text-2xl pt-2">Sign in</h1>
           </div>
@@ -137,6 +134,11 @@ const Login = () => {
             <button className="border border-darkcl px-4 py-2 rounded-xl shadow">
               Sign in
             </button>
+          </div>
+          <div className="text-center">
+            <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
+              {errorMessage}
+            </p>
           </div>
           <div className="text-center">
             Don't have an account? &nbsp;
