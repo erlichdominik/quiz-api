@@ -1,6 +1,7 @@
 import React from 'react';
 
 import axios from '../api/axios';
+import USER_ROLES from '../utils/roles/authRoles';
 import useAuth from './useAuth';
 
 const REFRESH_URL = 'auth/refreshtoken';
@@ -16,7 +17,11 @@ const useRefreshToken = () => {
     setAuth((prev) => {
       console.log(JSON.stringify(prev));
       console.log(response.data);
-      return { ...prev, accessToken: response.data.accessToken };
+      return {
+        ...prev,
+        roles: [USER_ROLES.regularUser],
+        accessToken: response.data.accessToken,
+      };
     });
 
     return response.data.accessToken;

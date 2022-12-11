@@ -5,14 +5,11 @@ import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import USER_ROLES from '../../utils/roles/authRoles';
-import useRefreshToken from '../../hooks/useRefreshToken';
 
 const LOGIN_URL = '/auth/login';
 
 const Login = () => {
   const { setAuth } = useAuth();
-
-  const refresh = useRefreshToken();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,14 +22,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
-
-  const tryToAuthenticate = async () => {
-    const response = await refresh();
-  };
-
-  useEffect(() => {
-    console.log(tryToAuthenticate());
-  }, []);
 
   useEffect(() => {
     setErrorMessage('');

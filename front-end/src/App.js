@@ -6,6 +6,7 @@ import MissingPath from './components/main-components/MissingPath';
 import Login from './components/user/Login';
 import Registration from './components/user/Registration';
 import RequireAuth from './components/security/RequireAuth';
+import PersistLogin from './components/user/PersistLogin';
 import USER_ROLES from './utils/roles/authRoles';
 import Quiz from './components/quiz/Quiz';
 import QuizHistory from './components/quiz/QuizHistory';
@@ -23,18 +24,16 @@ const App = () => {
         <Route path="*" element={<MissingPath />} />
 
         {/* Regular user routes*/}
-        <Route
-          element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="quiz" element={<Quiz />} />
-          <Route path="quizStart" element={<QuizStarter />} />
-          <Route path="quizHistory" element={<QuizHistory />} />
+        <Route element={<PersistLogin />}>
+          <Route
+            element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="quiz" element={<Quiz />} />
+            <Route path="quizStart" element={<QuizStarter />} />
+            <Route path="quizHistory" element={<QuizHistory />} />
+          </Route>
         </Route>
-        {/* Admin routes */}
-        <Route
-          element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}
-        ></Route>
       </Route>
     </Routes>
   );
