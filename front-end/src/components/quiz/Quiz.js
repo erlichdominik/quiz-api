@@ -3,8 +3,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import useQuiz from '../../hooks/useQuiz';
 import Navbar from '../ui/Navbar';
-import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const QUIZ_INIT_URL = '/quiz/init';
@@ -19,7 +17,13 @@ const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [walkthroughId, setWalkthroughId] = useState();
 
-  const { quizState, setQuizState, isQuizOver, setIsQuizOver } = useQuiz();
+  const {
+    quizState,
+    setQuizState,
+    isQuizOver,
+    setIsQuizOver,
+    setIsQuizStarted,
+  } = useQuiz();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -112,6 +116,7 @@ const Quiz = () => {
         )
         .then((resp) => {
           setIsQuizOver(resp.data.isQuizOver);
+          setIsQuizStarted(!resp.data.isQuizOver);
         });
     } catch (err) {
       console.log(err);

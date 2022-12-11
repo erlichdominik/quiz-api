@@ -28,7 +28,7 @@ const Registration = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          setErrorMessage('Registration succesful');
         });
     } catch (err) {
       setErrorMessage(err.response.data.message);

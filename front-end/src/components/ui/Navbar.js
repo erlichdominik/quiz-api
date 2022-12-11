@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import useQuiz from '../../hooks/useQuiz';
 
 const Navbar = () => {
-  const { quizState, setQuizState } = useQuiz();
+  const { setQuizState, isQuizStarted, setIsQuizStarted } = useQuiz();
+
+  const logoutClickedHandler = () => {
+    setQuizState(() => ({}));
+    setIsQuizStarted(false);
+  };
 
   return (
     <aside>
@@ -15,7 +20,7 @@ const Navbar = () => {
                 <li className="px-2 py-2 w-full">Start new quiz</li>
               </Link>
             </div>
-            {quizState.isQuizOver && (
+            {isQuizStarted && (
               <div className="w-full hover:bg-darkclLighter transition">
                 <Link to="/quiz">
                   <li className="px-2 py-2 w-full">Continue quiz</li>
@@ -28,12 +33,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="w-full hover:bg-darkclLighter transition">
-              <Link
-                to="/login"
-                onClick={() => {
-                  setQuizState(() => ({}));
-                }}
-              >
+              <Link to="/login" onClick={logoutClickedHandler}>
                 <li className="px-2 py-2 w-full">Log out</li>
               </Link>
             </div>

@@ -4,10 +4,11 @@ import useQuiz from '../../hooks/useQuiz';
 import Navbar from '../ui/Navbar';
 
 const QuizStarter = () => {
-  const { quizState, setQuizState } = useQuiz();
+  const { quizState, setQuizState, setIsQuizStarted } = useQuiz();
 
   const startNewQuizHandler = () => {
     setQuizState(() => ({}));
+    setIsQuizStarted(true);
   };
 
   return (
