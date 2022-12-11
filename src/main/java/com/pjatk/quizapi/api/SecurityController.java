@@ -5,6 +5,7 @@ import com.pjatk.quizapi.api.dto.AuthResponse;
 import com.pjatk.quizapi.api.dto.RefreshTokenResponse;
 import com.pjatk.quizapi.security.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -51,7 +52,15 @@ class SecurityController {
 
             AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken());
 
-            httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
+            ResponseCookie responseCookie = ResponseCookie.from("refreshToken", refreshToken.getToken())
+                    .httpOnly(false)
+                    .sameSite("None")
+                    .secure(true)
+                    .path("/")
+                    .maxAge(Math.toIntExact(60 * 60 * 24 * 7L))
+                    .build();
+
+            httpServletResponse.addHeader("Set-Cookie", responseCookie.toString());
 
             return ResponseEntity.ok().body(response);
 
