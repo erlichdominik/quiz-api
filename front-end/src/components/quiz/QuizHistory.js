@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
-import { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
-import { mockQuizHistoryItems } from '../../utils/mock-data/mock-quiz-history';
 import Navbar from '../ui/Navbar';
 
 const QUIZ_HISTORY_URL = '/quiz/history';
 
 const QuizHistory = () => {
   const [quizHistoryItems, setQuizHistoryItems] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const axiosPrivate = useAxiosPrivate();
 
   const getQuizHistoryData = async () => {
     try {
-      const response = await axiosPrivate
-        .get(QUIZ_HISTORY_URL)
-        .then((responseData) => {
-          console.log('response data: ', responseData);
-        });
+      const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
+      console.log(response.data);
+      setQuizHistoryItems(...response.data);
     } catch (err) {
       console.log('error', err);
+      setErrorMessage(err.response.data.message);
     }
   };
 
   useEffect(() => {
     getQuizHistoryData();
   }, []);
-
-  const getPercentageValueFromAccuracy = (accuracy) => {
-    let num = parseFloat(accuracy);
-    num = num.toFixed(2);
-    num *= 100;
-    return num;
-  };
 
   return (
     <>
@@ -51,7 +45,7 @@ const QuizHistory = () => {
               <tr key={item.id}>
                 <td>{item.quizName}</td>
                 <td>{item.completionDate.toLocaleString()}</td>
-                <td>{`${getPercentageValueFromAccuracy(item.accuracy)}%`}</td>
+                <td>{}</td>
               </tr>
             ))}
           </tbody>
