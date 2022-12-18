@@ -15,10 +15,8 @@ const QuizHistory = () => {
   const getQuizHistoryData = async () => {
     try {
       const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
-      console.log(response.data);
       setQuizHistoryItems(...response.data);
     } catch (err) {
-      console.log('error', err);
       setErrorMessage(err.response.data.message);
     }
   };
