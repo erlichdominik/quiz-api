@@ -39,17 +39,12 @@ const Login = () => {
         },
       });
 
-      console.log(JSON.stringify(response?.data));
-      console.log(JSON.stringify(response));
-
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
 
       const roles = [USER_ROLES.regularUser];
 
       setAuth({ username, password, roles, accessToken, refreshToken });
-
-      console.log(setAuth);
 
       setUsername('');
       setPassword('');
@@ -66,22 +61,6 @@ const Login = () => {
         setErrorMessage('Login failed');
       }
     }
-  };
-
-  const mockHandleSubmit = (e) => {
-    e.preventDefault();
-
-    const roles = [USER_ROLES.regularUser];
-    const accessToken = ['123123123asd'];
-
-    setAuth({ username, password, roles, accessToken });
-
-    console.log(username, password, roles, accessToken);
-
-    setUsername('');
-    setPassword('');
-
-    navigate(from, { replace: true });
   };
 
   return (

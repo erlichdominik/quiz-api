@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { useState, useEffect } from 'react';
-import useQuiz from '../../hooks/useQuiz';
+import { useEffect } from 'react';
 import Navbar from '../ui/Navbar';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import useCookieState from '../../hooks/useCookieState';
+import localKeys from '../../utils/local-storage-keys/localStorageKeys';
 
 const QUIZ_INIT_URL = '/quiz/init';
 const QUIZ_SUBMIT_URL = '/quiz/submit';
@@ -12,85 +13,27 @@ const QUIZ_ID = 1;
 const QUIZ_MODE = 'EXAM';
 
 const Quiz = () => {
-  const [currentQuestion, setCurrentQuestion] = useState({});
-  const [answers, setAnswers] = useState([]);
-  const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [walkthroughId, setWalkthroughId] = useState();
+  const [quiz, setQuiz] = useCookieState({}, localKeys.QUIZ_KEY);
 
-  const {
-    quizState,
-    setQuizState,
-    isQuizOver,
-    setIsQuizOver,
-    setIsQuizStarted,
-  } = useQuiz();
+  const [selectedAnswer, setSelectedAnswer] = useCookieState(
+    '',
+    localKeys.QUIZ_ANSWER_KEY
+  );
+
+  const [isQuizOver, setIsQuizOver] = useCookieState(
+    false,
+    localKeys.IS_QUIZ_OVER_KEY
+  );
+
+  const { currentQuestion, answers, walkthroughId } = quiz;
 
   const axiosPrivate = useAxiosPrivate();
 
-  const setQuizContextState = () => {
-    console.log('setting context state, props:');
-    console.log(walkthroughId);
-    console.log(currentQuestion);
-    console.log(answers);
-    console.log(selectedAnswer);
-    setQuizState((quizState) => ({
-      ...quizState,
-      walkthroughId: walkthroughId,
-      currentQuestion: currentQuestion,
-      answers: answers,
-      selectedAnswer: selectedAnswer,
-    }));
-    console.log('quiz state', quizState);
-  };
-
-  const setQuizContextStateFromObj = (quizObj) => {
-    console.log('setting context state from obj, props:');
-    console.log(quizObj.walkthroughId);
-    console.log(quizObj.currentQuestion);
-    console.log(quizObj.answers);
-    console.log(quizObj.selectedAnswer);
-    setQuizState((quizState) => ({
-      ...quizState,
-      walkthroughId: quizObj.walkthroughId,
-      currentQuestion: quizObj.currentQuestion,
-      answers: quizObj.answers,
-      selectedAnswer: quizObj.selectedAnswer,
-    }));
-    console.log('quiz state', quizState);
-  };
-
-  const mapResponseToCurrentState = (responseData) => {
-    console.log('response data: ', responseData);
-    const { walkthroughId, questionDto } = responseData;
-    setWalkthroughId(walkthroughId);
-    setCurrentQuestion(() => ({
-      questionName: questionDto.question,
-      questionId: questionDto.questionId,
-    }));
-    setAnswers(questionDto.answerDtos);
-  };
-
-  const getQuizStateFromResponseData = (responseData) => {
-    return {
-      walkthroughId: responseData.walkthroughId,
-      currentQuestion: {
-        questionId: responseData.questionDto.questionId,
-        questionName: responseData.questionDto.question,
-      },
-      answers: responseData.questionDto.answerDtos,
-    };
-  };
-
-  const quizData = async () => {
+  const loadQuizData = async () => {
     try {
-      await axiosPrivate
-        .get(`${QUIZ_INIT_URL}?quizMode=${QUIZ_MODE}&quizId=${QUIZ_ID}`)
-        .then((resp) => {
-          mapResponseToCurrentState(resp.data);
-          const qState = getQuizStateFromResponseData(resp.data);
-          setQuizContextStateFromObj(qState);
-          setIsQuizOver(false);
-        });
+      await axiosPrivate.get(
+        `${QUIZ_INIT_URL}?quizMode=${QUIZ_MODE}&quizId=${QUIZ_ID}`
+      );
     } catch (err) {
       console.log(err);
     }
@@ -98,11 +41,9 @@ const Quiz = () => {
 
   const loadNextQuestion = async () => {
     try {
-      await axiosPrivate
-        .get(`${QUIZ_NEXT_QUESTION_URL}?walkthroughId=${walkthroughId}`)
-        .then((resp) => {
-          mapResponseToCurrentState(resp.data);
-        });
+      await axiosPrivate.get(
+        `${QUIZ_NEXT_QUESTION_URL}?walkthroughId=${walkthroughId}`
+      );
     } catch (err) {
       console.log(err);
     }
@@ -110,49 +51,19 @@ const Quiz = () => {
 
   const submitQuestion = async () => {
     try {
-      await axiosPrivate
-        .post(
-          `${QUIZ_SUBMIT_URL}?walkthroughId=${walkthroughId}&answerId=${selectedAnswer}`
-        )
-        .then((resp) => {
-          setIsQuizOver(resp.data.isQuizOver);
-          setIsQuizStarted(!resp.data.isQuizOver);
-        });
+      await axiosPrivate.post(
+        `${QUIZ_SUBMIT_URL}?walkthroughId=${walkthroughId}&answerId=${selectedAnswer}`
+      );
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
-
-    if (isQuizContextEmpty) {
-      quizData().catch(console.error);
-    } else {
-      setWalkthroughId(quizState.walkthroughId);
-      setCurrentQuestion(() => ({
-        ...quizState.currentQuestion,
-      }));
-      setAnswers(quizState.answers);
-      setSelectedAnswer(quizState.selectedAnswer);
-    }
-  }, []);
-
-  useEffect(() => {
-    setQuizContextState();
-  }, [selectedAnswer]);
-
-  const answerClickHandler = (answerId) => {
-    setSelectedAnswer(answerId);
-  };
-
-  const nextQuestionClickedHandler = () => {
-    submitQuestion()
-      .then(() => loadNextQuestion())
-      .catch(() => {
-        console.log('wyjebalo sie');
-      });
-
+  const nextQuestionClickedHandler = async () => {
+    try {
+      await submitQuestion();
+      loadNextQuestion();
+    } catch (err) {}
     setSelectedAnswer('');
   };
 
@@ -169,9 +80,7 @@ const Quiz = () => {
                   className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition
                   ${answer.answerId === selectedAnswer ? '' : ''} `}
                   key={answer.answerId}
-                  onClick={() => {
-                    answerClickHandler(answer.answerId);
-                  }}
+                  onClick={() => setSelectedAnswer(selectedAnswer)}
                 >
                   <input
                     className="w-5 h-5 mr-2"
