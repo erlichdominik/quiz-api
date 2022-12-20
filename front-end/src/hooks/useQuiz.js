@@ -12,24 +12,22 @@ import useAxiosPrivate from './useAxiosPrivate';
 
 const useQuiz = (quizOptions) => {
   const [quizState, setQuizState] = useCookieState(null, localKeys.QUIZ_KEY);
+  const [selectedAnswer, setSelectedAnswer] = useCookieState(
+    null,
+    localKeys.SELECTED_ANSWER_KEY
+  );
+
   const [isQuizOver, setIsQuizOver] = useCookieState(
-    true,
+    false,
     localKeys.IS_QUIZ_OVER_KEY
   );
+
   const [isQuizStarted, setIsQuizStarted] = useCookieState(
-    true,
+    false,
     localKeys.IS_QUIZ_STARTED_KEY
   );
 
   const axiosPrivate = useAxiosPrivate();
-
-  const setQuizStarted = (value) => {
-    setIsQuizStarted(value);
-  };
-
-  const setQuizOver = (value) => {
-    setIsQuizOver(value);
-  };
 
   const loadInitialQuestions = async () => {
     try {
@@ -40,7 +38,7 @@ const useQuiz = (quizOptions) => {
         ...getQuizStateFromResponseData(response.data),
       }));
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 
@@ -54,7 +52,7 @@ const useQuiz = (quizOptions) => {
         setIsQuizStarted(false);
       }
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 
@@ -65,25 +63,16 @@ const useQuiz = (quizOptions) => {
         `${quizOptions.QUIZ_NEXT_QUESTION_URL}?walkthroughId=${quizState.walkthroughId}`
       );
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 
   const disbandQuiz = () => {
-    // clears current quiz state
     setQuizState(() => null);
+    setSelectedAnswer(() => null);
   };
 
-  return [
-    quizState,
-    isQuizStarted,
-    setQuizStarted,
-    isQuizOver,
-    setQuizOver,
-    loadInitialQuestions,
-    loadNextQuestion,
-    disbandQuiz,
-  ];
+  return [quizState, loadInitialQuestions, loadNextQuestion, disbandQuiz];
 };
 
 const getQuizStateFromResponseData = (responseData) => {
@@ -95,6 +84,33 @@ const getQuizStateFromResponseData = (responseData) => {
     },
     answers: responseData.questionDto.answerDtos,
   };
+};
+
+export const useQuizStartedState = () => {
+  const [isQuizStarted, setIsQuizStarted] = useCookieState(
+    false,
+    localKeys.IS_QUIZ_STARTED_KEY
+  );
+
+  return [isQuizStarted, setIsQuizStarted];
+};
+
+export const useQuizOverState = () => {
+  const [isQuizOver, setIsQuizOver] = useCookieState(
+    false,
+    localKeys.IS_QUIZ_OVER_KEY
+  );
+
+  return [isQuizOver, setIsQuizOver];
+};
+
+export const useSelectedAnswerState = () => {
+  const [selectedAnswer, setSelectedAnswer] = useCookieState(
+    null,
+    localKeys.SELECTED_ANSWER_KEY
+  );
+
+  return [selectedAnswer, setSelectedAnswer];
 };
 
 export default useQuiz;

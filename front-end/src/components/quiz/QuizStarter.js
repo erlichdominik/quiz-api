@@ -1,15 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../ui/Navbar';
-import useQuiz from '../../hooks/useQuiz';
+import useQuiz, {
+  useQuizStartedState,
+  useQuizOverState,
+} from '../../hooks/useQuiz';
+import useCookieState from '../../hooks/useCookieState';
+import localKeys from '../../utils/local-storage-keys/localStorageKeys';
+import useQuizContext from '../../hooks/useQuizContext';
 
 const QuizStarter = () => {
-  const [setQuizStarted, setQuizOver] = useQuiz();
+  const {
+    isQuizOver,
+    setIsQuizOver,
+    isQuizStarted,
+    setIsQuizStarted,
+    disbandQuiz,
+  } = useQuizContext();
 
   const startNewQuizHandler = () => {
-    console.log('start new quiz clicked');
-    setQuizStarted(true);
-    setQuizOver(false);
+    disbandQuiz();
+    setIsQuizStarted(true);
+    setIsQuizOver(false);
   };
 
   return (

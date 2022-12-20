@@ -1,37 +1,25 @@
 import React from 'react';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Navbar from '../ui/Navbar';
-import useQuiz from '../../hooks/useQuiz';
 
-import QUIZ_OPTIONS from '../../utils/options/quizOptions';
-import useCookieState from '../../hooks/useCookieState';
-import localKeys from '../../utils/local-storage-keys/localStorageKeys';
+import useQuizContext from '../../hooks/useQuizContext';
 
 const Quiz = () => {
-  const [quizState, isQuizOver, loadInitialQuestions, loadNextQuestion] =
-    useQuiz(QUIZ_OPTIONS);
-
-  const isQuizStateEmpty =
-    quizState &&
-    Object.keys(quizState).length === 0 &&
-    Object.getPrototypeOf(quizState) === Object.prototype;
-
-  const [selectedAnswer, setSelectedAnswer] = useCookieState(
-    '',
-    localKeys.QUIZ_ANSWER_KEY
-  );
-
-  const [isQuizStarted, setIsQuizStarted] = useCookieState(
-    true,
-    localKeys.IS_QUIZ_STARTED_KEY
-  );
+  const {
+    quizState,
+    loadInitialQuestions,
+    loadNextQuestion,
+    disbandQuiz,
+    selectedAnswer,
+    setSelectedAnswer,
+    isQuizOver,
+  } = useQuizContext();
 
   useEffect(() => {
-    loadInitialQuestions();
-    console.log('is quiz started?', isQuizStarted);
-    console.log('is quiz over?', isQuizOver);
-    console.log('is quiz state not empty?', !isQuizStateEmpty);
+    if (quizState === null) {
+      loadInitialQuestions();
+    }
   }, []);
 
   const answerSelectedHandler = (e) => {
@@ -46,8 +34,8 @@ const Quiz = () => {
 
   return (
     <div className="bg-secondaryblue h-screen w-screen">
-      {/* <Navbar />
-      {isQuizOver === false ? (
+      <Navbar />
+      {quizState !== null ? (
         <>
           <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
             <div>{quizState.currentQuestion.questionName}</div>
@@ -65,6 +53,9 @@ const Quiz = () => {
                     id={answer.answerId}
                     name="answer"
                     value={answer.answerId}
+                    defaultChecked={
+                      `${answer.answerId}` === `${selectedAnswer}`
+                    }
                   ></input>
                   <label className="" htmlFor={answer.answerId}>
                     {answer.answer}
@@ -93,7 +84,7 @@ const Quiz = () => {
             Thank you for completing the quiz!
           </h3>
         </>
-      )} */}
+      )}
     </div>
   );
 };
