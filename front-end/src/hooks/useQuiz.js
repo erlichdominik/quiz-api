@@ -9,6 +9,7 @@
 import localKeys from '../utils/local-storage-keys/localStorageKeys';
 import useCookieState from './useCookieState';
 import useAxiosPrivate from './useAxiosPrivate';
+import useAuth from './useAuth';
 
 const useQuiz = (quizOptions) => {
   const [quizState, setQuizState] = useCookieState(null, localKeys.QUIZ_KEY);
@@ -28,11 +29,17 @@ const useQuiz = (quizOptions) => {
   );
 
   const axiosPrivate = useAxiosPrivate();
+  const { auth } = useAuth();
 
   const loadInitialQuestions = async () => {
     try {
       const response = await axiosPrivate.get(
-        `${quizOptions.QUIZ_INIT_URL}?quizMode=${quizOptions.QUIZ_MODE}&quizId=${quizOptions.QUIZ_ID}`
+        `${quizOptions.QUIZ_INIT_URL}?quizMode=${quizOptions.QUIZ_MODE}&quizId=${quizOptions.QUIZ_ID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.accessToken}`,
+          },
+        }
       );
       setQuizState(() => ({
         ...getQuizStateFromResponseData(response.data),
