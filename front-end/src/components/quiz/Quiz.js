@@ -18,15 +18,10 @@ const Quiz = () => {
 
   useEffect(() => {
     if (quizState === null) {
+      setSelectedAnswer(null); // hack, will have to fix later
       loadInitialQuestions();
     }
   }, []);
-
-  const answerSelectedHandler = (e) => {
-    console.log('clickedAnswer: ', e.target.value);
-    console.log('answers: ', quizState.answers);
-    setSelectedAnswer(e.target.value);
-  };
 
   const nextQuestionClickedHandler = () => {
     loadNextQuestion(selectedAnswer);
@@ -42,24 +37,22 @@ const Quiz = () => {
             <div className="flex flex-col space-y-5 w-full">
               {quizState.answers.map((answer) => (
                 <div
-                  className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition
-                  ${answer.answerId === selectedAnswer ? '' : ''} `}
+                  className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition`}
                   key={answer.answerId}
-                  onClick={(e) => answerSelectedHandler(e)}
+                  onClick={() => setSelectedAnswer(answer.answerId)}
                 >
                   <input
                     className="w-5 h-5 mr-2"
                     type="radio"
                     id={answer.answerId}
                     name="answer"
-                    value={answer.answerId}
-                    defaultChecked={
-                      `${answer.answerId}` === `${selectedAnswer}`
+                    checked={
+                      answer.answerId === selectedAnswer &&
+                      selectedAnswer !== null
                     }
+                    onChange={() => {}}
                   ></input>
-                  <label className="" htmlFor={answer.answerId}>
-                    {answer.answer}
-                  </label>
+                  <label htmlFor={answer.answerId}>{answer.answer}</label>
                 </div>
               ))}
 

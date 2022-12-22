@@ -1,11 +1,3 @@
-/**
- * TODO:
- * loadInitialQuestions()
- * loadNextQuestion(answerId)
- * disbandQuiz()
- * clearQuizStorage()
- */
-
 import localKeys from '../utils/local-storage-keys/localStorageKeys';
 import useCookieState from './useCookieState';
 import useAxiosPrivate from './useAxiosPrivate';
@@ -80,8 +72,8 @@ const useQuiz = (quizOptions) => {
   };
 
   const disbandQuiz = () => {
-    setQuizState(() => null);
-    setSelectedAnswer(() => null);
+    setQuizState(null);
+    setSelectedAnswer(null);
   };
 
   return [quizState, loadInitialQuestions, loadNextQuestion, disbandQuiz];
