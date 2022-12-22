@@ -66,9 +66,14 @@ const useQuiz = (quizOptions) => {
   const loadNextQuestion = async (selectedAnswer) => {
     try {
       await submitQuestion(selectedAnswer);
-      await axiosPrivate.get(
+
+      const response = await axiosPrivate.get(
         `${quizOptions.QUIZ_NEXT_QUESTION_URL}?walkthroughId=${quizState.walkthroughId}`
       );
+
+      setQuizState(() => ({
+        ...getQuizStateFromResponseData(response.data),
+      }));
     } catch (err) {
       console.error(err);
     }

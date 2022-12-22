@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import useCookieState from '../../hooks/useCookieState';
 import localKeys from '../../utils/local-storage-keys/localStorageKeys';
 
@@ -9,7 +10,17 @@ const Navbar = () => {
     localKeys.IS_QUIZ_STARTED_KEY
   );
 
-  const logoutClickedHandler = () => {};
+  const axiosPrivate = useAxiosPrivate();
+
+  const logoutClickedHandler = async () => {
+    try {
+      // TODO : po callu zmienić na strone logowania
+      console.log('Logout clicked');
+      await axiosPrivate.get('/logout');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <aside>
