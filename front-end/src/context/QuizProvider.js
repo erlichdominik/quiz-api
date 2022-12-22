@@ -9,19 +9,23 @@ import QUIZ_OPTIONS from '../utils/options/quizOptions';
 const QuizContext = createContext({});
 
 export const QuizProvider = ({ children }) => {
-  const [quizState, loadInitialQuestions, loadNextQuestion, disbandQuiz] =
-    useQuiz(QUIZ_OPTIONS);
-
-  const [isQuizOver, setIsQuizOver] = useQuizOverState();
-  const [isQuizStarted, setIsQuizStarted] = useQuizStartedState();
-  const [selectedAnswer, setSelectedAnswer] = useSelectedAnswerState();
+  const [
+    quizState,
+    loadInitialQuestions,
+    loadNextQuestion,
+    disbandQuiz,
+    isQuizOver,
+    setIsQuizOver,
+    isQuizStarted,
+    setIsQuizStarted,
+    selectedAnswer,
+    setSelectedAnswer,
+  ] = useQuiz(QUIZ_OPTIONS);
 
   return (
     <QuizContext.Provider
       value={{
         quizState,
-        selectedAnswer,
-        setSelectedAnswer,
         loadInitialQuestions,
         loadNextQuestion,
         disbandQuiz,
@@ -29,6 +33,8 @@ export const QuizProvider = ({ children }) => {
         setIsQuizOver,
         isQuizStarted,
         setIsQuizStarted,
+        selectedAnswer,
+        setSelectedAnswer,
       }}
     >
       {children}

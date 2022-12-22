@@ -14,9 +14,14 @@ const QuizHistory = () => {
   const getQuizHistoryData = async () => {
     try {
       const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
-      setQuizHistoryItems(...response.data);
+      setQuizHistoryItems(() => response.data);
     } catch (err) {}
   };
+
+  useEffect(() => {
+    getQuizHistoryData();
+    console.log(quizHistoryItems);
+  }, []);
 
   return (
     <>
@@ -29,7 +34,7 @@ const QuizHistory = () => {
         </>
       ) : (
         <>
-          <div className="text-xl text-center font-sanspro">
+          {/* <div className="text-xl text-center font-sanspro">
             Quiz History
             <table className="table-auto border border-slate-400 border-spacing-3 border-separate mx-auto mt-5 ">
               <thead>
@@ -49,7 +54,7 @@ const QuizHistory = () => {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div> */}
         </>
       )}
     </>

@@ -1,10 +1,3 @@
-// TODO:
-/**
- * Save current quiz state to local storage
- * Load quiz from local storage
- * Erase current quiz state and clear it from the cookies
- */
-
 import { useEffect, useState } from 'react';
 
 const useCookieState = (defaultValue, key) => {

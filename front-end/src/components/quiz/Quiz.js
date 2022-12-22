@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useEffect } from 'react';
 import Navbar from '../ui/Navbar';
@@ -24,13 +24,14 @@ const Quiz = () => {
   }, []);
 
   const nextQuestionClickedHandler = () => {
+    console.log('is quiz over => ', isQuizOver);
     loadNextQuestion(selectedAnswer);
   };
 
   return (
     <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
-      {quizState !== null ? (
+      {!isQuizOver && quizState !== null && (
         <>
           <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
             <div>{quizState.currentQuestion.questionName}</div>
@@ -55,7 +56,6 @@ const Quiz = () => {
                   <label htmlFor={answer.answerId}>{answer.answer}</label>
                 </div>
               ))}
-
               <button
                 className={`w-full 
                 ${
@@ -64,20 +64,25 @@ const Quiz = () => {
                     : `opacity-75`
                 }`}
                 onClick={nextQuestionClickedHandler}
-                disabled={selectedAnswer === '' ? true : false}
+                disabled={
+                  selectedAnswer === '' || selectedAnswer === null
+                    ? true
+                    : false
+                }
               >
                 Next question
               </button>
             </div>
           </section>
         </>
-      ) : (
-        <>
+      )}
+      <>
+        {isQuizOver === true && (
           <h3 className="text-center text-3xl ">
             Thank you for completing the quiz!
           </h3>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 };

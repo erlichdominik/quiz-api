@@ -5,6 +5,7 @@ import useAuth from './useAuth';
 
 const useQuiz = (quizOptions) => {
   const [quizState, setQuizState] = useCookieState(null, localKeys.QUIZ_KEY);
+
   const [selectedAnswer, setSelectedAnswer] = useCookieState(
     null,
     localKeys.SELECTED_ANSWER_KEY
@@ -47,9 +48,10 @@ const useQuiz = (quizOptions) => {
         `${quizOptions.QUIZ_SUBMIT_URL}?walkthroughId=${quizState.walkthroughId}&answerId=${selectedAnswer}`
       );
       if (response.data.isQuizOver === true) {
+        console.log('inside submit quiz is over statement');
         setIsQuizOver(true);
-        setIsQuizStarted(false);
       }
+      return response.data.isQuizOver;
     } catch (err) {
       console.error(err);
     }
@@ -57,7 +59,11 @@ const useQuiz = (quizOptions) => {
 
   const loadNextQuestion = async (selectedAnswer) => {
     try {
-      await submitQuestion(selectedAnswer);
+      const quizFinished = await submitQuestion(selectedAnswer);
+
+      if (quizFinished) {
+        return;
+      }
 
       const response = await axiosPrivate.get(
         `${quizOptions.QUIZ_NEXT_QUESTION_URL}?walkthroughId=${quizState.walkthroughId}`
@@ -74,9 +80,22 @@ const useQuiz = (quizOptions) => {
   const disbandQuiz = () => {
     setQuizState(null);
     setSelectedAnswer(null);
+    setIsQuizOver(false);
+    setIsQuizStarted(false);
   };
 
-  return [quizState, loadInitialQuestions, loadNextQuestion, disbandQuiz];
+  return [
+    quizState,
+    loadInitialQuestions,
+    loadNextQuestion,
+    disbandQuiz,
+    isQuizOver,
+    setIsQuizOver,
+    isQuizStarted,
+    setIsQuizStarted,
+    selectedAnswer,
+    setSelectedAnswer,
+  ];
 };
 
 const getQuizStateFromResponseData = (responseData) => {
@@ -88,33 +107,6 @@ const getQuizStateFromResponseData = (responseData) => {
     },
     answers: responseData.questionDto.answerDtos,
   };
-};
-
-export const useQuizStartedState = () => {
-  const [isQuizStarted, setIsQuizStarted] = useCookieState(
-    false,
-    localKeys.IS_QUIZ_STARTED_KEY
-  );
-
-  return [isQuizStarted, setIsQuizStarted];
-};
-
-export const useQuizOverState = () => {
-  const [isQuizOver, setIsQuizOver] = useCookieState(
-    false,
-    localKeys.IS_QUIZ_OVER_KEY
-  );
-
-  return [isQuizOver, setIsQuizOver];
-};
-
-export const useSelectedAnswerState = () => {
-  const [selectedAnswer, setSelectedAnswer] = useCookieState(
-    null,
-    localKeys.SELECTED_ANSWER_KEY
-  );
-
-  return [selectedAnswer, setSelectedAnswer];
 };
 
 export default useQuiz;
