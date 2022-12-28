@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useEffect } from 'react';
-import Navbar from '../ui/Navbar';
+import { useEffect } from "react";
+import Navbar from "../ui/Navbar";
 
-import useQuizContext from '../../hooks/useQuizContext';
+import useQuizContext from "../../hooks/useQuizContext";
 
 const Quiz = () => {
   const {
@@ -24,7 +24,7 @@ const Quiz = () => {
   }, []);
 
   const nextQuestionClickedHandler = () => {
-    console.log('is quiz over => ', isQuizOver);
+    console.log("is quiz over => ", isQuizOver);
     loadNextQuestion(selectedAnswer);
   };
 
@@ -32,13 +32,15 @@ const Quiz = () => {
     <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
       {!isQuizOver && quizState !== null && (
-        <>
-          <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
-            <div>{quizState.currentQuestion.questionName}</div>
+        <div className="pt-8 ">
+          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-2/5 min-w-fit items-center mx-auto">
+            <div className="py-3 px-6">
+              {quizState.currentQuestion.questionName}
+            </div>
             <div className="flex flex-col space-y-5 w-full">
               {quizState.answers.map((answer) => (
                 <div
-                  className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition`}
+                  className={`border rounded-lg border-darkcl text-xl px-4 py-2 mx-auto w-10/12 min-w-fit hover:bg-secondaryblue hover:text-white transition`}
                   key={answer.answerId}
                   onClick={() => setSelectedAnswer(answer.answerId)}
                 >
@@ -60,12 +62,12 @@ const Quiz = () => {
                 className={`w-full 
                 ${
                   selectedAnswer
-                    ? `rounded hover:bg-secondaryblue hover:text-white transition`
+                    ? `rounded-b-md hover:bg-secondaryblue hover:text-white transition`
                     : `opacity-75`
                 }`}
                 onClick={nextQuestionClickedHandler}
                 disabled={
-                  selectedAnswer === '' || selectedAnswer === null
+                  selectedAnswer === "" || selectedAnswer === null
                     ? true
                     : false
                 }
@@ -74,7 +76,7 @@ const Quiz = () => {
               </button>
             </div>
           </section>
-        </>
+        </div>
       )}
       <>
         {isQuizOver === true && (
