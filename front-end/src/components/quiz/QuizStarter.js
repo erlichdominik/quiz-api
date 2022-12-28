@@ -1,14 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useQuiz from '../../hooks/useQuiz';
 import Navbar from '../ui/Navbar';
+import useQuizContext from '../../hooks/useQuizContext';
 
 const QuizStarter = () => {
-  const { quizState, setQuizState, setIsQuizStarted } = useQuiz();
+  const {
+    isQuizOver,
+    setIsQuizOver,
+    isQuizStarted,
+    setIsQuizStarted,
+    disbandQuiz,
+  } = useQuizContext();
 
   const startNewQuizHandler = () => {
-    setQuizState(() => ({}));
+    disbandQuiz();
     setIsQuizStarted(true);
+    setIsQuizOver(false);
   };
 
   return (

@@ -52,15 +52,7 @@ class SecurityController {
 
             AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken());
 
-            ResponseCookie responseCookie = ResponseCookie.from("refreshToken", refreshToken.getToken())
-                    .httpOnly(false)
-                    .sameSite("None")
-                    .secure(true)
-                    .path("/")
-                    .maxAge(Math.toIntExact(60 * 60 * 24 * 7L))
-                    .build();
-
-            httpServletResponse.addHeader("Set-Cookie", responseCookie.toString());
+            httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
 
             return ResponseEntity.ok().body(response);
 

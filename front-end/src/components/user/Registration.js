@@ -21,15 +21,12 @@ const Registration = () => {
     });
 
     try {
-      const response = await axios
-        .post(REGISTER_URL, postObj, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          setErrorMessage('Registration succesful');
-        });
+      await axios.post(REGISTER_URL, postObj, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setErrorMessage('Registration succesful');
     } catch (err) {
       setErrorMessage(err.response.data.message);
     }

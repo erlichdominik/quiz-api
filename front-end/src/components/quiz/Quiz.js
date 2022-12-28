@@ -1,217 +1,90 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import { useState, useEffect } from 'react';
-import useQuiz from '../../hooks/useQuiz';
-import Navbar from '../ui/Navbar';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { useEffect } from "react";
+import Navbar from "../ui/Navbar";
 
-const QUIZ_INIT_URL = '/quiz/init';
-const QUIZ_SUBMIT_URL = '/quiz/submit';
-const QUIZ_NEXT_QUESTION_URL = '/quiz/next';
-const QUIZ_ID = 1;
-const QUIZ_MODE = 'EXAM';
+import useQuizContext from "../../hooks/useQuizContext";
 
 const Quiz = () => {
-  const [currentQuestion, setCurrentQuestion] = useState({});
-  const [answers, setAnswers] = useState([]);
-  const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [walkthroughId, setWalkthroughId] = useState();
-
   const {
     quizState,
-    setQuizState,
+    loadInitialQuestions,
+    loadNextQuestion,
+    disbandQuiz,
+    selectedAnswer,
+    setSelectedAnswer,
     isQuizOver,
-    setIsQuizOver,
-    setIsQuizStarted,
-  } = useQuiz();
-
-  const axiosPrivate = useAxiosPrivate();
-
-  const setQuizContextState = () => {
-    console.log('setting context state, props:');
-    console.log(walkthroughId);
-    console.log(currentQuestion);
-    console.log(answers);
-    console.log(selectedAnswer);
-    setQuizState((quizState) => ({
-      ...quizState,
-      walkthroughId: walkthroughId,
-      currentQuestion: currentQuestion,
-      answers: answers,
-      selectedAnswer: selectedAnswer,
-    }));
-    console.log('quiz state', quizState);
-  };
-
-  const setQuizContextStateFromObj = (quizObj) => {
-    console.log('setting context state from obj, props:');
-    console.log(quizObj.walkthroughId);
-    console.log(quizObj.currentQuestion);
-    console.log(quizObj.answers);
-    console.log(quizObj.selectedAnswer);
-    setQuizState((quizState) => ({
-      ...quizState,
-      walkthroughId: quizObj.walkthroughId,
-      currentQuestion: quizObj.currentQuestion,
-      answers: quizObj.answers,
-      selectedAnswer: quizObj.selectedAnswer,
-    }));
-    console.log('quiz state', quizState);
-  };
-
-  const mapResponseToCurrentState = (responseData) => {
-    console.log('response data: ', responseData);
-    const { walkthroughId, questionDto } = responseData;
-    setWalkthroughId(walkthroughId);
-    setCurrentQuestion(() => ({
-      questionName: questionDto.question,
-      questionId: questionDto.questionId,
-    }));
-    setAnswers(questionDto.answerDtos);
-  };
-
-  const getQuizStateFromResponseData = (responseData) => {
-    return {
-      walkthroughId: responseData.walkthroughId,
-      currentQuestion: {
-        questionId: responseData.questionDto.questionId,
-        questionName: responseData.questionDto.question,
-      },
-      answers: responseData.questionDto.answerDtos,
-    };
-  };
-
-  const quizData = async () => {
-    try {
-      await axiosPrivate
-        .get(`${QUIZ_INIT_URL}?quizMode=${QUIZ_MODE}&quizId=${QUIZ_ID}`)
-        .then((resp) => {
-          mapResponseToCurrentState(resp.data);
-          const qState = getQuizStateFromResponseData(resp.data);
-          setQuizContextStateFromObj(qState);
-          setIsQuizOver(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const loadNextQuestion = async () => {
-    try {
-      await axiosPrivate
-        .get(`${QUIZ_NEXT_QUESTION_URL}?walkthroughId=${walkthroughId}`)
-        .then((resp) => {
-          mapResponseToCurrentState(resp.data);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const submitQuestion = async () => {
-    try {
-      await axiosPrivate
-        .post(
-          `${QUIZ_SUBMIT_URL}?walkthroughId=${walkthroughId}&answerId=${selectedAnswer}`
-        )
-        .then((resp) => {
-          setIsQuizOver(resp.data.isQuizOver);
-          setIsQuizStarted(!resp.data.isQuizOver);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  } = useQuizContext();
 
   useEffect(() => {
-    const isQuizContextEmpty = Object?.keys(quizState)?.length === 0 ?? true;
-
-    if (isQuizContextEmpty) {
-      quizData().catch(console.error);
-    } else {
-      setWalkthroughId(quizState.walkthroughId);
-      setCurrentQuestion(() => ({
-        ...quizState.currentQuestion,
-      }));
-      setAnswers(quizState.answers);
-      setSelectedAnswer(quizState.selectedAnswer);
+    if (quizState === null) {
+      setSelectedAnswer(null); // hack, will have to fix later
+      loadInitialQuestions();
     }
   }, []);
 
-  useEffect(() => {
-    setQuizContextState();
-  }, [selectedAnswer]);
-
-  const answerClickHandler = (answerId) => {
-    setSelectedAnswer(answerId);
-  };
-
   const nextQuestionClickedHandler = () => {
-    submitQuestion()
-      .then(() => loadNextQuestion())
-      .catch(() => {
-        console.log('wyjebalo sie');
-      });
-
-    setSelectedAnswer('');
+    console.log("is quiz over => ", isQuizOver);
+    loadNextQuestion(selectedAnswer);
   };
 
   return (
     <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
-      {isQuizOver === false ? (
-        <>
-          <section className="text-2xl flex flex-col border-4 bg-white border-primaryblue rounded-lg w-1/3 min-w-fit items-center mx-auto">
-            <div>{currentQuestion.questionName}</div>
+      {!isQuizOver && quizState !== null && (
+        <div className="pt-8 ">
+          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-2/5 min-w-fit items-center mx-auto">
+            <div className="py-3 px-6">
+              {quizState.currentQuestion.questionName}
+            </div>
             <div className="flex flex-col space-y-5 w-full">
-              {answers?.map((answer) => (
+              {quizState.answers.map((answer) => (
                 <div
-                  className={`border-2 rounded-lg border-darkcl px-4 py-2 mx-auto w-10/12 hover:bg-secondaryblue hover:text-white transition
-                  ${answer.answerId === selectedAnswer ? '' : ''} `}
+                  className={`border rounded-lg border-darkcl text-xl px-4 py-2 mx-auto w-10/12 min-w-fit hover:bg-secondaryblue hover:text-white transition`}
                   key={answer.answerId}
-                  onClick={() => {
-                    answerClickHandler(answer.answerId);
-                  }}
+                  onClick={() => setSelectedAnswer(answer.answerId)}
                 >
                   <input
                     className="w-5 h-5 mr-2"
                     type="radio"
                     id={answer.answerId}
                     name="answer"
-                    value={answer.answer}
-                    checked={answer.answerId === selectedAnswer}
+                    checked={
+                      answer.answerId === selectedAnswer &&
+                      selectedAnswer !== null
+                    }
+                    onChange={() => {}}
                   ></input>
-                  <label className="" htmlFor={answer.answerId}>
-                    {answer.answer}
-                  </label>
+                  <label htmlFor={answer.answerId}>{answer.answer}</label>
                 </div>
               ))}
-
               <button
                 className={`w-full 
                 ${
                   selectedAnswer
-                    ? `rounded hover:bg-secondaryblue hover:text-white transition`
+                    ? `rounded-b-md hover:bg-secondaryblue hover:text-white transition`
                     : `opacity-75`
                 }`}
                 onClick={nextQuestionClickedHandler}
-                onMouseOver={() => {
-                  console.log('is quiz over?', isQuizOver);
-                }}
-                disabled={selectedAnswer === '' ? true : false}
+                disabled={
+                  selectedAnswer === "" || selectedAnswer === null
+                    ? true
+                    : false
+                }
               >
                 Next question
               </button>
             </div>
           </section>
-        </>
-      ) : (
-        <>
+        </div>
+      )}
+      <>
+        {isQuizOver === true && (
           <h3 className="text-center text-3xl ">
             Thank you for completing the quiz!
           </h3>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 };

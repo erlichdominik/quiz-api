@@ -1,13 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useQuiz from '../../hooks/useQuiz';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import useCookieState from '../../hooks/useCookieState';
+import useQuizContext from '../../hooks/useQuizContext';
+import localKeys from '../../utils/local-storage-keys/localStorageKeys';
 
 const Navbar = () => {
-  const { setQuizState, isQuizStarted, setIsQuizStarted } = useQuiz();
+  const { isQuizStarted, isQuizOver } = useQuizContext();
 
-  const logoutClickedHandler = () => {
-    setQuizState(() => ({}));
-    setIsQuizStarted(false);
+  const axiosPrivate = useAxiosPrivate();
+
+  const logoutClickedHandler = async () => {
+    try {
+      // TODO : po callu zmienić na strone logowania
+      console.log('Logout clicked');
+      await axiosPrivate.get('/logout');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -20,7 +30,7 @@ const Navbar = () => {
                 <li className="px-2 py-2 w-full">Start new quiz</li>
               </Link>
             </div>
-            {isQuizStarted && (
+            {isQuizStarted && !isQuizOver && (
               <div className="w-full hover:bg-darkclLighter transition">
                 <Link to="/quiz">
                   <li className="px-2 py-2 w-full">Continue quiz</li>

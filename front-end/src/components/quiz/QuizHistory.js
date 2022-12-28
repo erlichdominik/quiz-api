@@ -1,63 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-import { mockQuizHistoryItems } from '../../utils/mock-data/mock-quiz-history';
-import Navbar from '../ui/Navbar';
+import Navbar from "../ui/Navbar";
 
-const QUIZ_HISTORY_URL = '/quiz/history';
+const QUIZ_HISTORY_URL = "/quiz/history";
+
+const transformResponseDataToState = (responseData) => {
+  const qHistoryItems = [];
+  const data = [...responseData];
+
+  data.forEach((item, index) => {
+    qHistoryItems.push({
+      id: index,
+      quizName: item.quizName,
+      pathway: item.statisticDtos[0]?.pathName,
+      percentage: item.statisticDtos[0]?.completedPercentage,
+    });
+  });
+
+  return qHistoryItems;
+};
 
 const QuizHistory = () => {
   const [quizHistoryItems, setQuizHistoryItems] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
   const getQuizHistoryData = async () => {
     try {
-      const response = await axiosPrivate
-        .get(QUIZ_HISTORY_URL)
-        .then((responseData) => {
-          console.log('response data: ', responseData);
-        });
-    } catch (err) {
-      console.log('error', err);
-    }
+      const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
+      const quizHistoryData = transformResponseDataToState(response.data);
+      console.log("transformed response => ", quizHistoryData);
+      setQuizHistoryItems(() => quizHistoryData);
+    } catch (err) {}
   };
 
   useEffect(() => {
     getQuizHistoryData();
   }, []);
 
-  const getPercentageValueFromAccuracy = (accuracy) => {
-    let num = parseFloat(accuracy);
-    num = num.toFixed(2);
-    num *= 100;
-    return num;
-  };
-
   return (
-    <>
+    <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
-      <div className="text-xl text-center font-sanspro">
-        Quiz History
-        <table className="table-auto border border-slate-400 border-spacing-3 border-separate mx-auto mt-5 ">
-          <thead>
-            <tr>
-              <th>Quiz name</th>
-              <th>Date of completion</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {quizHistoryItems.map((item) => (
-              <tr key={item.id}>
-                <td>{item.quizName}</td>
-                <td>{item.completionDate.toLocaleString()}</td>
-                <td>{`${getPercentageValueFromAccuracy(item.accuracy)}%`}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+      {quizHistoryItems?.length === 0 ? (
+        <>
+          <p className="text-center">
+            Looks like there are no history items yet...
+          </p>
+        </>
+      ) : (
+        <>
+          {
+            <div className="pt-8">
+              <div className="text-xl text-center">
+                Quiz History
+                <table className="table-auto ">
+                  <thead className="bg-white">
+                    <tr className="bg-white">
+                      <th>Quiz name</th>
+                      <th>Completed pathway</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {quizHistoryItems?.map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.quizName}</td>
+                        <td>{item.pathway}</td>
+                        <td>{item.percentage}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          }
+        </>
+      )}
+    </div>
   );
 };
 
