@@ -89,7 +89,11 @@ public class ApplicationSecurity {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                        .and()
+                                .logout().deleteCookies("SESSION")
+                        .invalidateHttpSession(true);
+
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
