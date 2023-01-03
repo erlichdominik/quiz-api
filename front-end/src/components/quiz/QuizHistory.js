@@ -42,43 +42,43 @@ const QuizHistory = () => {
   return (
     <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
-      {quizHistoryItems?.length === 0 ? (
-        <>
-          <p className="text-center">
+      <div className="w-72 text-2xl mx-auto sm:w-1/2">
+        {quizHistoryItems?.length === 0 ? (
+          <h1 className="text-center align-middle">
             Looks like there are no history items yet...
-          </p>
-        </>
-      ) : (
-        <>
-          {
-            <div className="overflow-x-auto w-1/2 mx-auto pt-8">
-              <table className="bg-white table-fixed border border-primaryblue rounded border-collapse min-w-full">
-                <thead className="bg-white text-lg">
-                  <tr className="w-64">
-                    <th colspan="3" className="text-xl py-3">
-                      Quiz History
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Quiz name</th>
-                    <th scope="col">Completed pathway</th>
-                    <th scope="col">Score</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {quizHistoryItems?.map((item) => (
-                    <tr className="border-t border-darkcl" key={item.id}>
-                      <td className="w-36">{item.quizName}</td>
-                      <td className="w-36">{item.pathway}</td>
-                      <td className="w-36">{item.percentage}</td>
+          </h1>
+        ) : (
+          <>
+            {
+              <div className="overflow-x-auto w-1/2 mx-auto pt-8">
+                <table className="bg-white border border-primaryblue table-fixed border-separate rounded-xl">
+                  <thead className="text-base">
+                    <tr className="w-64">
+                      <th colspan="3" className="text-xl py-3">
+                        Quiz History
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          }
-        </>
-      )}
+                    <tr>
+                      <th scope="col">Quiz name</th>
+                      <th scope="col">Completed pathway</th>
+                      <th scope="col">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-center">
+                    {quizHistoryItems?.map((item) => (
+                      <tr className="border-t border-darkcl" key={item.id}>
+                        <td className="w-36 py-1">{item.quizName}</td>
+                        <td className="w-36 py-1">{item.pathway}</td>
+                        <td className="w-36 py-1">{item.percentage}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            }
+          </>
+        )}
+      </div>
     </div>
   );
 };

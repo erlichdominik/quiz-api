@@ -1,30 +1,30 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 
-import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import USER_ROLES from '../../utils/roles/authRoles';
+import USER_ROLES from "../../utils/roles/authRoles";
 
-const LOGIN_URL = '/auth/login';
+const LOGIN_URL = "/auth/login";
 
 const Login = () => {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   const usernameRef = useRef();
   const errorRef = useRef();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setErrorMessage('');
+    setErrorMessage("");
   }, [username, password]);
 
   const handleSubmit = async (e) => {
@@ -35,7 +35,7 @@ const Login = () => {
     try {
       const response = await axios.post(LOGIN_URL, postObj, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
@@ -46,19 +46,19 @@ const Login = () => {
 
       setAuth({ username, password, roles, accessToken, refreshToken });
 
-      setUsername('');
-      setPassword('');
+      setUsername("");
+      setPassword("");
 
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
-        setErrorMessage('No server response');
+        setErrorMessage("No server response");
       } else if (err.response.status === 400) {
-        setErrorMessage('Missing username or password');
+        setErrorMessage("Missing username or password");
       } else if (err.response?.status === 401) {
-        setErrorMessage('Invalid credentials');
+        setErrorMessage("Invalid credentials");
       } else {
-        setErrorMessage('Login failed');
+        setErrorMessage("Login failed");
       }
     }
   };
@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <section className="bg-secondaryblue w-screen h-screen">
       <form onSubmit={handleSubmit} className="pt-16">
-        <div className="flex flex-col space-y-4 border w-5/12 mx-auto border-darkcl shadow rounded-md bg-white">
+        <div className="flex flex-col space-y-4 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12 ">
           <div className="text-center">
             <h1 className="text-2xl pt-2">Sign in</h1>
           </div>
@@ -99,19 +99,21 @@ const Login = () => {
             />
           </div>
           <div className="py-2 text-center">
-            <button className="border border-darkcl px-4 py-2 rounded-xl shadow">
+            <button className="border border-darkcl w-24 px-4 py-2 rounded-xl shadow">
               Sign in
             </button>
           </div>
           <div className="text-center">
-            <p ref={errorRef} className={errorMessage ? 'text-base' : 'hidden'}>
+            <p ref={errorRef} className={errorMessage ? "text-base" : "hidden"}>
               {errorMessage}
             </p>
           </div>
-          <div className="text-center">
+          <div className="text-center px-2">
             Don't have an account? &nbsp;
             <span className="font-bold underline">
-              <Link to="/register">Sign up</Link>
+              <Link to="/register" className="inline-block">
+                Sign up
+              </Link>
             </span>
           </div>
         </div>
