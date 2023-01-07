@@ -16,7 +16,7 @@ import java.util.Optional;
 @Setter
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
     @Column(nullable = false, unique = true)
     private String email;
@@ -65,5 +65,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", applicationUser=" + applicationUser +
+                '}';
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 @Slf4j
 public class JwtTokenCreator {
-    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour
+    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000L; // 24 hour
 
     @Value("${app.jwt.secret}")
     private String SECRET_KEY;

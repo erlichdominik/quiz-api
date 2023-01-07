@@ -4,13 +4,15 @@ import com.pjatk.quizapi.api.dto.AuthRequest;
 import com.pjatk.quizapi.api.dto.AuthResponse;
 import com.pjatk.quizapi.api.dto.RefreshTokenResponse;
 import com.pjatk.quizapi.security.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import javax.validation.Valid;
 import java.util.Arrays;
 
 @RestController
+@Slf4j
 class SecurityController {
     private final AuthenticationManager manager;
     private final JwtTokenCreator tokenCreator;
@@ -65,6 +68,16 @@ class SecurityController {
     public ResponseEntity<Boolean> register(@RequestBody @Valid AuthRequest request) {
         userService.createNewUser(request);
         return ResponseEntity.ok().build();
+    }
+
+    @SecurityRequirement(name = ApplicationSecurity.SECURITY_CONFIG_NAME)
+    @GetMapping("/auth/logout")
+    void logout() {
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        refreshTokenManager.deleteByUserId(user.getId());
     }
 
     @GetMapping("/auth/refreshtoken")

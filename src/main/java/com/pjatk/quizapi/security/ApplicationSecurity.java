@@ -92,6 +92,7 @@ public class ApplicationSecurity {
                 .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                         .and()
                                 .logout().deleteCookies("SESSION")
+                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(200))
                         .invalidateHttpSession(true);
 
 

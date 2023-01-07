@@ -3,7 +3,7 @@ package com.pjatk.quizapi.quiz.application.commands.handlers;
 import com.pjatk.quizapi.cqrs.annotations.CommandHandlerAnnotation;
 import com.pjatk.quizapi.cqrs.command.handler.CommandHandler;
 import com.pjatk.quizapi.quiz.application.commands.InitQuizCommand;
-import com.pjatk.quizapi.quiz.application.engine.QuizCreationPolicy;
+import com.pjatk.quizapi.quiz.application.engine.QuizCreator;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUserRepository;
 import com.pjatk.quizapi.quiz.domain.walkthrough.Walkthrough;
@@ -15,12 +15,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @CommandHandlerAnnotation
 @Slf4j
 class InitExamCommandHandler implements CommandHandler<InitQuizCommand, Long> {
-    private final QuizCreationPolicy quizCreationPolicy;
+    private final QuizCreator quizCreator;
     private final WalkthroughRepository walkthroughRepository;
     private final ApplicationUserRepository applicationUserRepository;
 
-    InitExamCommandHandler(QuizCreationPolicy quizCreationPolicy, WalkthroughRepository walkthroughRepository, ApplicationUserRepository applicationUserRepository) {
-        this.quizCreationPolicy = quizCreationPolicy;
+    InitExamCommandHandler(QuizCreator quizCreator, WalkthroughRepository walkthroughRepository, ApplicationUserRepository applicationUserRepository) {
+        this.quizCreator = quizCreator;
         this.walkthroughRepository = walkthroughRepository;
         this.applicationUserRepository = applicationUserRepository;
     }
@@ -31,7 +31,7 @@ class InitExamCommandHandler implements CommandHandler<InitQuizCommand, Long> {
 
         ApplicationUser applicationUser = getOrInitApplicationUser(user);
 
-        Walkthrough walkthrough = quizCreationPolicy.createWalkthrough(applicationUser, command.quizId());
+        Walkthrough walkthrough = quizCreator.createWalkthrough(applicationUser, command.quizId());
 
         walkthrough.setAppUser(applicationUser);
 
