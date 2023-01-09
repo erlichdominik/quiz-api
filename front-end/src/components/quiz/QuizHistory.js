@@ -7,11 +7,11 @@ import Navbar from "../ui/Navbar";
 const QUIZ_HISTORY_URL = "/quiz/history";
 
 const transformResponseDataToState = (responseData) => {
-  const qHistoryItems = [];
+  const quizHistoryItems = [];
   const data = [...responseData];
 
   data.forEach((item, index) => {
-    qHistoryItems.push({
+    quizHistoryItems.push({
       id: index,
       quizName: item.quizName,
       pathway: item.statisticDtos[0]?.pathName,
@@ -19,7 +19,7 @@ const transformResponseDataToState = (responseData) => {
     });
   });
 
-  return qHistoryItems;
+  return quizHistoryItems;
 };
 
 const QuizHistory = () => {
@@ -42,41 +42,43 @@ const QuizHistory = () => {
   return (
     <div className="bg-secondaryblue h-screen w-screen">
       <Navbar />
-      {quizHistoryItems?.length === 0 ? (
-        <>
-          <p className="text-center">
+      <div className="w-72 text-2xl mx-auto sm:w-1/2">
+        {quizHistoryItems?.length === 0 ? (
+          <h1 className="text-center align-middle">
             Looks like there are no history items yet...
-          </p>
-        </>
-      ) : (
-        <>
-          {
-            <div className="pt-8">
-              <div className="text-xl text-center">
-                Quiz History
-                <table className="table-auto ">
-                  <thead className="bg-white">
-                    <tr className="bg-white">
-                      <th>Quiz name</th>
-                      <th>Completed pathway</th>
-                      <th>Score</th>
+          </h1>
+        ) : (
+          <>
+            {
+              <div className="overflow-x-auto w-1/2 mx-auto pt-8">
+                <table className="bg-white border border-primaryblue table-fixed border-separate rounded-xl">
+                  <thead className="text-base">
+                    <tr className="w-64">
+                      <th colspan="3" className="text-xl py-3">
+                        Quiz History
+                      </th>
+                    </tr>
+                    <tr>
+                      <th scope="col">Quiz name</th>
+                      <th scope="col">Completed pathway</th>
+                      <th scope="col">Score</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="text-center">
                     {quizHistoryItems?.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.quizName}</td>
-                        <td>{item.pathway}</td>
-                        <td>{item.percentage}</td>
+                      <tr className="border-t border-darkcl" key={item.id}>
+                        <td className="w-36 py-1">{item.quizName}</td>
+                        <td className="w-36 py-1">{item.pathway}</td>
+                        <td className="w-36 py-1">{item.percentage}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-          }
-        </>
-      )}
+            }
+          </>
+        )}
+      </div>
     </div>
   );
 };

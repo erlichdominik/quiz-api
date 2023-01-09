@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from '../../api/axios';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "../../api/axios";
 
-import { USERNAME_REGEX, PASSWORD_REGEX } from '../../utils/regexes/userRegex';
+import { USERNAME_REGEX, PASSWORD_REGEX } from "../../utils/regexes/userRegex";
 
-const REGISTER_URL = '/auth/register';
+const REGISTER_URL = "/auth/register";
 
 const Registration = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,10 +23,10 @@ const Registration = () => {
     try {
       await axios.post(REGISTER_URL, postObj, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
-      setErrorMessage('Registration succesful');
+      setErrorMessage("Registration succesful");
     } catch (err) {
       setErrorMessage(err.response.data.message);
     }
@@ -36,7 +36,7 @@ const Registration = () => {
     <>
       <section className="bg-secondaryblue w-screen h-screen">
         <form onSubmit={handleSubmit} className="pt-16">
-          <div className="flex flex-col space-y-4 border w-5/12 mx-auto border-darkcl shadow rounded-md bg-white">
+          <div className="flex flex-col space-y-4 border mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12">
             <div className="text-center">
               <p className="text-2xl pt-2">Register</p>
             </div>
@@ -84,7 +84,7 @@ const Registration = () => {
                 Sign up
               </button>
             </div>
-            <div className="text-center">
+            <div className="text-center px-2">
               Already have an account? &nbsp;
               <span className="font-bold underline">
                 <Link to="/login">Sign in</Link>

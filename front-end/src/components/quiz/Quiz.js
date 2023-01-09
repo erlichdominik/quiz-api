@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useEffect } from "react";
 import Navbar from "../ui/Navbar";
@@ -10,7 +10,6 @@ const Quiz = () => {
     quizState,
     loadInitialQuestions,
     loadNextQuestion,
-    disbandQuiz,
     selectedAnswer,
     setSelectedAnswer,
     isQuizOver,
@@ -33,19 +32,19 @@ const Quiz = () => {
       <Navbar />
       {!isQuizOver && quizState !== null && (
         <div className="pt-8 ">
-          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-2/5 min-w-fit items-center mx-auto">
+          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md ">
             <div className="py-3 px-6">
               {quizState.currentQuestion.questionName}
             </div>
             <div className="flex flex-col space-y-5 w-full">
               {quizState.answers.map((answer) => (
                 <div
-                  className={`border rounded-lg border-darkcl text-xl px-4 py-2 mx-auto w-10/12 min-w-fit hover:bg-secondaryblue hover:text-white transition`}
+                  className={`border rounded-lg border-darkcl text-lg px-4 py-2 mx-auto w-11/12 max-w-full hover:bg-secondaryblue hover:text-white transition`}
                   key={answer.answerId}
                   onClick={() => setSelectedAnswer(answer.answerId)}
                 >
                   <input
-                    className="w-5 h-5 mr-2"
+                    className="w-5 h-5 mr-2 align-middle"
                     type="radio"
                     id={answer.answerId}
                     name="answer"
@@ -53,17 +52,18 @@ const Quiz = () => {
                       answer.answerId === selectedAnswer &&
                       selectedAnswer !== null
                     }
-                    onChange={() => {}}
                   ></input>
-                  <label htmlFor={answer.answerId}>{answer.answer}</label>
+                  <label className="align-middle" htmlFor={answer.answerId}>
+                    {answer.answer}
+                  </label>
                 </div>
               ))}
               <button
-                className={`w-full 
+                className={`w-full pb-1
                 ${
                   selectedAnswer
                     ? `rounded-b-md hover:bg-secondaryblue hover:text-white transition`
-                    : `opacity-75`
+                    : `opacity-50`
                 }`}
                 onClick={nextQuestionClickedHandler}
                 disabled={
