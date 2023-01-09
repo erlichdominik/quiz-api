@@ -65,8 +65,8 @@ const Login = () => {
 
   return (
     <section className="bg-secondaryblue w-screen h-screen">
-      <form onSubmit={handleSubmit} className="pt-16">
-        <div className="flex flex-col space-y-4 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12 ">
+      <form onSubmit={handleSubmit} className="pt-6">
+        <div className="flex flex-col space-y-3 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12 ">
           <div className="text-center">
             <h1 className="text-2xl pt-2">Sign in</h1>
           </div>
@@ -98,7 +98,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="py-2 text-center">
+          <div className="pt-2 text-center">
             <button className="border border-darkcl w-24 px-4 py-2 rounded-xl shadow">
               Sign in
             </button>
@@ -108,11 +108,19 @@ const Login = () => {
               {errorMessage}
             </p>
           </div>
-          <div className="text-center px-2">
+          <div className="text-center px-2 mt-0">
             Don't have an account? &nbsp;
             <span className="font-bold underline">
               <Link to="/register" className="inline-block">
                 Sign up
+              </Link>
+            </span>
+          </div>
+          <div className="text-center px-2">
+            Forgot your password? &nbsp;
+            <span className="font-bold underline">
+              <Link to="/register" className="inline-block">
+                Recover password
               </Link>
             </span>
           </div>

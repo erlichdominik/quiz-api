@@ -28,10 +28,10 @@ const Quiz = () => {
   };
 
   return (
-    <div className="bg-secondaryblue h-screen w-screen">
-      <Navbar />
-      {!isQuizOver && quizState !== null && (
-        <div className="pt-8 ">
+    <div className="bg-secondaryblue h-screen w-screen ">
+      <div className="h-4/5 flex justify-center items-center">
+        <Navbar />
+        {!isQuizOver && quizState !== null && (
           <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md ">
             <div className="py-3 px-6">
               {quizState.currentQuestion.questionName}
@@ -76,15 +76,15 @@ const Quiz = () => {
               </button>
             </div>
           </section>
-        </div>
-      )}
-      <>
-        {isQuizOver === true && (
-          <h3 className="text-center text-3xl ">
-            Thank you for completing the quiz!
-          </h3>
         )}
-      </>
+        <>
+          {isQuizOver === true && (
+            <h3 className="text-center text-3xl ">
+              Thank you for completing the quiz!
+            </h3>
+          )}
+        </>
+      </div>
     </div>
   );
 };

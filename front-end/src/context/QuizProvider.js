@@ -1,10 +1,6 @@
-import { createContext } from 'react';
-import useQuiz, {
-  useQuizStartedState,
-  useQuizOverState,
-  useSelectedAnswerState,
-} from '../hooks/useQuiz';
-import QUIZ_OPTIONS from '../utils/options/quizOptions';
+import { createContext } from "react";
+import useQuiz from "../hooks/useQuiz";
+import QUIZ_OPTIONS from "../utils/options/quizOptions";
 
 const QuizContext = createContext({});
 
