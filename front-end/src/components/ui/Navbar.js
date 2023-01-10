@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useQuizContext from "../../hooks/useQuizContext";
-import { faCoffee } from "@fortawesome/react-fontawesome";
 import NavItem from "./NavItem";
+import StartQuizIcon from "../../assets/start-quiz.svg";
+import ContinueQuizIcon from "../../assets/continue-quiz.svg";
+import QuizHistoryIcon from "../../assets/quiz-history.svg";
+import LogoutIcon from "../../assets/logout.svg";
+import { ReactComponent as LogoutIconTest } from "../../assets/quiz-history.svg";
 
 const Navbar = () => {
   const { isQuizStarted, isQuizOver, disbandQuiz } = useQuizContext();
@@ -22,24 +26,34 @@ const Navbar = () => {
 
   return (
     <section className="fixed bottom-0 inset-x-0 ">
-      <div className="flex justify-between">
+      <div className="flex justify-between bg-white">
+        <NavItem
+          icon={StartQuizIcon}
+          label="Start quiz"
+          alt="start quiz icon"
+          linkTo="/quizStart"
+        />
         {isQuizStarted && !isQuizOver && (
-          <div className="w-full hover:bg-darkclLighter transition inline-block text-center">
-            <Link to="/quiz">
-              <li className="px-2 py-2 w-full">Continue quiz</li>
-            </Link>
-          </div>
+          <NavItem
+            icon={ContinueQuizIcon}
+            label="Continue quiz"
+            alt="continue quiz icon"
+            linkTo="/quiz"
+          />
         )}
-        <div className="w-full hover:bg-darkclLighter transition inline-block text-center">
-          <Link to="/quizHistory">
-            <li className="px-2 py-2 w-full">Quiz History</li>
-          </Link>
-        </div>
-        <div className="w-full hover:bg-darkclLighter transition inline-block text-center">
-          <Link to="/login" onClick={logoutClickedHandler}>
-            <li className="px-2 py-2 w-full">Log out</li>
-          </Link>
-        </div>
+        <NavItem
+          icon={QuizHistoryIcon}
+          label="Quiz history"
+          alt="quiz history icon"
+          linkTo="/quizHistory"
+        />
+        <NavItem
+          icon={LogoutIcon}
+          label="Logout"
+          alt="logout icon"
+          linkTo="/login"
+          onClick={logoutClickedHandler}
+        />
       </div>
     </section>
   );
