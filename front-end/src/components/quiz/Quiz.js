@@ -17,7 +17,7 @@ const Quiz = () => {
 
   useEffect(() => {
     if (quizState === null) {
-      setSelectedAnswer(null); // hack, will have to fix later
+      setSelectedAnswer(null);
       loadInitialQuestions();
     }
   }, []);
@@ -29,10 +29,10 @@ const Quiz = () => {
 
   return (
     <div className="bg-secondaryblue h-screen w-screen ">
-      <div className="h-4/5 flex justify-center items-center">
+      <div className="h-3/5 flex justify-center items-center">
         <Navbar />
         {!isQuizOver && quizState !== null && (
-          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md ">
+          <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md">
             <div className="py-3 px-6">
               {quizState.currentQuestion.questionName}
             </div>
