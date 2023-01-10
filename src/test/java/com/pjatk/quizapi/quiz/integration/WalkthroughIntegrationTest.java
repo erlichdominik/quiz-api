@@ -77,7 +77,9 @@ class WalkthroughIntegrationTest {
 
         User principal = new User(
                 "test",
-                "dsadsadsadasd"
+                "dsadsadsadasd",
+                "test",
+                "test"
         );
 
         userRepository.save(principal);

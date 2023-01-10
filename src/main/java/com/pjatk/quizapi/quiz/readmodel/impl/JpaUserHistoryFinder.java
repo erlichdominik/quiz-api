@@ -6,15 +6,15 @@ import com.pjatk.quizapi.quiz.domain.appuser.UserHistory;
 import com.pjatk.quizapi.quiz.readmodel.UserHistoryDto;
 import com.pjatk.quizapi.quiz.readmodel.UserHistoryFinder;
 import com.pjatk.quizapi.security.User;
+import com.pjatk.quizapi.sharedkernel.AbstractEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Finder
 class JpaUserHistoryFinder implements UserHistoryFinder {
@@ -22,25 +22,40 @@ class JpaUserHistoryFinder implements UserHistoryFinder {
     private EntityManager entityManager;
 
     @Override
-    public List<UserHistoryDto> find() {
+    public List<UserHistoryDto> findAll() {
+        Set<UserHistory> userHistories = fetchUserHistories();
+
+        return userHistories.stream()
+                .map(this::map)
+                .toList();
+    }
+
+    @Override
+    public UserHistoryDto find() {
+        Set<UserHistory> userHistories = fetchUserHistories();
+
+        return userHistories.stream()
+                .sorted(Comparator.comparing(AbstractEntity::getId).reversed())
+                .map(this::map)
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private Set<UserHistory> fetchUserHistories() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String selectApplicationUserJpql = "select a from ApplicationUser a where a.user.id = ?1";
 
         TypedQuery<ApplicationUser> selectApplicationUserQuery = entityManager.createQuery(selectApplicationUserJpql, ApplicationUser.class)
-                        .setParameter(1, user.getId());
+                .setParameter(1, user.getId());
 
         ApplicationUser applicationUser = selectApplicationUserQuery.getResultStream()
                 .findFirst()
                 .orElseThrow(HistoryNotInitializedException::new);
 
-        Set<UserHistory> userHistories = Optional.ofNullable(applicationUser)
+        return Optional.ofNullable(applicationUser)
                 .map(ApplicationUser::getUserHistories)
-                .orElse(Set.of());
-
-        return userHistories.stream()
-                .map(this::map)
-                .toList();
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user doesnt have history"));
     }
 
     private UserHistoryDto map(UserHistory userHistory) {

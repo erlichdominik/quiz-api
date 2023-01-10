@@ -16,7 +16,7 @@ public class UserService {
     }
 
     public void createNewUser(AuthRequest request) {
-        var user = new User(request.email(), encoder.encode(request.password()));
+        var user = new User(request.email(), encoder.encode(request.password()), request.passwordRecoveryQuestion(), request.passwordRecoveryAnswer());
         try {
             repository.save(user);
         } catch (DataIntegrityViolationException e) {

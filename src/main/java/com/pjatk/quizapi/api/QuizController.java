@@ -109,7 +109,12 @@ class QuizController {
 
     @GetMapping("/history")
     ResponseEntity<List<UserHistoryDto>> fetchUserHistory() {
-        return ResponseEntity.ok(userHistoryFinder.find());
+        return ResponseEntity.ok(userHistoryFinder.findAll());
+    }
+
+    @GetMapping("/history/score")
+    UserHistoryDto fetchLastUserHistory() {
+        return userHistoryFinder.find();
     }
 
     @DeleteMapping("")

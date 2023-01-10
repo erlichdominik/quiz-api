@@ -26,9 +26,17 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
     private ApplicationUser applicationUser;
 
-    public User(String email, String password) {
+    @Column(nullable = false)
+    private String passwordRecoveryQuestion;
+
+    @Column(nullable = false)
+    private String passwordRecoveryAnswer;
+
+    public User(String email, String password, String passwordRecoveryQuestion, String passwordRecoveryAnswer) {
         this.email = email;
         this.password = password;
+        this.passwordRecoveryQuestion = passwordRecoveryQuestion;
+        this.passwordRecoveryAnswer = passwordRecoveryAnswer;
     }
 
     protected User() {}
