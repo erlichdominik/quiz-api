@@ -35,9 +35,9 @@ const Registration = () => {
   return (
     <section className="bg-secondaryblue h-screen">
       <form onSubmit={handleSubmit} className="my-auto pt-6 h-full">
-        <div className="flex flex-col space-y-4 border mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12">
+        <div className="flex flex-col space-y-4 border mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
-            <p className="text-2xl pt-2">Register</p>
+            <p className="text-3xl pt-2">Register</p>
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">

@@ -66,9 +66,9 @@ const Login = () => {
   return (
     <section className="bg-secondaryblue w-screen h-screen">
       <form onSubmit={handleSubmit} className="pt-6">
-        <div className="flex flex-col space-y-3 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-5/12 ">
+        <div className="flex flex-col space-y-3 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
-            <h1 className="text-2xl pt-2">Sign in</h1>
+            <h1 className="text-3xl pt-2">Sign in</h1>
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">

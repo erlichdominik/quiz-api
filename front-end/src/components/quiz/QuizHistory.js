@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "";
 
-import Navbar from "../ui/Navbar";
+import Navbar from "../../ui/Navbar";
 
 const QUIZ_HISTORY_URL = "/quiz/history";
 
