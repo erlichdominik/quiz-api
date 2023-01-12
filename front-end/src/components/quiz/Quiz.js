@@ -28,8 +28,8 @@ const Quiz = () => {
   };
 
   return (
-    <div className="bg-secondaryblue h-screen w-screen ">
-      <div className="h-3/5 flex justify-center items-center">
+    <main className="bg-secondaryblue h-screen w-screen ">
+      <section className="h-3/5 flex justify-center items-center">
         <Navbar />
         {!isQuizOver && quizState !== null && (
           <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md">
@@ -84,8 +84,8 @@ const Quiz = () => {
             </h3>
           )}
         </>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
+import { mockQuizHistoryItems } from "../../../utils/mock-data/mock-quiz-history";
+
 import Navbar from "../../ui/Navbar";
 
 const QUIZ_HISTORY_URL = "/quiz/history";
@@ -14,8 +16,8 @@ const transformResponseDataToState = (responseData) => {
     quizHistoryItems.push({
       id: index,
       quizName: item.quizName,
-      pathway: item.statisticDtos[0]?.pathName,
-      percentage: item.statisticDtos[0]?.completedPercentage,
+      completionDate: item.completionDate,
+      pathways: item.statisticsDtos,
     });
   });
 
@@ -23,7 +25,9 @@ const transformResponseDataToState = (responseData) => {
 };
 
 const QuizHistory = () => {
-  const [quizHistoryItems, setQuizHistoryItems] = useState([]);
+  const [quizHistoryItems, setQuizHistoryItems] = useState(
+    transformResponseDataToState(mockQuizHistoryItems)
+  );
   const axiosPrivate = useAxiosPrivate();
 
   const getQuizHistoryData = async () => {
@@ -35,49 +39,52 @@ const QuizHistory = () => {
     } catch (err) {}
   };
 
+  const stateTester = () =>
+    console.log("quiz history items => ", quizHistoryItems);
+
+  const getDateString = (dateObj) => dateObj.toISOString().split("T")[0];
+
+  /*
   useEffect(() => {
     getQuizHistoryData();
   }, []);
+  */
 
   return (
-    <div className="bg-secondaryblue h-screen w-screen">
+    <main className="bg-secondaryblue h-screen w-screen overflow-auto">
       <Navbar />
-      <div className="h-3/5 flex justify-center items-center">
-        {quizHistoryItems?.length === 0 ? (
-          <div className="text-center text-3xl text-white">
-            Looks like there are no history items yet...
-          </div>
+      <div className="flex h-3/5 items-center justify-center overflow-y-auto">
+        {quizHistoryItems.length === 0 ? (
+          <h1 className="text-3xl text-white">
+            Looks like the quiz history is empty...
+          </h1>
         ) : (
-          <>
-            {
-              <table className="bg-white border border-primaryblue table-fixed border-separate rounded-xl ">
-                <thead className="text-base">
-                  <tr className="w-64">
-                    <th colspan="3" className="text-2xl py-3">
-                      Quiz History
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Quiz name</th>
-                    <th scope="col">Completed pathway</th>
-                    <th scope="col">Score</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {quizHistoryItems?.map((item) => (
-                    <tr className="border-t border-darkcl" key={item.id}>
-                      <td className="w-36 py-1">{item.quizName}</td>
-                      <td className="w-36 py-1">{item.pathway}</td>
-                      <td className="w-36 py-1">{item.percentage}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            }
-          </>
+          <table className="table-auto w-1/2 bg-white border border-primaryblue rounded shadow">
+            <thead className="w-full">
+              <tr>
+                <th rowspan="2">Quiz Name</th>
+                <th rowspan="2">Completion Date</th>
+                <th colspan="4">Pathways</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Path name</th>
+                <th>Completed percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {quizHistoryItems.map((item, index) => (
+                <tr className="text-center">
+                  <td>{item.quizName}</td>
+                  <td>{getDateString(item.completionDate)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 
