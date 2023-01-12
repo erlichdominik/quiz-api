@@ -31,7 +31,7 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(request.login()));
 
         if (user.areRecoveryAnswersCorrect(request.firstAnswerRecovery(), request.secondAnswerRecovery())) {
-            user.changePassword(encoder.encode(request.password()));
+            user.changePassword(encoder.encode(request.newPassword()));
             repository.save(user);
         }
 

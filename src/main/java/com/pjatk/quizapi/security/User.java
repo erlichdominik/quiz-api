@@ -50,7 +50,7 @@ public class User implements UserDetails {
     public void changePassword(String password) {
         if (password.isEmpty() || password.isBlank()) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
-                    "Not acceptable password");
+                    "Not acceptable newPassword");
         }
         this.password = password;
     }
@@ -96,7 +96,7 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", newPassword='" + password + '\'' +
                 ", applicationUser=" + applicationUser +
                 '}';
     }
