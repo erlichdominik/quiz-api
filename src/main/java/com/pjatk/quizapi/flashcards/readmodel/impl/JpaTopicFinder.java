@@ -17,7 +17,7 @@ class JpaTopicFinder implements TopicFinder {
     public List<Topic> findAll() {
         var jpql = """
                 select new
-                com.pjatk.quizapi.flashcards.readmodel.Topic(cat.id, cat.name)
+                com.pjatk.quizapi.flashcards.readmodel.Topic(cat.id, cat.category)
                 from Category cat
                 """;
 

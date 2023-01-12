@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Getter
 public class Category extends AbstractEntity {
-    private String name;
+    private String category;
 
     @OneToMany(
             mappedBy = "category",
@@ -25,8 +25,8 @@ public class Category extends AbstractEntity {
 
     protected Category() {}
 
-    public Category(String name, Set<Flashcard> flashcards) {
-        this.name = name;
+    public Category(String category, Set<Flashcard> flashcards) {
+        this.category = category;
         this.flashcards = flashcards;
     }
 }

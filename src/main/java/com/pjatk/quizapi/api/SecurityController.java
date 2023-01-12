@@ -1,8 +1,6 @@
 package com.pjatk.quizapi.api;
 
-import com.pjatk.quizapi.api.dto.AuthRequest;
-import com.pjatk.quizapi.api.dto.AuthResponse;
-import com.pjatk.quizapi.api.dto.RefreshTokenResponse;
+import com.pjatk.quizapi.api.dto.*;
 import com.pjatk.quizapi.security.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +62,13 @@ class SecurityController {
         }
     }
 
+    @PostMapping("/auth/password/recover")
+    void recoverPassword(@RequestBody @Valid RecoverPasswordRequest request) {
+        userService.recoverPassword(request);
+    }
+
     @PostMapping("/auth/register")
-    public ResponseEntity<Boolean> register(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterNewUserRequest request) {
         userService.createNewUser(request);
         return ResponseEntity.ok().build();
     }
@@ -76,6 +79,7 @@ class SecurityController {
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
+
 
         refreshTokenManager.deleteByUserId(user.getId());
     }

@@ -8,7 +8,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Flashcard extends AbstractEntity {
+
     private String text;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

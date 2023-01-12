@@ -3,8 +3,10 @@ package com.pjatk.quizapi.security;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -27,16 +29,30 @@ public class User implements UserDetails {
     private ApplicationUser applicationUser;
 
     @Column(nullable = false)
-    private String passwordRecoveryQuestion;
+    private String firstRecoveryAnswer;
 
     @Column(nullable = false)
-    private String passwordRecoveryAnswer;
+    private String secondRecoveryAnswer;
 
-    public User(String email, String password, String passwordRecoveryQuestion, String passwordRecoveryAnswer) {
+    public User(String email, String password, String firstRecoveryAnswer, String secondRecoveryAnswer) {
         this.email = email;
         this.password = password;
-        this.passwordRecoveryQuestion = passwordRecoveryQuestion;
-        this.passwordRecoveryAnswer = passwordRecoveryAnswer;
+        this.firstRecoveryAnswer = firstRecoveryAnswer;
+        this.secondRecoveryAnswer = secondRecoveryAnswer;
+    }
+
+    public boolean areRecoveryAnswersCorrect(String firstAnswer,
+                                             String secondAnswer) {
+        return firstRecoveryAnswer.equals(firstAnswer)
+               && secondRecoveryAnswer.equals(secondAnswer);
+    }
+
+    public void changePassword(String password) {
+        if (password.isEmpty() || password.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+                    "Not acceptable password");
+        }
+        this.password = password;
     }
 
     protected User() {}

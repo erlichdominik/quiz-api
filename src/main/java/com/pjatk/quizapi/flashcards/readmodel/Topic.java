@@ -1,4 +1,4 @@
 package com.pjatk.quizapi.flashcards.readmodel;
 
-public record Topic(long id, String name) {
+public record Topic(long id, String category) {
 }
