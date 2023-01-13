@@ -25,8 +25,8 @@ public class UserHistory extends AbstractEntity {
     }
 
     public void addStatistic(Statistic statistic) {
-        statistics.add(statistic);
         statistic.assignUserHistory(this);
+        statistics.add(statistic);
     }
 
     void assignApplicationUser(ApplicationUser applicationUser) {
