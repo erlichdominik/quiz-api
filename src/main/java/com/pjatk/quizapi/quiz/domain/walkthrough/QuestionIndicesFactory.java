@@ -13,8 +13,11 @@ class QuestionIndicesFactory {
     public List<QuestionsIndex> fromPathways(Set<Pathway> pathways) {
         List<QuestionsIndex> questionsIndices = new ArrayList<>();
 
+        List<Pathway> pathwayList = new ArrayList<>(pathways.stream().toList());
+        Collections.shuffle(pathwayList);
+
         for (Pathway pathway :
-                pathways) {
+                pathwayList) {
             QuestionsIndex indicesFromPathway = new QuestionsIndex(
                     pathway.getQuestions()
                             .stream()

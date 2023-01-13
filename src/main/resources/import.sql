@@ -118,17 +118,213 @@ insert into answer(id, text, is_true, question_id) values(47, 'Spadek MAP', fals
 insert into answer(id, text, is_true, question_id) values(48, 'utrzymanie MAP na dotychczasowym poziomie', false, 16)
 
 -- -- pathway 2
--- insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (2, 2, 3, 'pathway2', 1 )
+insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (2, 2, 3, 'pathway2', 1)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (17, 'lorem', 'Wzrost CO powoduje', 2, null)
+
+insert into answer(id, text, is_true, question_id) values(49, 'Wzrost MAP', true, 17)
+insert into answer(id, text, is_true, question_id) values(50, 'Spadek MAP', false, 17)
+insert into answer(id, text, is_true, question_id) values(51, 'utrzymanie MAP na dotychczasowym poziomie', false, 17)
+
 --
--- insert into question(id, comment, text, pathway_id, subpathway_id) values (17, 'lorem', 'Komórki robocze komór serca unerwiane są przez', 1, null)
+insert into subpathway(id, pathway_id) values (3, 2)
 --
--- insert into answer(id, text, is_true, question_id) values(1, 'Wyłącznie układ współczulny', true, 1)
--- insert into answer(id, text, is_true, question_id) values(2, 'Wyłącznie układ przywspółczulny', false, 1)
--- insert into answer(id, text, is_true, question_id) values(3, 'Oba układy razem', false, 1)
+insert into question(id, comment, text, pathway_id, subpathway_id) values(18, 'lorem', 'Efekt lustiropowy, fosfolamban', null, 3)
 --
--- insert into subpathway(id, pathway_id) values (1, 1)
+insert into answer(id, text, is_true, question_id) values(52, 'true', true, 18)
+insert into answer(id, text, is_true, question_id) values(53, 'false', false, 18)
+insert into answer(id, text, is_true, question_id) values(54, 'false', false, 18)
+--
+insert into question(id, comment, text, pathway_id, subpathway_id) values (19, 'lorem', '22a', null, 3)
+--
+insert into answer(id, text, is_true, question_id) values (55, 'true', true, 19)
+insert into answer(id, text, is_true, question_id) values (56, 'false', false, 19)
+insert into answer(id, text, is_true, question_id) values (57, 'false', false, 19)
+--
+insert into question(id, comment, text, pathway_id, subpathway_id) values (20, 'lorem', '23a', null, 3)
+--
+insert into answer(id, text, is_true, question_id) values (58, 'true', true, 20)
+insert into answer(id, text, is_true, question_id) values (59, 'false', false, 20)
+insert into answer(id, text, is_true, question_id) values (60, 'false', false, 20)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (21, 'lorem', '24a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (61, 'true', true, 21)
+insert into answer(id, text, is_true, question_id) values (62, 'false', false, 21)
+insert into answer(id, text, is_true, question_id) values (63, 'false', false, 21)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (22, 'lorem', '25a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (64, 'true', true, 22)
+insert into answer(id, text, is_true, question_id) values (65, 'false', false, 22)
+insert into answer(id, text, is_true, question_id) values (66, 'false', false, 22)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (23, 'lorem', '26a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (67, 'true', true, 23)
+insert into answer(id, text, is_true, question_id) values (68, 'false', false, 23)
+insert into answer(id, text, is_true, question_id) values (69, 'false', false, 23)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (24, 'lorem', '26a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (70, 'true', true, 24)
+insert into answer(id, text, is_true, question_id) values (71, 'false', false, 24)
+insert into answer(id, text, is_true, question_id) values (72, 'false', false, 24)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (25, 'lorem', '27a', null, 3)
+insert into answer(id, text, is_true, question_id) values (73, 'true', true, 25)
+insert into answer(id, text, is_true, question_id) values (74, 'false', false, 25)
+insert into answer(id, text, is_true, question_id) values (75, 'false', false, 25)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (26, 'lorem', '28a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (76, 'true', true, 26)
+insert into answer(id, text, is_true, question_id) values (77, 'false', false, 26)
+insert into answer(id, text, is_true, question_id) values (78, 'false', false, 26)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (27, 'lorem', '29a', null, 3)
+
+insert into answer(id, text, is_true, question_id) values (79, 'true', true, 27)
+insert into answer(id, text, is_true, question_id) values (80, 'false', false, 27)
+insert into answer(id, text, is_true, question_id) values (81, 'false', false, 27)
+
+insert into subpathway(id, pathway_id) values (4, 2)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (28, 'lorem', '22b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (82, 'true', true, 28)
+insert into answer(id, text, is_true, question_id) values (83, 'false', false, 28)
+insert into answer(id, text, is_true, question_id) values (84, 'false', false, 28)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (29, 'lorem', '23b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (85, 'true', true, 29)
+insert into answer(id, text, is_true, question_id) values (86, 'false', false, 29)
+insert into answer(id, text, is_true, question_id) values (87, 'false', false, 29)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (30, 'lorem', '24b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (88, 'true', true, 30)
+insert into answer(id, text, is_true, question_id) values (89, 'false', false, 30)
+insert into answer(id, text, is_true, question_id) values (90, 'false', false, 30)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (31, 'lorem', '25b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (91, 'true', true, 31)
+insert into answer(id, text, is_true, question_id) values (92, 'false', false, 31)
+insert into answer(id, text, is_true, question_id) values (93, 'false', false, 31)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (32, 'lorem', '26b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (94, 'true', true, 32)
+insert into answer(id, text, is_true, question_id) values (95, 'false', false, 32)
+insert into answer(id, text, is_true, question_id) values (96, 'false', false, 32)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (33, 'lorem', '27b', null, 4)
+
+insert into answer(id, text, is_true, question_id)  values (97, 'true', true, 33)
+insert into answer(id, text, is_true, question_id) values (98, 'false', false, 33)
+insert into answer(id, text, is_true, question_id) values (99, 'false', false, 33)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (34, 'lorem', '28b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (100, 'true', true, 34)
+insert into answer(id, text, is_true, question_id) values (101, 'false', false, 34)
+insert into answer(id, text, is_true, question_id) values (102, 'false', false, 34)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (35, 'lorem', '29b', null, 4)
+
+insert into answer(id, text, is_true, question_id) values (103, 'true', true, 35)
+insert into answer(id, text, is_true, question_id) values (104, 'false', false, 35)
+insert into answer(id, text, is_true, question_id) values (105, 'false', false, 35)
+
+-- PATHWAY 3
+
+insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (3, 3, null, 'pathway2', 1)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (36, 'lorem', 'Układ bodźcoprzewodzący serca unerwiany jest przez', 3, null)
+
+insert into answer(id, text, is_true, question_id) values (106, 'wyłącznie układ współczulny', false, 36)
+insert into answer(id, text, is_true, question_id) values (107, 'wyłącznie układ przywspółczulny', false, 36)
+insert into answer(id, text, is_true, question_id) values (108, 'oba układy razem', true, 36)
+
+insert into subpathway(id, pathway_id) values (5, 3)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (37, 'lorem', 'The conduction system of the heart is innervated by', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (109, 'true', true, 37)
+insert into answer(id, text, is_true, question_id) values (110, 'false', false, 37)
+insert into answer(id, text, is_true, question_id) values (111, 'false', false, 37)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (38, 'lorem', '33a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (112, 'true', true, 38)
+insert into answer(id, text, is_true, question_id) values (113, 'false', false, 38)
+insert into answer(id, text, is_true, question_id) values (114, 'false', false, 38)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (39, 'lorem', '34a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (115, 'true', true, 39)
+insert into answer(id, text, is_true, question_id) values (116, 'false', false, 39)
+insert into answer(id, text, is_true, question_id) values (117, 'false', false, 39)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (40, 'lorem', '35a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (118, 'true', true, 40)
+insert into answer(id, text, is_true, question_id) values (119, 'false', false, 40)
+insert into answer(id, text, is_true, question_id) values (120, 'false', false, 40)
+
+insert into question(id, comment, text, pathway_id, subpathway_id)values (41, 'lorem', '36a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (121, 'true', true, 41)
+insert into answer(id, text, is_true, question_id) values (122, 'false', false, 41)
+insert into answer(id, text, is_true, question_id) values (123, 'false', false, 41)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (42, 'lorem', '37a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (124, 'true', true, 42)
+insert into answer(id, text, is_true, question_id) values (125, 'false', false, 42)
+insert into answer(id, text, is_true, question_id) values (126, 'false', false, 42)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (43, 'lorem', '38a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (127, 'true', true, 43)
+insert into answer(id, text, is_true, question_id) values (128, 'false', false, 43)
+insert into answer(id, text, is_true, question_id) values (129, 'false', false, 43)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (44, 'lorem', '39a', null, 5)
+
+insert into answer(id, text, is_true, question_id) values (130, 'true', true, 44)
+insert into answer(id, text, is_true, question_id) values (131, 'false', false, 44)
+insert into answer(id, text, is_true, question_id) values (132, 'false', false, 44)
+
+insert into subpathway(id, pathway_id) values (6, 3)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (45, 'lorem', '31b', null, 6)
+
+insert into answer(id, text, is_true, question_id) values (133, 'true', true, 45)
+insert into answer(id, text, is_true, question_id) values (134, 'false', false, 45)
+insert into answer(id, text, is_true, question_id) values (135, 'false', false, 45)
+
+insert into question(id, comment, text, pathway_id, subpathway_id) values (46, 'lorem', '32b', null, 6)
+
+insert into answer(id, text, is_true, question_id) values (136, 'true', true, 46)
+insert into answer(id, text, is_true, question_id) values (137, 'false', false, 46)
+insert into answer(id, text, is_true, question_id) values (138, 'false', false, 46)
+
 
 insert into category(id, category) values (1, 'Helpful abbreviations')
+insert into category(id, category) values (2, 'Basic hearth parameters')
+insert into category(id, category) values (3, 'Arteries')
+insert into category(id, category) values (4, 'Veins')
+insert into category(id, category) values (5, 'Cardiomyocytes')
+insert into category(id, category) values (6, 'Conducting system')
+insert into category(id, category) values (7, 'Right atrial pressure')
+insert into category(id, category) values (8, 'Venous return')
+insert into category(id, category) values (9, 'Laplace''s law')
+insert into category(id, category) values (10, 'Frank-Starling law')
+insert into category(id, category) values (11, 'Adjusting the contraction strength of the heart mm')
+insert into category(id, category) values (12, 'Selected autonomic receptors')
 
 insert into flashcard(id, text, description, category_id) values (1, 'MAP', 'Mean Arterial Pressure', 1)
 
@@ -137,7 +333,7 @@ insert into flashcard(id, text, description, category_id) values (3, 'CO', 'Card
 insert into flashcard(id, text, description, category_id) values (4, 'SV', 'Stroke volume', 1)
 insert into flashcard(id, text, description, category_id) values (5, 'HR', 'Heart rate', 1)
 insert into flashcard(id, text, description, category_id) values (6, 'EDV (1)', 'End-diastolic volume', 1)
-insert into flashcard(id, text, description, category_id) values (7, 'EDV (2)','Objętość krwi znajdująca się w komorach serca tuż przed fazą ich skurczu. Objętość ta ma wpływ na siłę skurczu komór. Zależność tę opisuje prawo Franka-Starlinga.',1)
+insert into flashcard(id, text, description, category_id) values (7, 'EDV (2)', 'Objętość krwi znajdująca się w komorach serca tuż przed fazą ich skurczu.', 1)
 insert into flashcard(id, text, description, category_id) values (8, 'ESV (1)', 'End-systolic volume', 1)
 insert into flashcard(id, text, description, category_id) values (9, 'ESV (2)', 'Definition', 1)
 insert into flashcard(id, text, description, category_id) values (10, 'CI', 'Cardiac index', 1)
