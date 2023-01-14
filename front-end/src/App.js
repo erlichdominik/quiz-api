@@ -11,6 +11,7 @@ import USER_ROLES from "./utils/roles/authRoles";
 import Quiz from "./components/quiz/Quiz";
 import QuizHistory from "./components/quiz/quiz-history/QuizHistory";
 import QuizStarter from "./components/quiz/QuizStarter";
+import FlashcardCategories from "./components/flashcard/FlashcardCategories";
 
 const App = () => {
   return (
@@ -32,6 +33,10 @@ const App = () => {
             <Route path="quiz" element={<Quiz />} />
             <Route path="quizStart" element={<QuizStarter />} />
             <Route path="quizHistory" element={<QuizHistory />} />
+            <Route
+              path="flashcardCategories"
+              element={<FlashcardCategories />}
+            />
           </Route>
         </Route>
       </Route>

@@ -10,14 +10,18 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [firstAnswerRecovery, setFirstAnswerRecovery] = useState("");
+  const [secondAnswerRecovery, setSecondAnswerRecovery] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const postObj = JSON.stringify({
-      email: username,
+      login: username,
       password: password,
+      firstAnswerRecovery: firstAnswerRecovery,
+      secondAnswerRecovery: secondAnswerRecovery,
     });
 
     try {
@@ -81,7 +85,7 @@ const Registration = () => {
               className="rounded-xl pl-2 border shadow w-full h-8"
               type="password"
               id="rePassword"
-              onChange={(e) => setRePassword(e.target.value)}
+              onChange={(e) => setFirstAnswerRecovery(e.target.value)}
             ></input>
           </div>
           <div className="w-10/12 mx-auto text-center">
@@ -93,7 +97,7 @@ const Registration = () => {
               className="rounded-xl pl-2 border shadow w-full h-8"
               type="password"
               id="rePassword"
-              onChange={(e) => setRePassword(e.target.value)}
+              onChange={(e) => setSecondAnswerRecovery(e.target.value)}
             ></input>
           </div>
           <div className="text-center">

@@ -62,9 +62,9 @@ const QuizHistory = () => {
           <table className="table-auto w-1/2 bg-white border border-primaryblue rounded shadow">
             <thead className="w-full">
               <tr>
-                <th rowspan="2">Quiz Name</th>
-                <th rowspan="2">Completion Date</th>
-                <th colspan="4">Pathways</th>
+                <th rowSpan="2">Quiz Name</th>
+                <th rowSpan="2">Completion Date</th>
+                <th colSpan="4">Pathways</th>
               </tr>
               <tr>
                 <th></th>
@@ -75,7 +75,7 @@ const QuizHistory = () => {
             </thead>
             <tbody>
               {quizHistoryItems.map((item, index) => (
-                <tr className="text-center">
+                <tr className="text-center" key={index}>
                   <td>{item.quizName}</td>
                   <td>{getDateString(item.completionDate)}</td>
                 </tr>

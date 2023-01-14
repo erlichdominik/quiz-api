@@ -7,6 +7,7 @@ import StartQuizIcon from "../../assets/start-quiz.svg";
 import ContinueQuizIcon from "../../assets/continue-quiz.svg";
 import QuizHistoryIcon from "../../assets/quiz-history.svg";
 import LogoutIcon from "../../assets/logout.svg";
+import FlashcardIcon from "../../assets/flashcards.svg";
 import { ReactComponent as LogoutIconTest } from "../../assets/quiz-history.svg";
 
 const Navbar = () => {
@@ -25,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <section className="fixed bottom-0 inset-x-0 ">
+    <nav className="fixed bottom-0 inset-x-0 ">
       <div className="flex justify-between bg-white">
         <NavItem
           icon={StartQuizIcon}
@@ -48,6 +49,12 @@ const Navbar = () => {
           linkTo="/quizHistory"
         />
         <NavItem
+          icon={FlashcardIcon}
+          label="Flashcards"
+          alt="flashcard icon"
+          linkTo="/flashcardCategories"
+        />
+        <NavItem
           icon={LogoutIcon}
           label="Logout"
           alt="logout icon"
@@ -55,7 +62,7 @@ const Navbar = () => {
           onClick={logoutClickedHandler}
         />
       </div>
-    </section>
+    </nav>
   );
 };
 
