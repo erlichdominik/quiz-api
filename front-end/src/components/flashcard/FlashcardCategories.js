@@ -45,9 +45,18 @@ const FlashcardCategories = () => {
   return (
     <>
       <main className="bg-secondaryblue h-screen w-screen">
-        <h1 className="text-xl text-white pt-3 w-fit mx-auto">
+        <h1 className="text-2xl text-white pt-3 w-fit mx-auto">
           {isCategorySelected ? "Flashcards" : "Flashcard Categories"}
         </h1>
+        {isCategorySelected && (
+          <h2 className="text-xl text-white pt-3 w-fit mx-auto">
+            Category: &nbsp;
+            {
+              flashcardCategories.find((cat) => cat.id === selectedCategory)
+                .category
+            }
+          </h2>
+        )}
         <section className="flex justify-center pt-3 h-4/5 pb-3">
           {!isCategorySelected ? (
             <FlashcardCategoriesTable
