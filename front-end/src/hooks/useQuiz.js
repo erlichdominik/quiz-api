@@ -1,10 +1,15 @@
-import localKeys from '../utils/local-storage-keys/localStorageKeys';
-import useCookieState from './useCookieState';
-import useAxiosPrivate from './useAxiosPrivate';
-import useAuth from './useAuth';
+import localKeys from "../utils/local-storage-keys/localStorageKeys";
+import useCookieState from "./useCookieState";
+import useAxiosPrivate from "./useAxiosPrivate";
+import useAuth from "./useAuth";
 
 const useQuiz = (quizOptions) => {
   const [quizState, setQuizState] = useCookieState(null, localKeys.QUIZ_KEY);
+
+  const [finalScore, setFinalScore] = useCookieState(
+    { quizName: "", statisticDtos: [] },
+    localKeys.FINAL_SCORE
+  );
 
   const [selectedAnswer, setSelectedAnswer] = useCookieState(
     null,
@@ -34,9 +39,7 @@ const useQuiz = (quizOptions) => {
           },
         }
       );
-      setQuizState(() => ({
-        ...getQuizStateFromResponseData(response.data),
-      }));
+      setQuizState(getQuizStateFromResponseData(response.data));
     } catch (err) {
       console.error(err);
     }
@@ -48,7 +51,7 @@ const useQuiz = (quizOptions) => {
         `${quizOptions.QUIZ_SUBMIT_URL}?walkthroughId=${quizState.walkthroughId}&answerId=${selectedAnswer}`
       );
       if (response.data.isQuizOver === true) {
-        console.log('inside submit quiz is over statement');
+        console.log("inside submit quiz is over statement");
         setIsQuizOver(true);
       }
       return response.data.isQuizOver;
@@ -62,19 +65,26 @@ const useQuiz = (quizOptions) => {
       const quizFinished = await submitQuestion(selectedAnswer);
 
       if (quizFinished) {
+        await loadQuizFinalScore();
         return;
       }
 
       const response = await axiosPrivate.get(
         `${quizOptions.QUIZ_NEXT_QUESTION_URL}?walkthroughId=${quizState.walkthroughId}`
       );
-
-      setQuizState(() => ({
-        ...getQuizStateFromResponseData(response.data),
-      }));
+      setQuizState(getQuizStateFromResponseData(response.data));
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const loadQuizFinalScore = async () => {
+    const finalScoreData = await axiosPrivate.get(
+      quizOptions.QUIZ_FINAL_SCORE_URL
+    );
+    setFinalScore(finalScoreData.data);
+
+    return finalScoreData.data;
   };
 
   const disbandQuiz = () => {
@@ -95,6 +105,7 @@ const useQuiz = (quizOptions) => {
     setIsQuizStarted,
     selectedAnswer,
     setSelectedAnswer,
+    finalScore,
   ];
 };
 

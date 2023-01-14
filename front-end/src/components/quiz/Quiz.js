@@ -5,6 +5,9 @@ import Navbar from "../ui/Navbar";
 
 import useQuizContext from "../../hooks/useQuizContext";
 
+const percentageFormatter = (percentageValue) =>
+  `${(percentageValue * 100).toFixed(2)}%`;
+
 const Quiz = () => {
   const {
     quizState,
@@ -13,12 +16,15 @@ const Quiz = () => {
     selectedAnswer,
     setSelectedAnswer,
     isQuizOver,
+    finalScore,
   } = useQuizContext();
+
+  console.log("final score => ", finalScore);
 
   useEffect(() => {
     if (quizState === null) {
-      setSelectedAnswer(null);
       loadInitialQuestions();
+      setSelectedAnswer(null);
     }
   }, []);
 
@@ -79,9 +85,20 @@ const Quiz = () => {
         )}
         <>
           {isQuizOver === true && (
-            <h3 className="text-center text-3xl ">
-              Thank you for completing the quiz!
-            </h3>
+            <div className="bg-white border border-primaryblue rounded-lg shadow p-3">
+              <h3 className="text-center text-3xl ">
+                Thank you for completing the quiz!
+              </h3>
+              <p className="text-center text-xl ">
+                Your final score:
+                {finalScore.statisticDtos.map((s) => (
+                  <p className="text-base font-normal">
+                    {s.pathName}: &nbsp;
+                    {percentageFormatter(s.completedPercentage)}
+                  </p>
+                ))}
+              </p>
+            </div>
           )}
         </>
       </section>

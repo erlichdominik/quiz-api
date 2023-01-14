@@ -64,7 +64,7 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-secondaryblue w-screen h-screen">
+    <main className="bg-secondaryblue w-screen h-screen">
       <form onSubmit={handleSubmit} className="pt-6">
         <div className="flex flex-col space-y-3 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
@@ -117,16 +117,16 @@ const Login = () => {
             </span>
           </div>
           <div className="text-center px-2">
-            Forgot your password? &nbsp;
+            Forgot your password or want to change it? &nbsp;
             <span className="font-bold underline">
-              <Link to="/register" className="inline-block">
+              <Link to="/passwordRecovery" className="inline-block">
                 Recover password
               </Link>
             </span>
           </div>
         </div>
       </form>
-    </section>
+    </main>
   );
 };
 

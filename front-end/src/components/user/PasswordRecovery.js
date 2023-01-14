@@ -2,46 +2,44 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 
-import { USERNAME_REGEX, PASSWORD_REGEX } from "../../utils/regexes/userRegex";
+const PASSWORD_RECOVERY_URL = "/auth/password/recover";
 
-const REGISTER_URL = "/auth/register";
-
-const Registration = () => {
+const PasswordRecovery = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
   const [firstAnswerRecovery, setFirstAnswerRecovery] = useState("");
   const [secondAnswerRecovery, setSecondAnswerRecovery] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [reNewPassword, setReNewPassword] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const postObj = JSON.stringify({
       login: username,
-      password: password,
       firstAnswerRecovery: firstAnswerRecovery,
       secondAnswerRecovery: secondAnswerRecovery,
+      newPassword: newPassword,
     });
 
     try {
-      await axios.post(REGISTER_URL, postObj, {
+      await axios.post(PASSWORD_RECOVERY_URL, postObj, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setErrorMessage("Registration succesful");
+      setInfoMessage("Registration succesful");
     } catch (err) {
-      setErrorMessage(err.response.data.message);
+      setInfoMessage(err.response.data.message);
     }
   };
 
   return (
-    <section className="bg-secondaryblue h-screen">
+    <main className="bg-secondaryblue h-screen">
       <form onSubmit={handleSubmit} className="my-auto pt-6 h-full">
         <div className="flex flex-col space-y-3 border mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
-            <p className="text-3xl pt-2 ">Register</p>
+            <p className="text-3xl pt-2 ">Password recovery</p>
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">
@@ -61,8 +59,8 @@ const Registration = () => {
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
               type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
+              id="newPassword"
+              onChange={(e) => setNewPassword(e.target.value)}
             ></input>
           </div>
           <div className="w-10/12 mx-auto">
@@ -72,12 +70,11 @@ const Registration = () => {
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
               type="password"
-              id="rePassword"
-              onChange={(e) => setRePassword(e.target.value)}
+              id="reNewPassword"
+              onChange={(e) => setReNewPassword(e.target.value)}
             ></input>
           </div>
-          <div className="w-10/12 mx-auto text-center">
-            <p className="text-xs">(password recovery question)</p>
+          <div className="w-10/12 mx-auto ">
             <label className="block" htmlFor="rePassword">
               What's your favourite food?
             </label>
@@ -88,10 +85,9 @@ const Registration = () => {
               onChange={(e) => setFirstAnswerRecovery(e.target.value)}
             ></input>
           </div>
-          <div className="w-10/12 mx-auto text-center">
-            <p className="text-xs">(password recovery question)</p>
+          <div className="w-10/12 mx-auto ">
             <label className="block" htmlFor="rePassword">
-              What's your pet's name?
+              What's your first pet's name?
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -101,26 +97,32 @@ const Registration = () => {
             ></input>
           </div>
           <div className="text-center">
-            <p>{errorMessage}</p>
+            <p>{infoMessage}</p>
           </div>
           <div className="text-center">
             <button
               className="border border-darkcl px-4 py-2 rounded-xl shadow"
               disabled={false}
             >
-              Sign up
+              Recover password
             </button>
           </div>
           <div className="text-center px-2">
-            Already have an account? &nbsp;
+            Have you managed to recover? &nbsp;
             <span className="font-bold underline">
               <Link to="/login">Sign in</Link>
             </span>
           </div>
+          <div className="text-center px-2">
+            Couldn't recover? &nbsp;
+            <span className="font-bold underline">
+              <Link to="/register">Register</Link>
+            </span>
+          </div>
         </div>
       </form>
-    </section>
+    </main>
   );
 };
 
-export default Registration;
+export default PasswordRecovery;

@@ -12,6 +12,7 @@ import Quiz from "./components/quiz/Quiz";
 import QuizHistory from "./components/quiz/quiz-history/QuizHistory";
 import QuizStarter from "./components/quiz/QuizStarter";
 import FlashcardCategories from "./components/flashcard/FlashcardCategories";
+import PasswordRecovery from "./components/user/PasswordRecovery";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Registration />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="passwordRecovery" element={<PasswordRecovery />} />
         {/* 404 page */}
         <Route path="*" element={<MissingPath />} />
 
