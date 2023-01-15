@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-import { mockQuizHistoryItems } from "../../../utils/mock-data/mock-quiz-history";
-
 import Navbar from "../../ui/Navbar";
+import QuizHistoryTable from "./QuizHistoryTable";
 
 const QUIZ_HISTORY_URL = "/quiz/history";
 
@@ -16,7 +15,7 @@ const transformResponseDataToState = (responseData) => {
     quizHistoryItems.push({
       id: index,
       quizName: item.quizName,
-      completionDate: item.completionDate,
+      completionDate: item.date,
       pathways: item.statisticsDtos,
     });
   });
@@ -25,66 +24,39 @@ const transformResponseDataToState = (responseData) => {
 };
 
 const QuizHistory = () => {
-  const [quizHistoryItems, setQuizHistoryItems] = useState(
-    transformResponseDataToState(mockQuizHistoryItems)
-  );
+  const [quizHistoryItems, setQuizHistoryItems] = useState([]);
   const axiosPrivate = useAxiosPrivate();
+
+  console.log("quiz history items", quizHistoryItems);
 
   const getQuizHistoryData = async () => {
     try {
       const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
       const quizHistoryData = transformResponseDataToState(response.data);
       console.log("transformed response => ", quizHistoryData);
-      setQuizHistoryItems(() => quizHistoryData);
+      setQuizHistoryItems(quizHistoryData);
     } catch (err) {}
   };
 
-  const stateTester = () =>
-    console.log("quiz history items => ", quizHistoryItems);
-
-  const getDateString = (dateObj) => dateObj.toISOString().split("T")[0];
-
-  /*
   useEffect(() => {
     getQuizHistoryData();
   }, []);
-  */
 
   return (
-    <main className="bg-secondaryblue h-screen w-screen overflow-auto">
+    <>
+      <main className="bg-secondaryblue h-screen w-screen ">
+        <section className="flex items-center justify-center pt-6">
+          {quizHistoryItems.length === 0 ? (
+            <h1 className="text-3xl text-white pt-10">
+              Looks like the quiz history is empty...
+            </h1>
+          ) : (
+            <QuizHistoryTable quizHistory={quizHistoryItems} />
+          )}
+        </section>
+      </main>
       <Navbar />
-      <div className="flex h-3/5 items-center justify-center overflow-y-auto">
-        {quizHistoryItems.length === 0 ? (
-          <h1 className="text-3xl text-white">
-            Looks like the quiz history is empty...
-          </h1>
-        ) : (
-          <table className="table-auto w-1/2 bg-white border border-primaryblue rounded shadow">
-            <thead className="w-full">
-              <tr>
-                <th rowSpan="2">Quiz Name</th>
-                <th rowSpan="2">Completion Date</th>
-                <th colSpan="4">Pathways</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th></th>
-                <th>Path name</th>
-                <th>Completed percentage</th>
-              </tr>
-            </thead>
-            <tbody>
-              {quizHistoryItems.map((item, index) => (
-                <tr className="text-center" key={index}>
-                  <td>{item.quizName}</td>
-                  <td>{getDateString(item.completionDate)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </main>
+    </>
   );
 };
 

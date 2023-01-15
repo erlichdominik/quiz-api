@@ -28,7 +28,7 @@ const PasswordRecovery = () => {
           "Content-Type": "application/json",
         },
       });
-      setInfoMessage("Registration succesful");
+      setInfoMessage("Recovery succesfull");
     } catch (err) {
       setInfoMessage(err.response.data.message);
     }
