@@ -54,7 +54,7 @@ const PasswordRecovery = () => {
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="password">
-              Password:
+              New password
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -65,7 +65,7 @@ const PasswordRecovery = () => {
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="rePassword">
-              Re-enter password:
+              Re-enter new password:
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
