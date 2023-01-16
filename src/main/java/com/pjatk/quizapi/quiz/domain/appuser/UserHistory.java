@@ -4,6 +4,7 @@ import com.pjatk.quizapi.quiz.domain.quiz.Quiz;
 import com.pjatk.quizapi.sharedkernel.AbstractEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,17 +17,21 @@ public class UserHistory extends AbstractEntity {
     @OneToMany(mappedBy = "userHistory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Statistic> statistics = new HashSet<>();
 
+    private LocalDateTime walkthroughDate;
+
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private ApplicationUser applicationUser;
 
     public UserHistory(Quiz quiz) {
         this.quiz = quiz;
+        walkthroughDate = LocalDateTime.now();
     }
 
     public void addStatistic(Statistic statistic) {
         statistic.assignUserHistory(this);
         statistics.add(statistic);
+        walkthroughDate = LocalDateTime.now();
     }
 
     void assignApplicationUser(ApplicationUser applicationUser) {
@@ -36,6 +41,9 @@ public class UserHistory extends AbstractEntity {
     protected UserHistory() {
     }
 
+    public LocalDateTime getWalkthroughDate() {
+        return walkthroughDate;
+    }
 
     public Quiz getQuiz() {
         return quiz;

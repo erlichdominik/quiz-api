@@ -14,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Finder
@@ -59,10 +61,14 @@ class JpaUserHistoryFinder implements UserHistoryFinder {
     }
 
     private UserHistoryDto map(UserHistory userHistory) {
-        return new UserHistoryDto(userHistory.getQuiz().getName(), new ArrayList<>(userHistory
-                .getStatistics()
-                .stream()
-                .map(it -> new UserHistoryDto.StatisticDto(it.getPathName(), String.valueOf(it.getCompletedPercentage())))
-                .toList()));
+        return new UserHistoryDto(userHistory.getQuiz().getName(),
+                userHistory.getWalkthroughDate(),
+                new ArrayList<>(userHistory
+                        .getStatistics()
+                        .stream()
+                        .map(it -> new UserHistoryDto.StatisticDto(it.getPathName(), String.valueOf(BigDecimal.valueOf(it.getCompletedPercentage())
+                                .setScale(2, RoundingMode.HALF_DOWN)
+                        )))
+                        .toList()));
     }
 }

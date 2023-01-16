@@ -15,6 +15,7 @@ import com.pjatk.quizapi.quiz.domain.quiz.QuizRepository;
 import com.pjatk.quizapi.quiz.domain.walkthrough.Stat;
 import com.pjatk.quizapi.quiz.domain.walkthrough.Walkthrough;
 
+import java.time.Clock;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +27,13 @@ class ExamHistoryManager implements HistoryManager {
     private final QuizRepository quizRepository;
     private final PathwayRepository pathwayRepository;
     private final ApplicationUserRepository applicationUserRepository;
+    private final Clock clock;
 
-    ExamHistoryManager(QuizRepository quizRepository, PathwayRepository pathwayRepository, ApplicationUserRepository applicationUserRepository) {
+    ExamHistoryManager(QuizRepository quizRepository, PathwayRepository pathwayRepository, ApplicationUserRepository applicationUserRepository, Clock clock) {
         this.quizRepository = quizRepository;
         this.pathwayRepository = pathwayRepository;
         this.applicationUserRepository = applicationUserRepository;
+        this.clock = clock;
     }
 
     @Override
