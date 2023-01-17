@@ -7,7 +7,7 @@ spring:
       remove-abandoned: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
 app:
   jwt:
     secret: abcdefghijklmnOPQRSTUVWXYZ

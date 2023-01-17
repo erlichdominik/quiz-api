@@ -53,22 +53,6 @@ public class ApplicationSecurity {
         return authConfig.getAuthenticationManager();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//
-////        configuration.setAllowedOrigins(List.of("https://www.yourdomain.com")); // www - obligatory
-//        configuration.setAllowedOrigins(List.of("*"));  //set access from all domains
-//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(List.of("*"));
-//
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//
-//        return source;
-//    }
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().antMatchers("/h2-console/**");
@@ -100,7 +84,8 @@ public class ApplicationSecurity {
 
         http.authorizeRequests()
                 .antMatchers("/auth/**", "/docs/**", "/users", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**", "/console/**").permitAll()
-                .anyRequest().authenticated();
+//                .anyRequest().authenticated();
+        .anyRequest().permitAll();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(
