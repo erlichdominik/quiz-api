@@ -11,6 +11,7 @@ const QUIZ_HISTORY_URL = "/quiz/history";
 const transformResponseDataToState = (responseData) => {
   const quizHistoryItems = [];
   const data = [...responseData];
+  console.log("DATA", data);
 
   data.forEach((item, index) => {
     quizHistoryItems.push({
