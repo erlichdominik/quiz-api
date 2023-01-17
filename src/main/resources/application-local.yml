@@ -2,6 +2,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
 app:
   jwt:
     secret: abcdefghijklmnOPQRSTUVWXYZ
