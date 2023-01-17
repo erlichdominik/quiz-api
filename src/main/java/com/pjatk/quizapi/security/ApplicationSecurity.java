@@ -84,8 +84,8 @@ public class ApplicationSecurity {
 
         http.authorizeRequests()
                 .antMatchers("/auth/**", "/docs/**", "/users", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**", "/console/**").permitAll()
-//                .anyRequest().authenticated();
-        .anyRequest().permitAll();
+                .anyRequest().authenticated();
+//        .anyRequest().permitAll();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(
