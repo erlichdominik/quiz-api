@@ -20,4 +20,5 @@ class DbConfig {
         config.setJdbcUrl(dbUrl);
         return new HikariDataSource(config);
     }
+
 }
