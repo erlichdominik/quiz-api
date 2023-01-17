@@ -10,13 +10,14 @@ const QUIZ_HISTORY_URL = "/quiz/history";
 const transformResponseDataToState = (responseData) => {
   const quizHistoryItems = [];
   const data = [...responseData];
+  console.log("DATA", data);
 
   data.forEach((item, index) => {
     quizHistoryItems.push({
       id: index,
       quizName: item.quizName,
       completionDate: item.date,
-      pathways: item.statisticsDtos,
+      pathways: item.statisticDtos,
     });
   });
 
