@@ -35,7 +35,7 @@ class JpaQuestionFinder implements QuestionFinder {
 
         QuestionId questionId = walkThrough.getCurrentQuestionId();
 
-        String findQuestionByIdJpql = "select q from Question q where q.id = ?1 ";
+        String findQuestionByIdJpql = "select q from Question q left join fetch q.answers where q.id = ?1";
 
         TypedQuery<Question> currentQuestionQuestion = entityManager.createQuery(findQuestionByIdJpql, Question.class)
                 .setParameter(1, questionId.questionId());

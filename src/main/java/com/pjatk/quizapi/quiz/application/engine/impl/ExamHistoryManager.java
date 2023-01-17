@@ -29,11 +29,11 @@ class ExamHistoryManager implements HistoryManager {
     private final ApplicationUserRepository applicationUserRepository;
     private final Clock clock;
 
-    ExamHistoryManager(QuizRepository quizRepository, PathwayRepository pathwayRepository, ApplicationUserRepository applicationUserRepository, Clock clock) {
+    ExamHistoryManager(QuizRepository quizRepository, PathwayRepository pathwayRepository, ApplicationUserRepository applicationUserRepository) {
         this.quizRepository = quizRepository;
         this.pathwayRepository = pathwayRepository;
         this.applicationUserRepository = applicationUserRepository;
-        this.clock = clock;
+        this.clock = Clock.systemDefaultZone();
     }
 
     @Override

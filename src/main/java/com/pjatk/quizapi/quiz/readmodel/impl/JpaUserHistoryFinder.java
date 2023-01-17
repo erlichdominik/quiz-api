@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Finder
@@ -62,13 +63,13 @@ class JpaUserHistoryFinder implements UserHistoryFinder {
 
     private UserHistoryDto map(UserHistory userHistory) {
         return new UserHistoryDto(userHistory.getQuiz().getName(),
-                userHistory.getWalkthroughDate(),
+                userHistory.getWalkthroughDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")),
                 new ArrayList<>(userHistory
                         .getStatistics()
                         .stream()
-                        .map(it -> new UserHistoryDto.StatisticDto(it.getPathName(), String.valueOf(BigDecimal.valueOf(it.getCompletedPercentage())
+                        .map(it -> new UserHistoryDto.StatisticDto(it.getPathName(), String.format(String.valueOf(BigDecimal.valueOf(it.getCompletedPercentage())
                                 .setScale(2, RoundingMode.HALF_DOWN)
-                        )))
+                        ), "%.2f")))
                         .toList()));
     }
 }
