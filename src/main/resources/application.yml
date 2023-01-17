@@ -18,3 +18,4 @@ server:
     include-message: always
     include-binding-errors: never
     include-stacktrace: never
+  port: ${PORT:5000}
