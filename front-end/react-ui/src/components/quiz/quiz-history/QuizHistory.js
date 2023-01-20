@@ -16,7 +16,7 @@ const transformResponseDataToState = (responseData) => {
       id: index,
       quizName: item.quizName,
       completionDate: item.date,
-      pathways: item.statisticsDtos,
+      pathways: item.statisticDtos,
     });
   });
 

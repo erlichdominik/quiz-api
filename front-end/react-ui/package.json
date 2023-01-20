@@ -2,7 +2,7 @@
   "name": "physiology-quiz-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://secret-thicket-39797.herokuapp.com/",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
@@ -18,7 +18,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
