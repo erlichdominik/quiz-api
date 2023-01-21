@@ -13,6 +13,8 @@ import QuizHistory from "./components/quiz/quiz-history/QuizHistory";
 import QuizStarter from "./components/quiz/QuizStarter";
 import FlashcardCategories from "./components/flashcard/FlashcardCategories";
 import PasswordRecovery from "./components/user/PasswordRecovery";
+import TeacherPanel from "./components/teacher/TeacherPanel";
+import AdminPanel from "./components/admin/AdminPanel";
 
 const App = () => {
   return (
@@ -26,10 +28,18 @@ const App = () => {
         {/* 404 page */}
         <Route path="*" element={<MissingPath />} />
 
-        {/* Regular user routes*/}
+        {/* All logged in user routes*/}
         <Route element={<PersistLogin />}>
           <Route
-            element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}
+            element={
+              <RequireAuth
+                allowedRoles={[
+                  USER_ROLES.regularUser,
+                  USER_ROLES.teacherUser,
+                  USER_ROLES.adminUser,
+                ]}
+              />
+            }
           >
             <Route path="/" element={<Home />} />
             <Route path="quiz" element={<Quiz />} />
@@ -39,6 +49,20 @@ const App = () => {
               path="flashcardCategories"
               element={<FlashcardCategories />}
             />
+          </Route>
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[USER_ROLES.teacherUser, USER_ROLES.adminUser]}
+              />
+            }
+          >
+            <Route path="teacherPanel" element={<TeacherPanel />} />
+          </Route>
+          <Route
+            element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}
+          >
+            <Route path="adminPanel" element={<AdminPanel />} />
           </Route>
         </Route>
       </Route>

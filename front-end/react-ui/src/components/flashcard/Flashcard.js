@@ -11,7 +11,7 @@ const Flashcard = ({
     <>
       {!isFinished ? (
         <div
-          className="flex flex-col items-center w-full bg-white border border-primaryblue rounded-lg shadow space-y-2 h-4/5 cursor-pointer select-none"
+          className="flex flex-col items-center w-full bg-white border border-primaryblue rounded-lg shadow space-y-2 h-3/5 cursor-pointer select-none"
           onClick={onClick}
         >
           <h2 className="text-xl border-b border-darkcl pt-2">{text}</h2>

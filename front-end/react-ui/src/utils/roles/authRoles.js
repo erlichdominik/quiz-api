@@ -1,6 +1,7 @@
 const USER_ROLES = {
-  regularUser: 'USER',
-  adminUser: 'ADMIN',
+  regularUser: "USER",
+  teacherUser: "TEACHER",
+  adminUser: "ADMIN",
 };
 
 export default USER_ROLES;
