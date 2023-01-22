@@ -1,4 +1,4 @@
-package com.pjatk.quizapi.cqrs.annotations;
+package com.pjatk.quizapi.sharedkernel.cqrs.annotations;
 
 import java.lang.annotation.*;
 

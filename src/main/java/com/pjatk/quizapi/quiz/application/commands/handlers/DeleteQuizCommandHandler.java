@@ -1,7 +1,7 @@
 package com.pjatk.quizapi.quiz.application.commands.handlers;
 
-import com.pjatk.quizapi.cqrs.annotations.CommandHandlerAnnotation;
-import com.pjatk.quizapi.cqrs.command.handler.CommandHandler;
+import com.pjatk.quizapi.sharedkernel.cqrs.annotations.CommandHandlerAnnotation;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.handler.CommandHandler;
 import com.pjatk.quizapi.quiz.application.commands.DeleteQuizCommand;
 import com.pjatk.quizapi.quiz.domain.quiz.QuizRepository;
 

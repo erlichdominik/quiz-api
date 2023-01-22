@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.quiz.domain.walkthrough;
 
-import com.pjatk.quizapi.ddd.annotations.domain.DomainRepository;
+import com.pjatk.quizapi.sharedkernel.annotations.domain.DomainRepository;
 
 import java.util.List;
 import java.util.Optional;

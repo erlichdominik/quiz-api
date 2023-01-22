@@ -1,8 +1,8 @@
 package com.pjatk.quizapi.quiz.application.commands.handlers;
 
 import com.pjatk.quizapi.api.dto.QuestionNotFoundException;
-import com.pjatk.quizapi.cqrs.annotations.CommandHandlerAnnotation;
-import com.pjatk.quizapi.cqrs.command.handler.CommandHandler;
+import com.pjatk.quizapi.sharedkernel.cqrs.annotations.CommandHandlerAnnotation;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.handler.CommandHandler;
 import com.pjatk.quizapi.quiz.application.HistoryManager;
 import com.pjatk.quizapi.quiz.application.commands.AnswerNotFoundException;
 import com.pjatk.quizapi.quiz.application.commands.UpdateWalkthroughCommand;

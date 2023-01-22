@@ -1,7 +1,7 @@
-package com.pjatk.quizapi.cqrs.command.handler.spring;
+package com.pjatk.quizapi.sharedkernel.cqrs.command.handler.spring;
 
-import com.pjatk.quizapi.cqrs.command.handler.CommandHandler;
-import com.pjatk.quizapi.cqrs.command.impl.RunEnvironment;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.handler.CommandHandler;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.impl.RunEnvironment;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationListener;

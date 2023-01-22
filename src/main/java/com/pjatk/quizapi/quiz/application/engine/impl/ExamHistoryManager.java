@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.quiz.application.engine.impl;
 
-import com.pjatk.quizapi.ddd.annotations.application.ApplicationPolicy;
+import com.pjatk.quizapi.sharedkernel.annotations.application.ApplicationPolicy;
 import com.pjatk.quizapi.quiz.application.HistoryManager;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUserRepository;
