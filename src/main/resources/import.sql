@@ -338,6 +338,19 @@ insert into category(id, category) values (10, 'Frank-Starling law')
 insert into category(id, category) values (11, 'Adjusting the contraction strength of the heart mm')
 insert into category(id, category) values (12, 'Selected autonomic receptors')
 
+insert into category(id, category) values (13, 'Przydatne skróty')
+insert into category(id, category) values (14, 'Podstawowe parametry pracy serca')
+insert into category(id, category) values (15, 'Tętnice')
+insert into category(id, category) values (16, 'Żyły')
+insert into category(id, category) values (17, 'Kardiomiocyty')
+insert into category(id, category) values (18, 'Układ bodźcoprzewodzący')
+insert into category(id, category) values (19, 'Ciśnienie w prawym przedsionku')
+insert into category(id, category) values (20, 'Powrót żylny')
+insert into category(id, category) values (21, 'Prawo Laplace')
+insert into category(id, category) values (22, 'Prawo Franka-Starlinga')
+insert into category(id, category) values (23, 'Regulacja siły skurczu mm sercowego')
+insert into category(id, category) values (24, 'Wybrane receptory układu autonomicznego')
+
 insert into flashcard(id, text, description, category_id) values (1, 'MAP', 'Mean Arterial Pressure', 1)
 
 insert into flashcard(id, text, description, category_id) values (2, 'TPR', 'Total Peripheral Resistance', 1)
@@ -349,5 +362,16 @@ insert into flashcard(id, text, description, category_id) values (7, 'EDV (2)', 
 insert into flashcard(id, text, description, category_id) values (8, 'ESV (1)', 'End-systolic volume', 1)
 insert into flashcard(id, text, description, category_id) values (9, 'ESV (2)', 'Definition', 1)
 insert into flashcard(id, text, description, category_id) values (10, 'CI', 'Cardiac index', 1)
+
+insert into flashcard(id, text, description, category_id) values (11, 'MAP', 'Średnie ciśnienie tętnicze (Mean Arterial Pressure)', 13)
+insert into flashcard(id, text, description, category_id) values (12, 'TPR', 'Całkowity opór obwodowy, całkowity obwodowy opór naczyniowy (Total Peripheral Resistance)', 13)
+insert into flashcard(id, text, description, category_id) values (13, 'CO', 'pojemność minutowa serca (Cardiac output)', 13)
+insert into flashcard(id, text, description, category_id) values (14, 'SV', 'objętość wyrzutowa serca (Stroke volume)', 13)
+insert into flashcard(id, text, description, category_id) values (15, 'HR', 'częstość skurczów serca (Heart rate)', 13)
+insert into flashcard(id, text, description, category_id) values (16, 'EDV (1)', 'Objętość końcoworozkurczowa,inaczej Objętość późnorozkurczowa (End-diastolic volume)', 13)
+insert into flashcard(id, text, description, category_id) values (17, 'EDV (2)', 'Objętość krwi znajdująca się w komorach serca tuż przed fazą ich skurczu. Objętość ta ma wpływ na siłę skurczu komór. Zależność tę opisuje prawo Franka-Starlinga.', 13)
+insert into flashcard(id, text, description, category_id) values (18, 'ESV (1)', 'objętość końcowoskurczowa (End-systolic volume)', 13)
+insert into flashcard(id, text, description, category_id) values (19, 'ESV (2)', 'Definicja', 13)
+insert into flashcard(id, text, description, category_id) values (20, 'CI', '"wskaźnik sercowy (Cardiac index)"', 13)
 
 

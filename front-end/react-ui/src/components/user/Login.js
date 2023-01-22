@@ -44,7 +44,7 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
 
-      const roles = [USER_ROLES.regularUser];
+      const roles = response?.data?.roles;
 
       setAuth({ username, password, roles, accessToken, refreshToken });
 

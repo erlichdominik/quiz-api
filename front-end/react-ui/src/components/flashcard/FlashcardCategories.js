@@ -18,6 +18,7 @@ const FlashcardCategories = () => {
   const [isCategorySelected, setIsCategorySelected] = useState(false);
 
   const getFlashcardCategoryData = async () => {
+    // na koncu language
     const response = await axiosPrivate.get(FLASHCARD_CATEGORY_URL);
     setFlashcardCategories(response.data);
   };
@@ -45,11 +46,14 @@ const FlashcardCategories = () => {
     getFlashcardCategoryData();
   }, []);
 
+  const renderTitle = () =>
+    isCategorySelected ? nameLib.flashcards : nameLib.flashcardCategories;
+
   return (
     <>
       <main className="bg-secondaryblue h-screen w-screen">
         <h1 className="text-2xl text-white pt-3 w-fit mx-auto">
-          {isCategorySelected ? "Flashcards" : "Flashcard Categories"}
+          {renderTitle()}
         </h1>
         {isCategorySelected && (
           <h2 className="text-xl text-white pt-3 w-fit mx-auto">
