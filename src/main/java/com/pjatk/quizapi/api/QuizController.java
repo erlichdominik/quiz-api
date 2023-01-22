@@ -18,6 +18,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,11 +45,13 @@ class QuizController {
 
     @ApiResponse(description = "get all quiz names")
     @GetMapping("/names")
+    @RolesAllowed({ "STUDENT", "ROLE_TEACHER" })
     public ResponseEntity<List<QuizName>> getQuizNames() {
         return ResponseEntity.ok(quizNameFinder.find());
     }
 
     @GetMapping("/download")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     public ResponseEntity<Resource> downloadSampleExcel() {
         Resource resource = new FileSystemResource("src/main/resources/QUIZ_UPLOAD_SAMPLE.xlsx");
 
@@ -69,6 +72,7 @@ class QuizController {
     }
 
     @PostMapping("/upload")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     public ResponseEntity<Void> uploadExcelFile(@RequestParam("file")MultipartFile excel) {
         log.info(excel.getOriginalFilename());
         quizUploader.processFile(excel);
@@ -77,6 +81,7 @@ class QuizController {
     }
 
     @GetMapping("/init")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     public ResponseEntity<QuestionDataResponse> initQuiz(@RequestParam QuizMode quizMode, @RequestParam  long quizId) {
         var command = new InitQuizCommand(quizMode, quizId);
         Long walkthroughId = (Long) gate.dispatch(command);
@@ -85,11 +90,13 @@ class QuizController {
     }
 
     @GetMapping("/next")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     ResponseEntity<QuestionDataResponse> goNext(@RequestParam long walkthroughId) {
         return ResponseEntity.ok(questionFinder.find(new QuestionDataRequest(walkthroughId)));
     }
 
     @PostMapping("/submit")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     ResponseEntity<QuizState> submitAnswer(@RequestParam long walkthroughId, @RequestParam long answerId) {
         var command = new UpdateWalkthroughCommand(walkthroughId, answerId);
 
@@ -99,6 +106,7 @@ class QuizController {
     }
 
     @DeleteMapping("/walkthrough/{id}")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     ResponseEntity<Void> deleteWalkthrough(@PathVariable long id) {
         var command = new DeleteCurrentWalkthroughCommand(id);
 
@@ -108,16 +116,19 @@ class QuizController {
     }
 
     @GetMapping("/history")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     ResponseEntity<List<UserHistoryDto>> fetchUserHistory() {
         return ResponseEntity.ok(userHistoryFinder.findAll());
     }
 
     @GetMapping("/history/score")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     UserHistoryDto fetchLastUserHistory() {
         return userHistoryFinder.find();
     }
 
     @DeleteMapping("")
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     public ResponseEntity<List<QuizName>> deleteQuizName(@RequestBody DeleteQuizCommand command) {
         gate.dispatch(command);
 

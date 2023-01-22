@@ -4,10 +4,12 @@ spring:
       ddl-auto: create-drop
     show-sql: true
   datasource:
-    url: jdbc:h2:mem:db
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost/dominikerlich
+    username: dominikerlich
+    driver-class-name: org.postgresql.Driver
+  h2:
+    console:
+      enabled: true
 app:
   jwt:
     secret: abcdefghijklmnOPQRSTUVWXYZ

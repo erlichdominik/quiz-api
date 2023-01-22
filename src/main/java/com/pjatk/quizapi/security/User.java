@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name = "app_user")
@@ -34,11 +34,20 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String secondRecoveryAnswer;
 
-    public User(String email, String password, String firstRecoveryAnswer, String secondRecoveryAnswer) {
+    @ManyToMany
+    @JoinTable(name = "users_roles")
+    private Set<Role> roles = new HashSet<>();
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public User(String email, String password, String firstRecoveryAnswer, String secondRecoveryAnswer, Role defaultRole) {
         this.email = email;
         this.password = password;
         this.firstRecoveryAnswer = firstRecoveryAnswer;
         this.secondRecoveryAnswer = secondRecoveryAnswer;
+        roles.add(defaultRole);
     }
 
     public boolean areRecoveryAnswersCorrect(String firstAnswer,
@@ -59,7 +68,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName())));
+        return authorities;
     }
 
     @Override
