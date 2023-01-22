@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../ui/Navbar";
 
-const TeacherPanel = () => {
+const StudentGroup = () => {
   return (
     <>
       <Navbar />
@@ -9,4 +9,4 @@ const TeacherPanel = () => {
   );
 };
 
-export default TeacherPanel;
+export default StudentGroup;

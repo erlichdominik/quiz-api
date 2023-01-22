@@ -8,11 +8,23 @@ import ContinueQuizIcon from "../../assets/continue-quiz.svg";
 import QuizHistoryIcon from "../../assets/quiz-history.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import FlashcardIcon from "../../assets/flashcards.svg";
-import { ReactComponent as LogoutIconTest } from "../../assets/quiz-history.svg";
+import StudentGroupIcon from "../../assets/student-group.svg";
+import AdminPanelIcon from "../../assets/admin-panel.svg";
+import TeacherPanelIcon from "../../assets/teacher-panel.svg";
+import useAuth from "../../hooks/useAuth";
+import USER_ROLES from "../../utils/roles/authRoles";
+
+const hasStudentRole = (roles) => roles.includes(USER_ROLES.regularUser);
+
+const hasTeacherRole = (roles) => roles.includes(USER_ROLES.teacherUser);
+
+const hasAdminRole = (roles) => roles.includes(USER_ROLES.adminUser);
 
 const Navbar = () => {
   const { isQuizStarted, isQuizOver, disbandQuiz } = useQuizContext();
   const { nameLib } = useLanguageContext();
+  const { auth } = useAuth();
+  const roles = auth.roles;
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -55,6 +67,32 @@ const Navbar = () => {
           alt={nameLib.flashcards}
           linkTo="/flashcardCategories"
         />
+        {(hasStudentRole(roles) ||
+          hasTeacherRole(roles) ||
+          hasAdminRole(roles)) && (
+          <NavItem
+            icon={StudentGroupIcon}
+            label={nameLib.studentGroup}
+            alt={nameLib.studentGroup}
+            linkTo="/studentGroup"
+          />
+        )}
+        {(hasTeacherRole(roles) || hasAdminRole(roles)) && (
+          <NavItem
+            icon={TeacherPanelIcon}
+            label={nameLib.teacherPanel}
+            alt={nameLib.teacherPanel}
+            linkTo="/teacherPanel"
+          />
+        )}
+        {hasAdminRole(roles) && (
+          <NavItem
+            icon={AdminPanelIcon}
+            label={nameLib.adminPanel}
+            alt={nameLib.adminPanel}
+            linkTo="/adminPanel"
+          />
+        )}
         <NavItem
           icon={LogoutIcon}
           label={nameLib.logout}
