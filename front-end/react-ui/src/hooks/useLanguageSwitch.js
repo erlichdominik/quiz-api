@@ -14,7 +14,7 @@ const useLanguageSwitch = (LANGUAGE_CONFIG) => {
     }
   }, [language]);
 
-  return { setLanguage, nameLib };
+  return { language, setLanguage, nameLib };
 };
 
 export default useLanguageSwitch;

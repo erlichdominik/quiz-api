@@ -1,16 +1,25 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import useLanguageSwitch from "../hooks/useLanguageSwitch";
 import { LANGUAGE_CONFIG } from "../utils/language-utils/language-config";
 
 const LanguageContext = createContext({});
 
 export const LanguageProvider = ({ children }) => {
-  const { setLanguage, nameLib } = useLanguageSwitch(LANGUAGE_CONFIG);
+  const { language, setLanguage, nameLib } = useLanguageSwitch(LANGUAGE_CONFIG);
+  const [canChangeLocale, setCanChangeLocale] = useState(true);
 
   console.log("language: ", nameLib);
 
   return (
-    <LanguageContext.Provider value={{ setLanguage, nameLib }}>
+    <LanguageContext.Provider
+      value={{
+        language,
+        setLanguage,
+        nameLib,
+        canChangeLocale,
+        setCanChangeLocale,
+      }}
+    >
       {children}
     </LanguageContext.Provider>
   );

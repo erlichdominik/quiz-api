@@ -10,7 +10,7 @@ const FLASHCARD_CATEGORY_URL = "/flashcards";
 const FlashcardCategories = () => {
   const axiosPrivate = useAxiosPrivate();
 
-  const { nameLib } = useLanguageContext();
+  const { setCanChangeLocale, language, nameLib } = useLanguageContext();
 
   const [flashcardCategories, setFlashcardCategories] = useState([]);
   const [flashcards, setFlashcards] = useState([]);
@@ -19,7 +19,10 @@ const FlashcardCategories = () => {
 
   const getFlashcardCategoryData = async () => {
     // na koncu language
-    const response = await axiosPrivate.get(FLASHCARD_CATEGORY_URL);
+    const languageReq = language === "POLISH" ? "PL" : "EN";
+    const response = await axiosPrivate.get(FLASHCARD_CATEGORY_URL, {
+      params: { locale: languageReq },
+    });
     setFlashcardCategories(response.data);
   };
 
@@ -44,7 +47,11 @@ const FlashcardCategories = () => {
 
   useEffect(() => {
     getFlashcardCategoryData();
-  }, []);
+  }, [language]);
+
+  useEffect(() => {
+    setCanChangeLocale(!isCategorySelected);
+  }, [isCategorySelected]);
 
   const renderTitle = () =>
     isCategorySelected ? nameLib.flashcards : nameLib.flashcardCategories;
