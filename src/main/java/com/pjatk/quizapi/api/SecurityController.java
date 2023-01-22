@@ -95,6 +95,7 @@ class SecurityController {
     }
 
     @GetMapping("/auth/refreshtoken")
+    @SecurityRequirement(name = ApplicationSecurity.SECURITY_CONFIG_NAME)
     public ResponseEntity<RefreshTokenResponse> refreshToken(HttpServletRequest request) {
 
         Cookie refreshToken = Arrays.stream(request.getCookies())
