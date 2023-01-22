@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import useLanguageContext from "../../hooks/useLanguageContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import USER_ROLES from "../../utils/roles/authRoles";
@@ -10,6 +11,7 @@ const LOGIN_URL = "/auth/login";
 
 const Login = () => {
   const { setAuth } = useAuth();
+  const { nameLib } = useLanguageContext();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,11 +70,11 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="pt-6">
         <div className="flex flex-col space-y-3 border w-72 mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
-            <h1 className="text-3xl pt-2">Sign in</h1>
+            <h1 className="text-3xl pt-2">{nameLib.signIn}</h1>
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">
-              Username:
+              {nameLib.username}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -87,7 +89,7 @@ const Login = () => {
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="password">
-              Password:
+              {nameLib.password}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -99,8 +101,8 @@ const Login = () => {
             />
           </div>
           <div className="pt-2 text-center">
-            <button className="border border-darkcl w-24 px-4 py-2 rounded-xl shadow">
-              Sign in
+            <button className="border border-darkcl w-max px-4 py-2 rounded-xl shadow">
+              {nameLib.signIn}
             </button>
           </div>
           <div className="text-center">
@@ -109,18 +111,18 @@ const Login = () => {
             </p>
           </div>
           <div className="text-center px-2 mt-0">
-            Don't have an account? &nbsp;
+            {nameLib.dontHaveAccount} &nbsp;
             <span className="font-bold underline">
               <Link to="/register" className="inline-block">
-                Sign up
+                {nameLib.signUp}
               </Link>
             </span>
           </div>
           <div className="text-center px-2">
-            Forgot your password or want to change it? &nbsp;
+            {nameLib.forgotYourPasswordOrWantToChangeIt} &nbsp;
             <span className="font-bold underline">
               <Link to="/passwordRecovery" className="inline-block">
-                Recover password
+                {nameLib.recoverPassword}
               </Link>
             </span>
           </div>

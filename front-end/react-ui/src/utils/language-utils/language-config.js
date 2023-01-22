@@ -1,11 +1,4 @@
-const LANGUAGE_CONFIG = {
-  availableLanguages: {
-    polish: "POLISH",
-    english: "ENGLISH",
-  },
-};
-
-const nameLibPolish = {
+export const nameLibPolish = {
   signIn: "Zaloguj się",
   username: "Nazwa użytkownika",
   password: "Hasło",
@@ -17,10 +10,64 @@ const nameLibPolish = {
     "Zapomniałeś hasła lub chcesz je zresetować?",
   recoverPassword: "Odzyskaj hasło",
   reEnterPassword: "Powtórz hasło",
+  newPassword: "Nowe hasło",
+  reEnterNewPassword: "Powtórz nowe hasło",
   passwordRecoveryQuestion: "Pytanie do odzyskiwania hasła",
   favFood: "Jakie jest twoje ulubione jedzenie?",
   firstPetName: "Jakie jest imie twojego pierwszego zwierzątka",
-  // TODO
+  startQuiz: "Rozpocznij quiz",
+  quizHistory: "Historia quizów",
+  flashcards: "Fiszki",
+  logout: "Wyloguj się",
+  startNewQuiz: "Rozpocznij nowy quiz",
+  nextQuestion: "Następne pytanie",
+  quizName: "Nazwa quizu",
+  dateOfCompletion: "Data ukończenia",
+  pathwayScores: "Wyniki ścieżek",
+  flashcardCategories: "Kategorie fiszek",
+  goBackToCatSelection: "Powrót do kategorii",
+  category: "Kategoria",
+  flashcardCatOver: "To ostatnia fiszka z kategorii, rozpocząć od nowa?",
+  startOver: "Rozpocznij od nowa",
 };
 
-export default LANGUAGE_CONFIG;
+export const nameLibEnglish = {
+  signIn: "Sign in",
+  username: "Username",
+  password: "Password",
+  dontHaveAccount: "Don't have an account?",
+  alreadyHaveAccount: "Already have an account?",
+  register: "Register",
+  signUp: "Sign up",
+  forgotYourPasswordOrWantToChangeIt:
+    "Forgot your password or want to change it?",
+  recoverPassword: "Recover password",
+  reEnterPassword: "Re-enter password",
+  newPassword: "New password",
+  reEnterNewPassword: "Re-enter new password",
+  passwordRecoveryQuestion: "Password recovery question",
+  favFood: "What's your favorite food?",
+  firstPetName: "What's your first pet's name?",
+  startQuiz: "Start quiz",
+  quizHistory: "Quiz history",
+  flashcards: "Flashcards",
+  logout: "Logout",
+  startNewQuiz: "Start new quiz",
+  nextQuestion: "Next question",
+  quizName: "Quiz name",
+  dateOfCompletion: "Date of completion",
+  pathwayScores: "Pathway scores",
+  flashcardCategories: "Flashcard categories",
+  goBackToCatSelection: "Powrót do kategorii",
+  category: "Categories",
+  flashcardCatOver:
+    "This flashcard category is finished, do you want to start it again?",
+  startOver: "Start over",
+};
+
+export const LANGUAGE_CONFIG = {
+  availableLanguages: {
+    polish: nameLibPolish,
+    english: nameLibEnglish,
+  },
+};
