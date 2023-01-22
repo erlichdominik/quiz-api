@@ -2,7 +2,6 @@ package com.pjatk.quizapi.security;
 
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +14,6 @@ import java.util.*;
 @Entity
 @Table(name = "app_user")
 @Getter
-@Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -64,6 +62,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public User(long id, String email, List<Role> roles) {
+        this.id = id;
+        this.email = email;
+        this.roles.addAll(roles);
+    }
+
     protected User() {}
 
     @Override
@@ -76,10 +80,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
-    }
-
-    public Optional<ApplicationUser> getApplicationUser() {
-        return Optional.ofNullable(applicationUser);
     }
 
     @Override
@@ -110,5 +110,15 @@ public class User implements UserDetails {
                 ", newPassword='" + password + '\'' +
                 ", applicationUser=" + applicationUser +
                 '}';
+    }
+
+    private boolean isTeacher() {
+        return roles.stream()
+                .anyMatch(it -> it.getName().equals(Roles.TEACHER.getRoleName()));
+    }
+
+    private boolean isStudent() {
+        return roles.stream()
+                .anyMatch(it -> it.getName().equals(Roles.STUDENT.getRoleName()));
     }
 }

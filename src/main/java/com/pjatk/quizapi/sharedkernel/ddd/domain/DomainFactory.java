@@ -1,4 +1,4 @@
-package com.pjatk.quizapi.sharedkernel.annotations.domain;
+package com.pjatk.quizapi.sharedkernel.ddd.domain;
 
 import org.springframework.stereotype.Component;
 

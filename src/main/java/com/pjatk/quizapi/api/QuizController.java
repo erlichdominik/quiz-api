@@ -45,7 +45,7 @@ class QuizController {
 
     @ApiResponse(description = "get all quiz names")
     @GetMapping("/names")
-    @RolesAllowed({ "STUDENT", "ROLE_TEACHER" })
+    @RolesAllowed({ "STUDENT", "TEACHER" })
     public ResponseEntity<List<QuizName>> getQuizNames() {
         return ResponseEntity.ok(quizNameFinder.find());
     }

@@ -10,11 +10,14 @@
 
 insert into app_user(id, email, password, first_recovery_answer, second_recovery_answer) values (1, 'admin', '$2a$10$bD45TIkBkCqdYfLI49RSyO/5QaxzOGUPMuKn0pupceFXIpIEuZvnK', 'admin', 'admin')
 
+insert into app_user(id, email, password, first_recovery_answer, second_recovery_answer) values (2, 't', '$2a$10$KMmN25KQOMf7H6suM2u7yOTN.yZroj1J7CzrshB.LFge9Imk38tqu', 't', 't')
+
 insert into ROLE(id, name) values (1, 'STUDENT')
 insert into ROLE(id, name) values (2, 'TEACHER')
 insert into ROLE(id, name) values (3, 'ADMIN')
 
 insert into users_roles(user_id, roles_id) values (1, 3)
+insert into users_roles(user_id, roles_id) values (2, 2)
 
 insert into QUIZ(id, name) values (1, 'default')
 -- insert into QUIZ(id, category) values (2, 'easy')
