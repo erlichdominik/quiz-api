@@ -33,7 +33,6 @@ public class UserService {
     public void createNewStudent(RegisterNewUserRequest request) {
         Role role = roleRepository.findByNameOrThrow(Roles.STUDENT.getRoleName());
         var user = new User(request.login(), encoder.encode(request.password()), request.firstAnswerRecovery(), request.secondAnswerRecovery(), role);
-
         try {
             repository.save(user);
         } catch (DataIntegrityViolationException e) {
