@@ -11,14 +11,19 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository repository, PasswordEncoder encoder) {
+
+    public UserService(UserRepository repository, PasswordEncoder encoder, RoleRepository roleRepository) {
         this.repository = repository;
         this.encoder = encoder;
+        this.roleRepository = roleRepository;
     }
 
-    public void createNewUser(RegisterNewUserRequest request) {
-        var user = new User(request.login(), encoder.encode(request.password()), request.firstAnswerRecovery(), request.secondAnswerRecovery());
+    public void createNewStudent(RegisterNewUserRequest request) {
+        Role role = roleRepository.findByNameOrThrow(Roles.STUDENT.getRoleName());
+        var user = new User(request.login(), encoder.encode(request.password()), request.firstAnswerRecovery(), request.secondAnswerRecovery(), role);
+
         try {
             repository.save(user);
         } catch (DataIntegrityViolationException e) {

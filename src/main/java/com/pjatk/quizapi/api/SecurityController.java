@@ -51,7 +51,10 @@ class SecurityController {
             String accessToken = tokenCreator.generateAccessToken(user);
             RefreshToken refreshToken = refreshTokenManager.createRefreshToken(user.getId());
 
-            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken());
+            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken.getToken(),
+                    user.getRoles().stream()
+                            .map(Role::getName)
+                            .toList());
 
             httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
 
@@ -69,7 +72,7 @@ class SecurityController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterNewUserRequest request) {
-        userService.createNewUser(request);
+        userService.createNewStudent(request);
         return ResponseEntity.ok().build();
     }
 

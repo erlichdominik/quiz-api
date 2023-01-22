@@ -1,5 +1,7 @@
 package com.pjatk.quizapi.api.dto;
 
-public record AuthResponse(String email, String accessToken, String refreshToken) {
+import java.util.List;
+
+public record AuthResponse(String email, String accessToken, String refreshToken, List<String> roles) {
     
 }

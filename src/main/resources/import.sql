@@ -7,6 +7,15 @@
 
 -- insert into app_user (id, email, newPassword) values (1, 'test@gmail.com', '$2a$10$M9WSIbp/oBUQfVsQkCjw/uQQ3zFXPgSFRmH4gqSr/v3YcOTpkoi4e')
 
+
+insert into app_user(id, email, password, first_recovery_answer, second_recovery_answer) values (1, 'admin', '$2a$10$bD45TIkBkCqdYfLI49RSyO/5QaxzOGUPMuKn0pupceFXIpIEuZvnK', 'admin', 'admin')
+
+insert into ROLE(id, name) values (1, 'STUDENT')
+insert into ROLE(id, name) values (2, 'TEACHER')
+insert into ROLE(id, name) values (3, 'ADMIN')
+
+insert into users_roles(user_id, roles_id) values (1, 3)
+
 insert into QUIZ(id, name) values (1, 'default')
 -- insert into QUIZ(id, category) values (2, 'easy')
 -- insert into quiz (id, category) values ('fed1de10-5d35-11ed-a94e-4d3f065c0f7x', 'easy')
