@@ -64,12 +64,14 @@ const FlashcardCategories = () => {
             }
           </h2>
         )}
-        <section className="flex justify-center pt-3 h-4/5 pb-3">
+        <section className="h-4/5 flex justify-center items-center mx-2">
           {!isCategorySelected ? (
-            <FlashcardCategoriesTable
-              flashcardCategories={flashcardCategories}
-              onCategoryClick={handleCategoryClick}
-            />
+            <div className="flex justify-center items-center w-full h-5/6">
+              <FlashcardCategoriesTable
+                flashcardCategories={flashcardCategories}
+                onCategoryClick={handleCategoryClick}
+              />
+            </div>
           ) : (
             <Flashcards
               flashcards={flashcards}

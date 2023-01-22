@@ -67,17 +67,15 @@ const Navbar = () => {
           alt={nameLib.flashcards}
           linkTo="/flashcardCategories"
         />
-        {(hasStudentRole(roles) ||
-          hasTeacherRole(roles) ||
-          hasAdminRole(roles)) && (
+        {hasStudentRole(roles) && (
           <NavItem
             icon={StudentGroupIcon}
-            label={nameLib.studentGroup}
-            alt={nameLib.studentGroup}
-            linkTo="/studentGroup"
+            label={nameLib.studentCredit}
+            alt={nameLib.studentCredit}
+            linkTo="/studentCredit"
           />
         )}
-        {(hasTeacherRole(roles) || hasAdminRole(roles)) && (
+        {hasTeacherRole(roles) && (
           <NavItem
             icon={TeacherPanelIcon}
             label={nameLib.teacherPanel}

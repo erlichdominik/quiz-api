@@ -45,7 +45,14 @@ const Login = () => {
       const refreshToken = response?.data?.refreshToken;
 
       // testing
-      const roles = ["STUDENT", "TEACHER", "ADMIN"];
+      const roles = ["STUDENT"];
+      // admin admin default admin
+      // teacher ->  t t
+      //
+      // admin view ma dwa linki, jak klika teacher
+      // admin -> lista teacaherow -> lista group -> lista studentow oraz pobierz pdf wynikow
+      // teacher panel -> add new group -> (nazwa grupy, deadline date picker) -> wyswietl kod
+      // teacher panel -> group list -> nazwa grupy i kod -> lista studentow
 
       setAuth({ username, password, roles, accessToken, refreshToken });
 

@@ -35,7 +35,7 @@ const Quiz = () => {
 
   return (
     <main className="bg-secondaryblue h-screen w-screen ">
-      <section className="h-3/5 flex justify-center items-center">
+      <section className="h-4/5 flex justify-center items-center mx-2">
         <Navbar />
         {!isQuizOver && quizState !== null && (
           <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md">

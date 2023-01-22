@@ -38,9 +38,12 @@ export const nameLibPolish = {
   thankYouForCompleting: "Dziękujemy za ukończenie quizu!",
   yourScore: "Twój wynik",
   quizHistoryEmpty: "Wygląda na to że nie ma ukończonych quizów",
-  studentGroup: "Grupa studenta",
+  studentCredit: "Zaliczenie",
   teacherPanel: "Panel nauczyciela",
   adminPanel: "Panel administratora",
+  enterCreditCode: "Wpisz kod zaliczeniowy tutaj",
+  creditCode: "Kod zaliczeniowy",
+  addToGroup: "Add to group",
 };
 
 export const nameLibEnglish = {
@@ -84,9 +87,12 @@ export const nameLibEnglish = {
   thankYouForCompleting: "Thank you for completing the quiz!",
   yourScore: "Your score",
   quizHistoryEmpty: "Looks like the quiz history is empty",
-  studentGroup: "Student group",
+  studentCredit: "Credit",
   teacherPanel: "Teacher panel",
   adminPanel: "Admin panel",
+  enterCreditCode: "Enter credit code here",
+  creditCode: "Credit code",
+  addToGroup: "Add to group",
 };
 
 export const LANGUAGE_CONFIG = {

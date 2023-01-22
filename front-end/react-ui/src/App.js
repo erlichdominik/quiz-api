@@ -15,7 +15,7 @@ import FlashcardCategories from "./components/flashcard/FlashcardCategories";
 import PasswordRecovery from "./components/user/PasswordRecovery";
 import TeacherPanel from "./components/teacher/TeacherPanel";
 import AdminPanel from "./components/admin/AdminPanel";
-import StudentGroup from "./components/student/StudentGroup";
+import StudentCredit from "./components/student/StudentCredit";
 
 const App = () => {
   return (
@@ -50,7 +50,7 @@ const App = () => {
               path="flashcardCategories"
               element={<FlashcardCategories />}
             />
-            <Route path="studentGroup" element={<StudentGroup />}></Route>
+            <Route path="studentCredit" element={<StudentCredit />}></Route>
           </Route>
           <Route
             element={

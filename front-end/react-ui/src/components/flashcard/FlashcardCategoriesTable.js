@@ -6,7 +6,7 @@ const FlashcardCategoriesTable = ({ flashcardCategories, onCategoryClick }) => {
   };
 
   return (
-    <ul className="bg-white border border-primaryblue w-2/5 h-5/6 min-w-max min-h-full mx-auto rounded-lg flex flex-col items-center text-lg px-2 py-1 overflow-auto">
+    <ul className="bg-white border border-primaryblue w-[20rem] h-full mx-auto rounded-lg flex flex-col items-center text-lg px-2 py-1 overflow-auto">
       {flashcardCategories.map((category) => (
         <li
           className="cursor-pointer hover:bg-secondaryblue hover:text-white px-2 rounded w-full p-1 transition"

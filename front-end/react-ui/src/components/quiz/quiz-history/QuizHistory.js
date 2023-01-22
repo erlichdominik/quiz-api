@@ -45,7 +45,7 @@ const QuizHistory = () => {
   return (
     <>
       <main className="bg-secondaryblue h-screen w-screen ">
-        <section className="flex items-center justify-center pt-6">
+        <section className="flex items-center h-4/5 w-full justify-center pt-6">
           {quizHistoryItems.length === 0 ? (
             <h1 className="text-3xl text-white pt-10">
               {nameLib.quizHistoryEmpty}

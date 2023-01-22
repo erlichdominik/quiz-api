@@ -23,7 +23,7 @@ const Flashcards = ({ flashcards, onReturnClick }) => {
   };
 
   return (
-    <div className="flex flex-col w-3/4 ">
+    <div className="flex flex-col w-[20rem] h-full">
       <button
         className="bg-secondaryblue h-10 text-white w-full text-sm border border-white shadow rounded-lg px-2 py-1  mb-1"
         onClick={() => onReturnClick(false)}
