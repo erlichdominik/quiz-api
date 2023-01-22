@@ -1,12 +1,10 @@
 package com.pjatk.quizapi.flashcards.domain;
 
 import com.pjatk.quizapi.sharedkernel.AbstractEntity;
+import com.pjatk.quizapi.sharedkernel.Locale;
 import lombok.Getter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +12,8 @@ import java.util.Set;
 @Getter
 public class Category extends AbstractEntity {
     private String category;
+    @Enumerated(value = EnumType.STRING)
+    private Locale locale;
 
     @OneToMany(
             mappedBy = "category",

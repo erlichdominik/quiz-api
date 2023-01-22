@@ -5,11 +5,9 @@ import com.pjatk.quizapi.flashcards.readmodel.FlashcardFinder;
 import com.pjatk.quizapi.flashcards.readmodel.Topic;
 import com.pjatk.quizapi.flashcards.readmodel.TopicFinder;
 import com.pjatk.quizapi.security.ApplicationSecurity;
+import com.pjatk.quizapi.sharedkernel.Locale;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +24,8 @@ class FlashcardsController {
     }
 
     @GetMapping
-    List<Topic> fetchTopics() {
-        return topicFinder.findAll();
+    List<Topic> fetchTopics(@RequestParam Locale locale) {
+        return topicFinder.findAll(locale);
     }
 
     @GetMapping("/{categoryId}")
