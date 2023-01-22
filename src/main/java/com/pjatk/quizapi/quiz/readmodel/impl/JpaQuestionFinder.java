@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.quiz.readmodel.impl;
 
-import com.pjatk.quizapi.sharedkernel.annotations.application.Finder;
+import com.pjatk.quizapi.sharedkernel.ddd.application.Finder;
 import com.pjatk.quizapi.quiz.application.commands.QuizAlreadyFinishedException;
 import com.pjatk.quizapi.quiz.domain.answer.Answer;
 import com.pjatk.quizapi.quiz.domain.question.Question;

@@ -1,4 +1,4 @@
-package com.pjatk.quizapi.sharedkernel.annotations.domain;
+package com.pjatk.quizapi.sharedkernel.ddd.domain;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

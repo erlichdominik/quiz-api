@@ -1,4 +1,4 @@
-package com.pjatk.quizapi.sharedkernel.annotations.application;
+package com.pjatk.quizapi.sharedkernel.ddd.application;
 
 import org.springframework.stereotype.Component;
 

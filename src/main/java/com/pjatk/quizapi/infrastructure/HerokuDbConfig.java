@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-class DbConfig {
+class HerokuDbConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 

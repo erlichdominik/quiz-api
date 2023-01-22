@@ -6,7 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-public interface RoleRepository extends Repository<Role, Long> {
+interface RoleRepository extends Repository<Role, Long> {
     Optional<Role> findByName(String name);
 
     default Role findByNameOrThrow(String name) {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,6 @@ class SecurityController {
         this.refreshTokenManager = refreshTokenManager;
         this.userService = userService;
     }
-
 
     @PostMapping("/auth/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
@@ -74,6 +74,13 @@ class SecurityController {
     public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterNewUserRequest request) {
         userService.createNewStudent(request);
         return ResponseEntity.ok().build();
+    }
+
+    @RolesAllowed({ "ADMIN" })
+    @PostMapping("/auth/register/admin")
+    @SecurityRequirement(name = ApplicationSecurity.SECURITY_CONFIG_NAME)
+    void registerTeacher(@RequestBody @Valid RegisterNewUserRequest request) {
+        userService.createNewTeacher(request);
     }
 
     @SecurityRequirement(name = ApplicationSecurity.SECURITY_CONFIG_NAME)

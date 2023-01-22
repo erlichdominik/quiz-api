@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 class JwtTokenFilter extends OncePerRequestFilter {
@@ -65,7 +67,6 @@ class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private UserDetails getUserDetails(String token) {
-        User userDetails = new User();
         String[] jwtSubject = tokenCreator.getSubject(token).split(",");
         Claims claims = tokenCreator.parseClaims(token);
         String roles = (String) claims.get("roles");
@@ -73,13 +74,11 @@ class JwtTokenFilter extends OncePerRequestFilter {
         roles = roles.replace("[", "").replace("]", "");
         String[] roleNames = roles.split(",");
 
+        List<Role> rolesList = new ArrayList<>();
         for (String aRoleName : roleNames) {
-            userDetails.addRole(new Role(aRoleName));
+            rolesList.add(new Role(aRoleName));
         }
 
-        userDetails.setId(Integer.parseInt(jwtSubject[0]));
-        userDetails.setEmail(jwtSubject[1]);
-
-        return userDetails;
+        return new User(Integer.parseInt(jwtSubject[0]), jwtSubject[1], rolesList);
     }
 }

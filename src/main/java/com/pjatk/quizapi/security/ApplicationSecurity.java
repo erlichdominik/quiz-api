@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -27,8 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 @SecurityScheme(name = ApplicationSecurity.SECURITY_CONFIG_NAME, in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
-public class ApplicationSecurity {
+@EnableGlobalMethodSecurity(jsr250Enabled = true, securedEnabled = true,
+prePostEnabled = true)
+public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
     private final UserRepository userRepository;
     private final JwtTokenFilter jwtTokenFilter;
     public static final String SECURITY_CONFIG_NAME = "App Bearer token";

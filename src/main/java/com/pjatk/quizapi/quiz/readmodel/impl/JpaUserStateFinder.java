@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.quiz.readmodel.impl;
 
-import com.pjatk.quizapi.sharedkernel.annotations.application.Finder;
+import com.pjatk.quizapi.sharedkernel.ddd.application.Finder;
 import com.pjatk.quizapi.quiz.readmodel.UserStateDto;
 import com.pjatk.quizapi.quiz.readmodel.UserStateFinder;
 import org.apache.commons.lang3.NotImplementedException;
