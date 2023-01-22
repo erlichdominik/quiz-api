@@ -1,14 +1,11 @@
-package com.pjatk.quizapi.ddd.annotations.domain;
-
-import org.springframework.stereotype.Component;
+package com.pjatk.quizapi.sharedkernel.annotations.domain;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Component
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface DomainFactory {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DomainRepository {
 }

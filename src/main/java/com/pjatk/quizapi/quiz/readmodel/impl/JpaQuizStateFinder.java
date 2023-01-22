@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.quiz.readmodel.impl;
 
-import com.pjatk.quizapi.ddd.annotations.application.Finder;
+import com.pjatk.quizapi.sharedkernel.annotations.application.Finder;
 import com.pjatk.quizapi.quiz.domain.walkthrough.Walkthrough;
 import com.pjatk.quizapi.quiz.readmodel.QuizState;
 import com.pjatk.quizapi.quiz.readmodel.QuizStateFinder;

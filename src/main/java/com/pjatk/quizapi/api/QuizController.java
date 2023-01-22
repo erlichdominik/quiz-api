@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.api;
 
-import com.pjatk.quizapi.cqrs.command.Gate;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.Gate;
 import com.pjatk.quizapi.quiz.application.commands.DeleteCurrentWalkthroughCommand;
 import com.pjatk.quizapi.quiz.application.commands.DeleteQuizCommand;
 import com.pjatk.quizapi.quiz.application.commands.InitQuizCommand;

@@ -1,6 +1,6 @@
-package com.pjatk.quizapi.cqrs.command.impl;
+package com.pjatk.quizapi.sharedkernel.cqrs.command.impl;
 
-import com.pjatk.quizapi.cqrs.annotations.Command;
+import com.pjatk.quizapi.sharedkernel.cqrs.annotations.Command;
 
 import java.util.Date;
 import java.util.LinkedHashMap;

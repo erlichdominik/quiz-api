@@ -1,6 +1,6 @@
 package com.pjatk.quizapi.flashcards.readmodel.impl;
 
-import com.pjatk.quizapi.ddd.annotations.application.Finder;
+import com.pjatk.quizapi.sharedkernel.annotations.application.Finder;
 import com.pjatk.quizapi.flashcards.readmodel.Topic;
 import com.pjatk.quizapi.flashcards.readmodel.TopicFinder;
 

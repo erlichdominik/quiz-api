@@ -1,6 +1,6 @@
-package com.pjatk.quizapi.cqrs.command.impl;
+package com.pjatk.quizapi.sharedkernel.cqrs.command.impl;
 
-import com.pjatk.quizapi.cqrs.command.handler.CommandHandler;
+import com.pjatk.quizapi.sharedkernel.cqrs.command.handler.CommandHandler;
 import org.springframework.stereotype.Component;
 
 @Component
