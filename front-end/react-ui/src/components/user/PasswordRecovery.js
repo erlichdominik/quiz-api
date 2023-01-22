@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const PASSWORD_RECOVERY_URL = "/auth/password/recover";
 
 const PasswordRecovery = () => {
+  const { nameLib } = useLanguageContext();
+
   const [username, setUsername] = useState("");
   const [firstAnswerRecovery, setFirstAnswerRecovery] = useState("");
   const [secondAnswerRecovery, setSecondAnswerRecovery] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [reNewPassword, setReNewPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -39,11 +41,11 @@ const PasswordRecovery = () => {
       <form onSubmit={handleSubmit} className="my-auto pt-6 h-full">
         <div className="flex flex-col space-y-3 border mx-auto border-darkcl shadow rounded-md bg-white sm:w-1/2">
           <div className="text-center">
-            <p className="text-3xl pt-2 ">Password recovery</p>
+            <p className="text-3xl pt-2 ">{nameLib.recoverPassword}</p>
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="username">
-              Username:
+              {nameLib.username}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -54,7 +56,7 @@ const PasswordRecovery = () => {
           </div>
           <div className="w-10/12 mx-auto">
             <label className="block" htmlFor="password">
-              New password
+              {nameLib.newPassword}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -63,20 +65,9 @@ const PasswordRecovery = () => {
               onChange={(e) => setNewPassword(e.target.value)}
             ></input>
           </div>
-          <div className="w-10/12 mx-auto">
-            <label className="block" htmlFor="rePassword">
-              Re-enter new password:
-            </label>
-            <input
-              className="rounded-xl pl-2 border shadow w-full h-8"
-              type="password"
-              id="reNewPassword"
-              onChange={(e) => setReNewPassword(e.target.value)}
-            ></input>
-          </div>
           <div className="w-10/12 mx-auto ">
             <label className="block" htmlFor="rePassword">
-              What's your favourite food?
+              {nameLib.favFood}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -87,7 +78,7 @@ const PasswordRecovery = () => {
           </div>
           <div className="w-10/12 mx-auto ">
             <label className="block" htmlFor="rePassword">
-              What's your first pet's name?
+              {nameLib.firstPetName}
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
@@ -104,19 +95,19 @@ const PasswordRecovery = () => {
               className="border border-darkcl px-4 py-2 rounded-xl shadow"
               disabled={false}
             >
-              Recover password
+              {nameLib.recoverPassword}
             </button>
           </div>
           <div className="text-center px-2">
-            Have you managed to recover? &nbsp;
+            {nameLib.haveYouManagedToRecover} &nbsp;
             <span className="font-bold underline">
-              <Link to="/login">Sign in</Link>
+              <Link to="/login">{nameLib.signIn}</Link>
             </span>
           </div>
           <div className="text-center px-2">
-            Couldn't recover? &nbsp;
+            {nameLib.didntManageToRecover} &nbsp;
             <span className="font-bold underline">
-              <Link to="/register">Register</Link>
+              <Link to="/register">{nameLib.register}</Link>
             </span>
           </div>
         </div>

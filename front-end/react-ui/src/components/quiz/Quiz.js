@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Navbar from "../ui/Navbar";
 
 import useQuizContext from "../../hooks/useQuizContext";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const percentageFormatter = (percentageValue) =>
   `${(percentageValue * 100).toFixed(2)}%`;
@@ -19,7 +20,7 @@ const Quiz = () => {
     finalScore,
   } = useQuizContext();
 
-  console.log("final score => ", finalScore);
+  const { nameLib } = useLanguageContext();
 
   useEffect(() => {
     if (quizState === null) {
@@ -29,7 +30,6 @@ const Quiz = () => {
   }, []);
 
   const nextQuestionClickedHandler = () => {
-    console.log("is quiz over => ", isQuizOver);
     loadNextQuestion(selectedAnswer);
   };
 
@@ -78,7 +78,7 @@ const Quiz = () => {
                     : false
                 }
               >
-                Next question
+                {nameLib.nextQuestion}
               </button>
             </div>
           </section>
@@ -87,10 +87,10 @@ const Quiz = () => {
           {isQuizOver === true && (
             <div className="bg-white border border-primaryblue rounded-lg shadow p-3">
               <h3 className="text-center text-3xl ">
-                Thank you for completing the quiz!
+                {nameLib.thankYouForCompleting}
               </h3>
               <p className="text-center text-xl ">
-                Your final score:
+                {nameLib.yourScore}
                 {finalScore.statisticDtos.map((s) => (
                   <p className="text-base font-normal">
                     {s.pathName}: &nbsp;

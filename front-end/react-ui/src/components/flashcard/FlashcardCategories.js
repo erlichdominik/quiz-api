@@ -3,11 +3,14 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Navbar from "../ui/Navbar";
 import FlashcardCategoriesTable from "./FlashcardCategoriesTable";
 import Flashcards from "./Flashcards";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const FLASHCARD_CATEGORY_URL = "/flashcards";
 
 const FlashcardCategories = () => {
   const axiosPrivate = useAxiosPrivate();
+
+  const { nameLib } = useLanguageContext();
 
   const [flashcardCategories, setFlashcardCategories] = useState([]);
   const [flashcards, setFlashcards] = useState([]);
@@ -50,7 +53,7 @@ const FlashcardCategories = () => {
         </h1>
         {isCategorySelected && (
           <h2 className="text-xl text-white pt-3 w-fit mx-auto">
-            Category: &nbsp;
+            {nameLib.flashcardCategories} &nbsp;
             {
               flashcardCategories.find((cat) => cat.id === selectedCategory)
                 .category

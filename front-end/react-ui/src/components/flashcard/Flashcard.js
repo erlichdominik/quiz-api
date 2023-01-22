@@ -1,4 +1,5 @@
 import React from "react";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const Flashcard = ({
   text,
@@ -7,6 +8,8 @@ const Flashcard = ({
   isFinished,
   onResetClick,
 }) => {
+  const { nameLib } = useLanguageContext();
+
   return (
     <>
       {!isFinished ? (
@@ -20,13 +23,13 @@ const Flashcard = ({
       ) : (
         <div className="flex flex-col items-center w-full bg-white border border-primaryblue rounded-lg shadow h-4/5 min-h-max select-none">
           <h2 className="text-xl pt-3 pb-8 px-2 text-center">
-            This flashcard category is finished, do you want to start it again?
+            {nameLib.flashcardCatOver}
           </h2>
           <button
             className="bg-secondaryblue h-10 text-white w-full text-sm border border-white shadow rounded-lg px-2 py-1 "
             onClick={onResetClick}
           >
-            Start over
+            {nameLib.startOver}
           </button>
         </div>
       )}

@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useQuizContext from "../../hooks/useQuizContext";
+import useLanguageContext from "../../hooks/useLanguageContext";
 import NavItem from "./NavItem";
 import StartQuizIcon from "../../assets/start-quiz.svg";
 import ContinueQuizIcon from "../../assets/continue-quiz.svg";
@@ -12,6 +12,7 @@ import { ReactComponent as LogoutIconTest } from "../../assets/quiz-history.svg"
 
 const Navbar = () => {
   const { isQuizStarted, isQuizOver, disbandQuiz } = useQuizContext();
+  const { nameLib } = useLanguageContext();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -30,34 +31,34 @@ const Navbar = () => {
       <div className="flex justify-between bg-white">
         <NavItem
           icon={StartQuizIcon}
-          label="Start quiz"
-          alt="start quiz icon"
+          label={nameLib.startQuiz}
+          alt={nameLib.startQuiz}
           linkTo="/quizStart"
         />
         {isQuizStarted && !isQuizOver && (
           <NavItem
             icon={ContinueQuizIcon}
-            label="Continue quiz"
-            alt="continue quiz icon"
+            label={nameLib.continueQuiz}
+            alt={nameLib.continueQuiz}
             linkTo="/quiz"
           />
         )}
         <NavItem
           icon={QuizHistoryIcon}
-          label="Quiz history"
-          alt="quiz history icon"
+          label={nameLib.quizHistory}
+          alt={nameLib.quizHistory}
           linkTo="/quizHistory"
         />
         <NavItem
           icon={FlashcardIcon}
-          label="Flashcards"
-          alt="flashcard icon"
+          label={nameLib.flashcards}
+          alt={nameLib.flashcards}
           linkTo="/flashcardCategories"
         />
         <NavItem
           icon={LogoutIcon}
-          label="Logout"
-          alt="logout icon"
+          label={nameLib.logout}
+          alt={nameLib.logout}
           linkTo="/login"
           onClick={logoutClickedHandler}
         />

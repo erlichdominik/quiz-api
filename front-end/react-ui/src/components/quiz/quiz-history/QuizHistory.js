@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useLanguageContext from "../../../hooks/useLanguageContext";
 
 import Navbar from "../../ui/Navbar";
 import QuizHistoryTable from "./QuizHistoryTable";
@@ -26,14 +27,12 @@ const transformResponseDataToState = (responseData) => {
 const QuizHistory = () => {
   const [quizHistoryItems, setQuizHistoryItems] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-
-  console.log("quiz history items", quizHistoryItems);
+  const { nameLib } = useLanguageContext();
 
   const getQuizHistoryData = async () => {
     try {
       const response = await axiosPrivate.get(QUIZ_HISTORY_URL);
       const quizHistoryData = transformResponseDataToState(response.data);
-      console.log("transformed response => ", quizHistoryData);
       setQuizHistoryItems(quizHistoryData);
     } catch (err) {}
   };
@@ -48,7 +47,7 @@ const QuizHistory = () => {
         <section className="flex items-center justify-center pt-6">
           {quizHistoryItems.length === 0 ? (
             <h1 className="text-3xl text-white pt-10">
-              Looks like the quiz history is empty...
+              {nameLib.quizHistoryEmpty}
             </h1>
           ) : (
             <QuizHistoryTable quizHistory={quizHistoryItems} />

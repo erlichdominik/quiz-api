@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../ui/Navbar";
 import useQuizContext from "../../hooks/useQuizContext";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const QuizStarter = () => {
   const { setIsQuizOver, setIsQuizStarted, disbandQuiz } = useQuizContext();
+  const { nameLib } = useLanguageContext();
 
   const startNewQuizHandler = () => {
     disbandQuiz();
@@ -18,7 +20,9 @@ const QuizStarter = () => {
         <Navbar />
         <div className="text-4xl text-center hover:text-white p-4 transition">
           <Link to="/quiz">
-            <button onClick={startNewQuizHandler}>Start new quiz</button>
+            <button onClick={startNewQuizHandler}>
+              {nameLib.startNewQuiz}
+            </button>
           </Link>
         </div>
       </div>

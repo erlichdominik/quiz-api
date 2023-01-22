@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Flashcard from "./Flashcard";
+import useLanguageContext from "../../hooks/useLanguageContext";
 
 const Flashcards = ({ flashcards, onReturnClick }) => {
+  const { nameLib } = useLanguageContext();
   const [flashcardCounter, setFlashcardCounter] = useState(0);
   const [isFlashcardFinished, setIsFlashcardFinished] = useState(false);
   console.log("flashcards", flashcards);
@@ -26,10 +28,10 @@ const Flashcards = ({ flashcards, onReturnClick }) => {
         className="bg-secondaryblue h-10 text-white w-full text-sm border border-white shadow rounded-lg px-2 py-1  mb-1"
         onClick={() => onReturnClick(false)}
       >
-        Go back to category selection
+        {nameLib.goBackToCatSelection}
       </button>
       {flashcards.length === 0 ? (
-        <p>Flashcard category is empty</p>
+        <p>{nameLib.flashcardCategoryEmpty}</p>
       ) : (
         <Flashcard
           text={flashcards[flashcardCounter]?.text}
