@@ -6,7 +6,6 @@ import com.pjatk.quizapi.teacher.readmodel.StudentsForGroupFinder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Tuple;
 import java.util.List;
 
 @Finder
@@ -15,10 +14,11 @@ class JdbcStudentsForGroupFinder implements StudentsForGroupFinder {
     private EntityManager entityManager;
     @Override
     public List<StudentsForGroup> findAll(long groupId, long teacherId) {
-        var sql = """
-                """;
+//        var sql = """
+//                """;
+//
+//        entityManager.createNativeQuery(sql, Tuple.class)
 
-        entityManager.createNativeQuery(sql, Tuple.class)
-
+        return null;
     }
 }
