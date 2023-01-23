@@ -4,6 +4,7 @@ import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
 import useLanguageContext from "../../hooks/useLanguageContext";
+import GroupTable from "./GroupTable";
 
 const singleGroup = [
   {
@@ -45,35 +46,7 @@ const Groups = () => {
 
             <h1 className="pt-2 text-2xl text-center">{nameLib.groups}</h1>
             <div className="w-full h-3/4 mx-auto pt-2">
-              <div className="bg-white border border-primaryblue w-5/6 h-full mx-auto grid auto-rows-max grid-cols-4 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
-                <div className="pt-1 sticky top-0 bg-white text-center col-span-1">
-                  {nameLib.groupName}
-                </div>
-                <div className="pt-1 sticky top-0 bg-white text-center col-span-1">
-                  {nameLib.groupCode}
-                </div>
-                <div className="pt-1 sticky top-0 bg-white text-center col-span-2">
-                  {nameLib.actions}
-                </div>
-                {groups.map((group) => (
-                  <>
-                    <div className="self-center text-center col-span-1">
-                      {group.name}
-                    </div>
-                    <div className="self-center text-center col-span-1">
-                      {group.groupCode}
-                    </div>
-                    <div className="self-center text-center flex justify-center gap-x-2 col-span-2 px-2">
-                      <button className="bg-darkcl text-white text-xs  self-center rounded-xl px-3 py-[2px]">
-                        Delete group
-                      </button>
-                      <button className="bg-primaryblue text-white text-xs rounded-xl px-3 py-[2px]">
-                        Inspect group
-                      </button>
-                    </div>
-                  </>
-                ))}
-              </div>
+              <GroupTable groups={groups} />
             </div>
           </div>
         </Card>

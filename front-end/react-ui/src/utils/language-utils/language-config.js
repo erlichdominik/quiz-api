@@ -51,6 +51,8 @@ export const nameLibPolish = {
   backToTeacherPanel: "Powrót do panelu nauczyciela",
   groupCode: "Kod grupy",
   actions: "Akcje",
+  deleteGroup: "Usuń grupę",
+  groupDetails: "Szczegóły grupy",
 };
 
 export const nameLibEnglish = {
@@ -107,6 +109,8 @@ export const nameLibEnglish = {
   backToTeacherPanel: "Back to teacher panel",
   groupCode: "Group code",
   actions: "Actions",
+  deleteGroup: "Delete group",
+  groupDetails: "Group details",
 };
 
 export const LANGUAGE_CONFIG = {
