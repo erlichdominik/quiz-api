@@ -12,7 +12,6 @@ const Registration = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
   const [firstAnswerRecovery, setFirstAnswerRecovery] = useState("");
   const [secondAnswerRecovery, setSecondAnswerRecovery] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,17 +67,6 @@ const Registration = () => {
               onChange={(e) => setPassword(e.target.value)}
             ></input>
           </div>
-          <div className="w-10/12 mx-auto">
-            <label className="block" htmlFor="rePassword">
-              {nameLib.reEnterPassword}
-            </label>
-            <input
-              className="rounded-xl pl-2 border shadow w-full h-8"
-              type="password"
-              id="rePassword"
-              onChange={(e) => setRePassword(e.target.value)}
-            ></input>
-          </div>
           <div className="w-10/12 mx-auto text-center">
             <p className="text-xs">({nameLib.passwordRecoveryQuestion})</p>
             <label className="block" htmlFor="rePassword">
@@ -87,7 +75,7 @@ const Registration = () => {
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
               type="text"
-              id="rePassword"
+              id="firstPassRecovery"
               onChange={(e) => setFirstAnswerRecovery(e.target.value)}
             ></input>
           </div>
@@ -98,8 +86,8 @@ const Registration = () => {
             </label>
             <input
               className="rounded-xl pl-2 border shadow w-full h-8"
-              type="password"
-              id="rePassword"
+              type="text"
+              id="secondPassRecovery"
               onChange={(e) => setSecondAnswerRecovery(e.target.value)}
             ></input>
           </div>

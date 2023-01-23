@@ -43,7 +43,14 @@ export const nameLibPolish = {
   adminPanel: "Panel administratora",
   enterCreditCode: "Wpisz kod zaliczeniowy tutaj",
   creditCode: "Kod zaliczeniowy",
-  addToGroup: "Add to group",
+  addToGroup: "Dodaj do grupy",
+  groups: "Grupy",
+  createGroup: "Stwórz grupę",
+  groupName: "Nazwa grupy",
+  createGroupDate: "Data utworzenia grupy",
+  backToTeacherPanel: "Powrót do panelu nauczyciela",
+  groupCode: "Kod grupy",
+  actions: "Akcje",
 };
 
 export const nameLibEnglish = {
@@ -93,6 +100,13 @@ export const nameLibEnglish = {
   enterCreditCode: "Enter credit code here",
   creditCode: "Credit code",
   addToGroup: "Add to group",
+  groups: "Groups",
+  createGroup: "Create group",
+  groupName: "Group name",
+  createGroupDate: "Group creation date",
+  backToTeacherPanel: "Back to teacher panel",
+  groupCode: "Group code",
+  actions: "Actions",
 };
 
 export const LANGUAGE_CONFIG = {

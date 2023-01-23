@@ -16,6 +16,8 @@ import PasswordRecovery from "./components/user/PasswordRecovery";
 import TeacherPanel from "./components/teacher/TeacherPanel";
 import AdminPanel from "./components/admin/AdminPanel";
 import StudentCredit from "./components/student/StudentCredit";
+import CreateGroup from "./components/teacher/CreateGroup";
+import Groups from "./components/teacher/Groups";
 
 const App = () => {
   return (
@@ -50,16 +52,18 @@ const App = () => {
               path="flashcardCategories"
               element={<FlashcardCategories />}
             />
+          </Route>
+          <Route
+            element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}
+          >
             <Route path="studentCredit" element={<StudentCredit />}></Route>
           </Route>
           <Route
-            element={
-              <RequireAuth
-                allowedRoles={[USER_ROLES.teacherUser, USER_ROLES.adminUser]}
-              />
-            }
+            element={<RequireAuth allowedRoles={[USER_ROLES.teacherUser]} />}
           >
             <Route path="teacherPanel" element={<TeacherPanel />} />
+            <Route path="createGroup" element={<CreateGroup />} />
+            <Route path="groups" element={<Groups />} />
           </Route>
           <Route
             element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}

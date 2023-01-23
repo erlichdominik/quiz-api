@@ -45,7 +45,7 @@ const Login = () => {
       const refreshToken = response?.data?.refreshToken;
 
       // testing
-      const roles = ["STUDENT"];
+      const roles = ["TEACHER"];
       // admin admin default admin
       // teacher ->  t t
       //

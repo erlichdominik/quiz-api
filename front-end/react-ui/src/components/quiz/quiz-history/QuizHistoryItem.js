@@ -10,12 +10,10 @@ const QuizHistoryItem = ({ id, quizName, completionDate, pathways }) => {
       <div className="self-center">{completionDate}</div>
       <div>
         {pathways.map((pathway) => (
-          <>
-            <div className="inline-block pb-1">
-              {pathway.pathName}:{" "}
-              {percentageFormatter(pathway.completedPercentage)}
-            </div>
-          </>
+          <div className="pb-1">
+            {pathway.pathName}:{" "}
+            {percentageFormatter(pathway.completedPercentage)}
+          </div>
         ))}
       </div>
     </>
