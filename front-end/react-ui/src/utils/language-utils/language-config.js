@@ -53,6 +53,13 @@ export const nameLibPolish = {
   actions: "Akcje",
   deleteGroup: "Usuń grupę",
   groupDetails: "Szczegóły grupy",
+  students: "Studenci",
+  downloadStudentsScore: "Pobierz wyniki studentów",
+  deleteAllStudents: "Usuń wszystkich studentów",
+  downloadStudentScore: "Pobierz wyniki",
+  deleteStudent: "Usuń",
+  details: "Szczegóły",
+  delete: "Usuń",
 };
 
 export const nameLibEnglish = {
@@ -111,6 +118,13 @@ export const nameLibEnglish = {
   actions: "Actions",
   deleteGroup: "Delete group",
   groupDetails: "Group details",
+  students: "Students",
+  downloadStudentsScore: "Download students score",
+  deleteAllStudents: "Delete all students",
+  downloadStudentScore: "Download score",
+  deleteStudent: "Delete",
+  details: "Details",
+  delete: "Delete",
 };
 
 export const LANGUAGE_CONFIG = {

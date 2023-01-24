@@ -16,7 +16,7 @@ const CreateGroup = () => {
     <>
       <BackgroundWrapper>
         <Card>
-          <div className="h-2/3 w-[20rem] sm:w-[26rem] bg-white rounded-lg border border-primaryblue shadow">
+          <div className=" w-[20rem] sm:w-[26rem] bg-white rounded-lg border border-primaryblue shadow">
             <div className="text-sm w-full h-10 hover:bg-secondaryblue hover:text-white">
               <Link to="/teacherPanel">
                 <button className="w-full h-full">

@@ -4,9 +4,13 @@ import useLanguageContext from "../../hooks/useLanguageContext";
 const Group = ({ group, onClickDelete, onClickInspect }) => {
   const { nameLib } = useLanguageContext();
 
-  const handleGroupDelete = () => {};
+  const handleGroupDelete = () => {
+    onClickDelete();
+  };
 
-  const handleGroupInspect = () => {};
+  const handleGroupInspect = () => {
+    onClickInspect(group);
+  };
 
   return (
     <>
@@ -15,10 +19,16 @@ const Group = ({ group, onClickDelete, onClickInspect }) => {
         {group.groupCode}
       </div>
       <div className="self-center text-center flex justify-center gap-x-2 col-span-2 px-2">
-        <button className="text-xs border border-darkcl self-center rounded-xl px-3 py-[2px] hover:bg-darkcl hover:text-white">
+        <button
+          className="text-xs border border-darkcl self-center rounded-xl px-3 py-[2px] hover:bg-danger hover:text-white"
+          onClick={handleGroupDelete}
+        >
           {nameLib.deleteGroup}
         </button>
-        <button className="text-xs border border-darkcl self-center rounded-xl px-3 py-[2px] hover:bg-secondaryblue hover:text-white">
+        <button
+          className="text-xs border border-darkcl self-center rounded-xl px-3 py-[2px] hover:bg-secondaryblue hover:text-white"
+          onClick={handleGroupInspect}
+        >
           {nameLib.groupDetails}
         </button>
       </div>
