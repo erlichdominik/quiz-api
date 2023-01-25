@@ -15,6 +15,11 @@ const StudentCredit = () => {
   const [creditCode, setCreditCode] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
 
+  const handleCodeInput = (e) => {
+    setCreditCode(e.target.value);
+    setInfoMessage("");
+  };
+
   const handleAddToGroupClick = async () => {
     try {
       await axiosPrivate.post(STUDENT_GROUP_URL, null, {
@@ -48,7 +53,7 @@ const StudentCredit = () => {
               type="text"
               id="studentCredit"
               className="block w-4/5 border border-darkcl rounded-xl pl-2 h-8 mx-auto my-auto text-center"
-              onChange={(e) => setCreditCode(e.target.value)}
+              onChange={handleCodeInput}
             />
           </div>
           <div className="w-full mx-auto text-center ">

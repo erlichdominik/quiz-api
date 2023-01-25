@@ -5,14 +5,7 @@ import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
 import useLanguageContext from "../../hooks/useLanguageContext";
 import GroupTable from "./GroupTable";
-
-const singleGroup = [
-  {
-    id: 1,
-    name: "group1",
-    groupCode: "abc!@#",
-  },
-];
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 
 const randomInt = () => Math.floor(Math.random() * 99999);
 
@@ -28,9 +21,15 @@ const groupData = () => {
   return groupList;
 };
 
+const GROUPS_URL = "/teacher/groups";
 const Groups = () => {
   const { nameLib } = useLanguageContext();
   const groups = groupData();
+
+  const { isLoading, responseData, infoMessage } = usePrivateRequests({
+    url: GROUPS_URL,
+  });
+
   return (
     <>
       <BackgroundWrapper>
