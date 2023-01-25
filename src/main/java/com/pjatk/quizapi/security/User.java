@@ -55,6 +55,9 @@ public class User implements UserDetails {
 
     public void stopExam() {
         accountState = AccountState.TRAINING;
+
+        Optional.ofNullable(applicationUser)
+                .ifPresent(ApplicationUser::clearCounter);
     }
 
     public void addRole(Role role) {

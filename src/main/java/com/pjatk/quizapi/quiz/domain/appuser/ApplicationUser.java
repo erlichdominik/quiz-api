@@ -63,7 +63,7 @@ public class ApplicationUser extends AbstractEntity {
             } else {
                 walkthroughExamCounter++;
 
-                if (walkthroughExamCounter >= AMOUNT_OF_EXAM_ATTEMPTS) {
+                if (walkthroughExamCounter > AMOUNT_OF_EXAM_ATTEMPTS) {
                     throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
                             "You finished all your attempts!");
                 }

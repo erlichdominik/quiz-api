@@ -50,7 +50,7 @@ class AdminController {
 
     @RolesAllowed({"ADMIN"})
     @GetMapping("/groupsbyteacher")
-    AllGroupsByTeacher fetchAllGroupsByTeacher() {
+    AllGroupsByTeacher fetchAllGroupsOrderedByTeacher() {
         return allGroupsByTeacherFinder.findAll();
     }
 
