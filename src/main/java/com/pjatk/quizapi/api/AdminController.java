@@ -55,7 +55,7 @@ class AdminController {
     }
 
     @RolesAllowed({"ADMIN"})
-    @PostMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     void deleteUser(@PathVariable long userId) {
         userService.deleteUser(userId);
     }
