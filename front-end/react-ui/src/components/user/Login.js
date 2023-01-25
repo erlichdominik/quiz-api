@@ -29,6 +29,14 @@ const Login = () => {
     setErrorMessage("");
   }, [username, password]);
 
+  const mockHandleSubmit = () => {
+    const accessToken = "TEST123";
+    const refreshToken = "TEST123";
+    const roles = ["ADMIN"];
+    setAuth({ username, password, roles, accessToken, refreshToken });
+    navigate(from, { replace: true });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,16 +51,7 @@ const Login = () => {
 
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
-
-      // testing
-      const roles = ["TEACHER"];
-      // admin admin default admin
-      // teacher ->  t t
-      //
-      // admin view ma dwa linki, jak klika teacher
-      // admin -> lista teacaherow -> lista group -> lista studentow oraz pobierz pdf wynikow
-      // teacher panel -> add new group -> (nazwa grupy, deadline date picker) -> wyswietl kod
-      // teacher panel -> group list -> nazwa grupy i kod -> lista studentow
+      const roles = response?.data?.roles;
 
       setAuth({ username, password, roles, accessToken, refreshToken });
 

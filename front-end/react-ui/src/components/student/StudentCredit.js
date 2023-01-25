@@ -3,14 +3,31 @@ import Navbar from "../ui/Navbar";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import useLanguageContext from "../../hooks/useLanguageContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+
+const STUDENT_GROUP_URL = "/student/group";
 
 const StudentCredit = () => {
   const { nameLib } = useLanguageContext();
 
-  const [creditCode, setCreditCode] = useState("");
+  const axiosPrivate = useAxiosPrivate();
 
-  const handleAddToGroupClick = () => {
-    console.log(creditCode);
+  const [creditCode, setCreditCode] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
+
+  const handleAddToGroupClick = async () => {
+    try {
+      await axiosPrivate.post(STUDENT_GROUP_URL, null, {
+        params: {
+          groupCode: creditCode,
+        },
+      });
+      setInfoMessage(nameLib.succesfullyAddedToGroup);
+    } catch (err) {
+      if (err.response?.status === 404) {
+        setInfoMessage(nameLib.creditCodeNotFound);
+      }
+    }
   };
 
   return (
@@ -41,6 +58,7 @@ const StudentCredit = () => {
             >
               {nameLib.addToGroup}
             </button>
+            <p className="pt-1">{infoMessage}</p>
           </div>
         </div>
       </Card>

@@ -18,7 +18,9 @@ const transformResponseDataToState = (responseData) => {
       id: index,
       quizName: item.quizName,
       completionDate: item.date,
-      pathways: item.statisticDtos,
+      pathways: item.statisticDtos.sort((a, b) =>
+        a.pathName.localeCompare(b.pathName)
+      ),
     });
   });
 

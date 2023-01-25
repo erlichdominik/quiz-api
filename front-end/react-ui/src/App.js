@@ -18,6 +18,9 @@ import AdminPanel from "./components/admin/AdminPanel";
 import StudentCredit from "./components/student/StudentCredit";
 import CreateGroup from "./components/teacher/CreateGroup";
 import Groups from "./components/teacher/Groups";
+import CreateTeacher from "./components/admin/CreateTeacher";
+import AdminGroups from "./components/admin/AdminGroups";
+import AllUsers from "./components/admin/AllUsers";
 
 const App = () => {
   return (
@@ -69,6 +72,9 @@ const App = () => {
             element={<RequireAuth allowedRoles={[USER_ROLES.adminUser]} />}
           >
             <Route path="adminPanel" element={<AdminPanel />} />
+            <Route path="createTeacher" element={<CreateTeacher />} />
+            <Route path="adminGroups" element={<AdminGroups />} />
+            <Route path="allUsers" element={<AllUsers />} />
           </Route>
         </Route>
       </Route>

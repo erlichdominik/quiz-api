@@ -91,12 +91,14 @@ const Quiz = () => {
               </h3>
               <p className="text-center text-xl ">
                 {nameLib.yourScore}
-                {finalScore.statisticDtos.map((s) => (
-                  <p className="text-base font-normal">
-                    {s.pathName}: &nbsp;
-                    {percentageFormatter(s.completedPercentage)}
-                  </p>
-                ))}
+                {finalScore.statisticDtos
+                  .sort((a, b) => a.pathName.localeCompare(b.pathName))
+                  .map((s) => (
+                    <p className="text-base font-normal">
+                      {s.pathName}: &nbsp;
+                      {percentageFormatter(s.completedPercentage)}
+                    </p>
+                  ))}
               </p>
             </div>
           )}
