@@ -8,10 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService extends MailValidator {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
+    private final MailValidator mailValidator = new MailValidator();
 
 
     public UserService(UserRepository repository, PasswordEncoder encoder, RoleRepository roleRepository) {
@@ -21,6 +22,7 @@ public class UserService {
     }
 
     public void createNewTeacher(RegisterNewUserRequest request) {
+        mailValidator.requireCorrectMail(request.login(), "@wum.edu.pl");
         Role role = roleRepository.findByNameOrThrow(Roles.TEACHER.getRoleName());
         var user = new User(request.login(), encoder.encode(request.password()), request.firstAnswerRecovery(), request.secondAnswerRecovery(), role);
         try {
@@ -31,6 +33,7 @@ public class UserService {
     }
 
     public void createNewStudent(RegisterNewUserRequest request) {
+        mailValidator.requireCorrectMail(request.login(), "@student.wum.edu.pl");
         Role role = roleRepository.findByNameOrThrow(Roles.STUDENT.getRoleName());
         var user = new User(request.login(), encoder.encode(request.password()), request.firstAnswerRecovery(), request.secondAnswerRecovery(), role);
         try {
@@ -39,6 +42,7 @@ public class UserService {
             throw new LoginTakenException();
         }
     }
+
 
     public void recoverPassword(RecoverPasswordRequest request) {
         User user = repository.findByEmail(request.login())
@@ -49,6 +53,10 @@ public class UserService {
             repository.save(user);
         }
 
+    }
+
+    public void requireCorrectMail(String username, String suffix) {
+        mailValidator.requireCorrectMail(username, suffix);
     }
 
 }

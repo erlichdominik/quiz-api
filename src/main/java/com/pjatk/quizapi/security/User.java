@@ -16,7 +16,12 @@ import java.util.*;
 @Getter
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "app_user_seq")
+    @SequenceGenerator(name = "app_user_seq",
+    sequenceName = "APP_USER_SEQ",
+    initialValue = 101,
+    allocationSize = 1)
     private long id;
     @Column(nullable = false, unique = true)
     private String email;
@@ -35,6 +40,22 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(name = "users_roles")
     private Set<Role> roles = new HashSet<>();
+
+    public enum AccountState {
+        TRAINING,
+        EXAM
+    }
+
+    @Enumerated(value = EnumType.STRING)
+    private AccountState accountState;
+
+    public void startExam() {
+        accountState = AccountState.EXAM;
+    }
+
+    public void stopExam() {
+        accountState = AccountState.TRAINING;
+    }
 
     public void addRole(Role role) {
         this.roles.add(role);
