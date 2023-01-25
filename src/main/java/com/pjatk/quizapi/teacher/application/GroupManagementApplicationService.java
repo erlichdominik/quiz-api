@@ -70,4 +70,18 @@ public class GroupManagementApplicationService {
         return new GroupCode(group.getCode());
     }
 
+    public void deleteGroup(long groupId) {
+        repository.removeById(groupId);
+    }
+
+    public void removeAllStudentFromGroup(long groupId) {
+        AcademicGroup academicGroup = repository.findById(groupId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "group with id: %d was not found".formatted(groupId)));
+
+        academicGroup.removeAllStudentsFromTheGroup();
+
+        repository.save(academicGroup);
+    }
+
 }

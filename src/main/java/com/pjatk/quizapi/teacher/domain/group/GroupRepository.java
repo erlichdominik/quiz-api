@@ -11,4 +11,5 @@ public interface GroupRepository {
     Optional<AcademicGroup> findById(long id);
 
     Optional<AcademicGroup> findByCode(String code);
+    void removeById(long id);
 }

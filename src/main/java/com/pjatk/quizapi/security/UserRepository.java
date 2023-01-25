@@ -16,4 +16,7 @@ public interface UserRepository extends Repository<User, Long> {
     @Modifying
     @Query(value = "truncate table app_user", nativeQuery = true)
     void removeAll();
+
+    @Modifying
+    void removeById(long id);
 }

@@ -30,6 +30,18 @@ class TeacherController {
         this.facade = facade;
     }
 
+    @RolesAllowed({"TEACHER", "ADMIN" })
+    @PostMapping("/group/{groupId}/remove/students")
+    void removeAllStudentsFromGroup(@PathVariable long groupId) {
+        facade.removeAllStudentFromGroup(groupId);
+    }
+
+    @RolesAllowed({"TEACHER", "ADMIN"})
+    @DeleteMapping("/groups/{groupId}")
+    void deleteGroup(@PathVariable long groupId) {
+        facade.deleteGroup(groupId);
+    }
+
     @RolesAllowed({ "TEACHER", "ADMIN" })
     @GetMapping("/groups")
     FindAllGroupsView findAll() {

@@ -37,6 +37,10 @@ public class AcademicGroup extends AbstractEntity {
         studentIds.add(studentId);
     }
 
+    public void removeAllStudentsFromTheGroup() {
+        studentIds.clear();
+    }
+
     public void removeStudentFromGroup(long studentId) {
         Optional<Long> isPresent = studentIds.stream()
                 .filter(it -> it == studentId)

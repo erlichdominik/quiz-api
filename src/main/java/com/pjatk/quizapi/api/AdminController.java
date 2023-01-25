@@ -53,4 +53,10 @@ class AdminController {
     AllGroupsByTeacher fetchAllGroupsByTeacher() {
         return allGroupsByTeacherFinder.findAll();
     }
+
+    @RolesAllowed({"ADMIN"})
+    @PostMapping("/delete/{userId}")
+    void deleteUser(@PathVariable long userId) {
+        userService.deleteUser(userId);
+    }
 }

@@ -59,4 +59,8 @@ public class UserService extends MailValidator {
         mailValidator.requireCorrectMail(username, suffix);
     }
 
+    public void deleteUser(long userId) {
+        repository.removeById(userId);
+    }
+
 }
