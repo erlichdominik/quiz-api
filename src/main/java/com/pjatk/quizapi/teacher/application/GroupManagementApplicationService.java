@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Component
 @Transactional
@@ -19,7 +20,7 @@ public class GroupManagementApplicationService {
 
     public GroupManagementApplicationService(GroupRepository repository, UserRepository userRepository) {
         this.repository = repository;
-        this.userRepository= userRepository;
+        this.userRepository = userRepository;
     }
 
     public GroupCode addNewGroup(String groupName, User teacher, LocalDate deadline) {
@@ -35,9 +36,7 @@ public class GroupManagementApplicationService {
 
         group.addStudentToGroup(student.getId());
 
-        User user = userRepository.findById(student.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "user not found"));
+        User user = fetchUserBy(student.getId());
 
         user.startExam();
 
@@ -46,13 +45,9 @@ public class GroupManagementApplicationService {
     }
 
     public void removeStudentFromGroup(long studentId, long groupId) {
-        AcademicGroup group = repository.findById(groupId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Group with id: %d was not found".formatted(groupId)));
+        AcademicGroup group = fetchGroupBy(groupId);
 
-        User student = userRepository.findById(studentId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "user not found"));
+        User student = fetchUserBy(studentId);
 
         group.removeStudentFromGroup(studentId);
         student.stopExam();
@@ -71,17 +66,38 @@ public class GroupManagementApplicationService {
     }
 
     public void deleteGroup(long groupId) {
+        AcademicGroup academicGroup = fetchGroupBy(groupId);
+
+        stopExamForAllStudentsIn(academicGroup);
+
         repository.removeById(groupId);
     }
 
     public void removeAllStudentFromGroup(long groupId) {
-        AcademicGroup academicGroup = repository.findById(groupId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "group with id: %d was not found".formatted(groupId)));
-
-        academicGroup.removeAllStudentsFromTheGroup();
-
+        AcademicGroup academicGroup = fetchGroupBy(groupId);
+        stopExamForAllStudentsIn(academicGroup);
         repository.save(academicGroup);
     }
 
+    private AcademicGroup fetchGroupBy(long groupId) {
+        return repository.findById(groupId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "group with id: %d was not found".formatted(groupId)));
+    }
+
+    private void stopExamForAllStudentsIn(AcademicGroup academicGroup) {
+        List<User> students = userRepository.findByIdIn(academicGroup.getStudentIds().stream().toList());
+
+        students.forEach(User::stopExam);
+
+        academicGroup.removeAllStudentsFromTheGroup();
+
+        userRepository.saveAll(students);
+    }
+
+    private User fetchUserBy(long studentId) {
+        return userRepository.findById(studentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "user not found"));
+    }
 }
