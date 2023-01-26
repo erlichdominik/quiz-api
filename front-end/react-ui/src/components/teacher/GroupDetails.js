@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Card from "../ui/Card";
 import StudentList from "./students/StudentList";
 import useLanguageContext from "../../hooks/useLanguageContext";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 
-const GroupDetails = ({ students, group, onClose }) => {
+const GroupDetails = ({ group, onClose, onDeleteAllStudents }) => {
   const { nameLib } = useLanguageContext();
+
+  const handleDeleteAllStudents = () => {
+    onDeleteAllStudents(group);
+  };
 
   return (
     <Card topPadding="1">
@@ -21,11 +26,14 @@ const GroupDetails = ({ students, group, onClose }) => {
           <button className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-secondaryblue hover:text-white transition">
             {nameLib.downloadGroupScore}
           </button>
-          <button className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-danger hover:text-white transition">
+          <button
+            className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-danger hover:text-white transition"
+            onClick={handleDeleteAllStudents}
+          >
             {nameLib.deleteAllStudents}
           </button>
         </div>
-        <StudentList students={students} group={group} />
+        <StudentList group={group} />
       </div>
     </Card>
   );

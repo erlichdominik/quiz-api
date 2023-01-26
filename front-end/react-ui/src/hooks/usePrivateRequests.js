@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import useAxiosPrivate from "./useAxiosPrivate";
 
 const usePrivateRequests = ({
-  url,
+  url = "",
   body = {},
   queryParams = {},
   options = {
@@ -22,18 +22,18 @@ const usePrivateRequests = ({
   const [infoMessage, setInfoMessage] = useState("");
   const [responseCode, setResponseCode] = useState("");
 
-  const loadData = async () => {
+  const performRequest = async (customUrl = url) => {
     let response = null;
     try {
       if (requestType === "GET") {
-        response = await axiosPrivate.get(url, options);
-        setResponseData(response?.data);
-        setResponseCode(response?.status);
+        response = await axiosPrivate.get(customUrl, options);
       } else if (requestType === "POST") {
-        response = await axiosPrivate.post(url, body, options);
-        setResponseData(response?.data);
-        setResponseCode(response?.status);
+        response = await axiosPrivate.post(customUrl, body, options);
+      } else if (requestType === "DELETE") {
+        response = await axiosPrivate.delete(customUrl, options);
       }
+      setResponseData(response?.data);
+      setResponseCode(response?.status);
     } catch (err) {
       setInfoMessage(err?.reponse?.data?.message);
       setResponseCode(err?.response?.status);
@@ -44,11 +44,11 @@ const usePrivateRequests = ({
 
   useEffect(() => {
     if (loadType === "INITIAL_LOAD") {
-      loadData();
+      performRequest();
     }
   }, []);
 
-  return { isLoading, responseData, responseCode, infoMessage, loadData };
+  return { isLoading, responseData, responseCode, infoMessage, performRequest };
 };
 
 export default usePrivateRequests;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
@@ -21,14 +21,27 @@ const groupData = () => {
   return groupList;
 };
 
+const transformResponseData = (responseData) =>
+  responseData.map((group) => ({
+    id: group.id,
+    name: group.groupName,
+    groupCode: group.groupCode,
+  }));
+
 const GROUPS_URL = "/teacher/groups";
 const Groups = () => {
   const { nameLib } = useLanguageContext();
-  const groups = groupData();
+  const [groups, setGroups] = useState([]);
 
   const { isLoading, responseData, infoMessage } = usePrivateRequests({
     url: GROUPS_URL,
   });
+
+  useEffect(() => {
+    if (!isLoading) {
+      setGroups(transformResponseData(responseData.groups));
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -42,9 +55,18 @@ const Groups = () => {
                 </button>
               </Link>
             </div>
+            {infoMessage && <p>{infoMessage}</p>}
             <h1 className="pt-2 text-2xl text-center">{nameLib.groups}</h1>
             <div className="w-full h-3/4 mx-auto pt-2">
-              <GroupTable groups={groups} />
+              {groups.length !== 0 ? (
+                <GroupTable groups={groups} />
+              ) : (
+                <>
+                  <p className="text-xl text-center pt-10">
+                    {nameLib.groupsEmpty}
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </Card>

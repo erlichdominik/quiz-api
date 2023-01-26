@@ -13,6 +13,7 @@ const CreateGroup = () => {
   const [date, setDate] = useState("");
   const [groupName, setGroupName] = useState("");
   const [info, setInfo] = useState("");
+  const [groupCode, setGroupCode] = useState("");
 
   const queryParams = {
     groupName: groupName,
@@ -26,12 +27,14 @@ const CreateGroup = () => {
     loadType: "SELF_LOAD",
   };
 
-  const { responseCode, infoMessage, loadData } =
+  const { responseData, responseCode, infoMessage, performRequest } =
     usePrivateRequests(privateRequestParams);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loadData();
+    await performRequest();
+    setGroupName("");
+    setDate("");
   };
 
   const handleGroupNameChange = (e) => {
@@ -43,12 +46,13 @@ const CreateGroup = () => {
   };
 
   useEffect(() => {
+    setGroupCode(responseData?.value);
     if (responseCode === 200) {
       setInfo("Group created succesfully");
     } else if (infoMessage) {
       setInfo(infoMessage);
     }
-  }, [responseCode, infoMessage]);
+  }, [responseData, responseCode, infoMessage]);
   return (
     <>
       <BackgroundWrapper>
@@ -72,6 +76,7 @@ const CreateGroup = () => {
                     className="rounded-xl pl-2 border shadow w-full h-8"
                     id="groupName"
                     type="text"
+                    value={groupName}
                     onChange={handleGroupNameChange}
                   />
                 </div>
@@ -83,16 +88,28 @@ const CreateGroup = () => {
                     className="rounded-xl pl-2 border shadow w-full h-8"
                     id="groupStartDate"
                     type="date"
+                    value={date}
                     min={new Date().toISOString().split("T")[0]}
                     onChange={handleDateChange}
                   />
                 </div>
-                <div className="w-1/4 mx-auto pt-2 text-center">
+                <div className="w-1/4 mx-auto pt-2 ">
                   <button className="border border-darkcl w-max px-4 py-2 rounded-xl shadow hover:bg-secondaryblue hover:text-white transition">
                     {nameLib.createGroup}
                   </button>
                 </div>
-                <p className="text-center w-full">{info}</p>
+
+                <div className="w-3/4 mx-auto pt-2 ">
+                  <p className="text-center w-full text-lg">{info}</p>
+                </div>
+                <div>
+                  {groupCode && (
+                    <p className="text-center text-xl">{nameLib.groupCode}:</p>
+                  )}
+                  <span className="text-xl select-all cursor-copy">
+                    {groupCode}
+                  </span>
+                </div>
               </div>
             </form>
           </div>

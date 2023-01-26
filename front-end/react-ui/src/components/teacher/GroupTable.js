@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import useLanguageContext from "../../hooks/useLanguageContext";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 import Modal from "../ui/Modal";
 import Group from "./Group";
 import GroupDetails from "./GroupDetails";
+
+const DELETE_GROUP_URL = (groupId) => `/teacher/groups/${groupId}`;
+const DELETE_STUDENTS_URL = (groupId) => `/teacher/groups/${groupId}/students`;
 
 const GroupTable = ({ groups }) => {
   const { nameLib } = useLanguageContext();
@@ -10,16 +14,35 @@ const GroupTable = ({ groups }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
 
+  const deleteGroupParams = {
+    requestType: "DELETE",
+    loadType: "SELF_LOAD",
+  };
+
+  const deleteStudentsParams = {
+    requestType: "DELETE",
+    loadType: "SELF_LOAD",
+  };
+
+  const deleteGroupRequest = usePrivateRequests(deleteGroupParams);
+  const deleteStudentsRequest = usePrivateRequests(deleteStudentsParams);
+
   const handleModalClose = () => {
     setModalVisible(false);
   };
 
-  const handleGroupDelete = (group) => {};
+  const handleStudentsDelete = (group) => {
+    deleteStudentsRequest.performRequest(DELETE_STUDENTS_URL(group.id));
+  };
+
+  const handleGroupDelete = async (group) => {
+    setSelectedGroup(group);
+    deleteGroupRequest.performRequest(DELETE_GROUP_URL(group.id));
+  };
 
   const handleGroupInspect = (group) => {
     setSelectedGroup(group);
     setModalVisible(true);
-    console.log("selected group", group);
   };
 
   return (
@@ -37,6 +60,7 @@ const GroupTable = ({ groups }) => {
         {groups.map((group) => (
           <Group
             group={group}
+            key={group.id}
             onClickDelete={handleGroupDelete}
             onClickInspect={handleGroupInspect}
           />
@@ -45,7 +69,11 @@ const GroupTable = ({ groups }) => {
 
       {modalVisible && (
         <Modal onClose={handleModalClose}>
-          <GroupDetails onClose={handleModalClose} group={selectedGroup} />
+          <GroupDetails
+            onClose={handleModalClose}
+            group={selectedGroup}
+            onDeleteAllStudents={handleStudentsDelete}
+          />
         </Modal>
       )}
     </>

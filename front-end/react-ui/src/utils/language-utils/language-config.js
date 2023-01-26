@@ -77,6 +77,8 @@ export const nameLibPolish = {
   deleteAllUsers: "Usuń wszystkich użytkowników",
   successfullyAddedToGroup: "Pomyślnie dodano do grupy",
   creditCodeNotFound: "Nie znaleziono grupy z danym kodem",
+  groupCreated: "Grupa została utworzona! kod grupy:",
+  groupsEmpty: "Wygląda na to że nie ma utworzonych grup...",
 };
 
 export const nameLibEnglish = {
@@ -159,6 +161,7 @@ export const nameLibEnglish = {
   deleteAllUsers: "Delete all users",
   successfullyAddedToGroup: "Succesfully added to group",
   creditCodeNotFound: "Could not find group with the given code",
+  groupsEmpty: "Looks like there are no created groups yet...",
 };
 
 export const LANGUAGE_CONFIG = {
