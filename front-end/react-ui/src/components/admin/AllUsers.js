@@ -16,7 +16,7 @@ const transformDataResponse = (responseData) =>
   }));
 
 const GET_USERS_URL = "/admin/users";
-const DELETE_USERS_URL = "/admin/delete/all";
+const DELETE_USERS_URL = "/admin/all";
 const DELETE_USER_URL = (userId) => `/admin/${userId}`;
 
 const AllUsers = ({ group }) => {
@@ -30,7 +30,7 @@ const AllUsers = ({ group }) => {
 
   const deleteAllUsersParams = {
     url: DELETE_USERS_URL,
-    requestType: "POST",
+    requestType: "DELETE",
     loadType: "SELF_LOAD",
   };
   const deleteUsersRequest = usePrivateRequests(deleteAllUsersParams);
@@ -41,23 +41,29 @@ const AllUsers = ({ group }) => {
   };
   const deleteUserRequest = usePrivateRequests(deleteSingleUserParams);
 
+  const loadUserData = async () => {
+    const response = await getUsersRequest.performRequest();
+    setUsers(transformDataResponse(response.data));
+  };
+
   useEffect(() => {
-    if (!getUsersRequest.isLoading && getUsersRequest.responseCode === 200) {
-      console.log(transformDataResponse(getUsersRequest.responseData));
-      setUsers(transformDataResponse(getUsersRequest.responseData));
-    }
+    loadUserData();
   }, [getUsersRequest.isLoading, getUsersRequest.responseCode]);
 
   const handleDeleteAllUsers = async () => {
     const response = await deleteUsersRequest.performRequest();
-    console.log("delete all users response", response);
+    if (response.status === 200) {
+      loadUserData();
+    }
   };
 
   const handleDeleteSingleUser = async (studentId) => {
     const response = await deleteUserRequest.performRequest(
       DELETE_USER_URL(studentId)
     );
-    console.log("delete single user response, ", response);
+    if (response.status === 200) {
+      loadUserData();
+    }
   };
 
   return (

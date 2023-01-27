@@ -33,9 +33,19 @@ const Groups = () => {
   const { nameLib } = useLanguageContext();
   const [groups, setGroups] = useState([]);
 
-  const { isLoading, responseData, infoMessage } = usePrivateRequests({
-    url: GROUPS_URL,
-  });
+  const { isLoading, responseData, infoMessage, performRequest } =
+    usePrivateRequests({
+      url: GROUPS_URL,
+    });
+
+  const refreshGroupData = async () => {
+    const response = await performRequest();
+    setGroups(transformResponseData(response.data.groups));
+  };
+
+  const handleGroupDelete = () => {
+    refreshGroupData();
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -59,7 +69,7 @@ const Groups = () => {
             <h1 className="pt-2 text-2xl text-center">{nameLib.groups}</h1>
             <div className="w-full h-3/4 mx-auto pt-2">
               {groups.length !== 0 ? (
-                <GroupTable groups={groups} />
+                <GroupTable groups={groups} onGroupDelete={handleGroupDelete} />
               ) : (
                 <>
                   <p className="text-xl text-center pt-10">

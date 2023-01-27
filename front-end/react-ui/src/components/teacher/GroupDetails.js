@@ -1,16 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Card from "../ui/Card";
 import StudentList from "./students/StudentList";
 import useLanguageContext from "../../hooks/useLanguageContext";
 import usePrivateRequests from "../../hooks/usePrivateRequests";
 
-const GroupDetails = ({ group, onClose, onDeleteAllStudents }) => {
+const GET_STUDENTS_URL = (groupId) => `/teacher/groups/${groupId}`;
+
+const DELETE_STUDENT_URL = (groupId, studentId) =>
+  `/teacher/remove/group/${groupId}/student/${studentId}`;
+
+const DELETE_STUDENTS_URL = (groupId) => `/teacher/group/${groupId}/students`;
+
+const transformResponseData = (responseData) =>
+  responseData.map((student) => ({
+    id: student.id,
+    name: student.username,
+  }));
+
+const GroupDetails = ({ group, onClose }) => {
   const { nameLib } = useLanguageContext();
 
-  const handleDeleteAllStudents = () => {
-    onDeleteAllStudents(group);
+  const [students, setStudents] = useState([]);
+
+  const getStudentsParams = {
+    url: GET_STUDENTS_URL(group.id),
   };
+
+  const deleteAllStudentsParams = {
+    url: DELETE_STUDENTS_URL(group.id),
+    requestType: "DELETE",
+    loadType: "SELF_LOAD",
+  };
+
+  const deleteStudentParams = {
+    requestType: "POST",
+    loadType: "SELF_LOAD",
+  };
+
+  const getStudentsRequest = usePrivateRequests(getStudentsParams);
+  const deleteStudentRequest = usePrivateRequests(deleteStudentParams);
+  const deleteStudentsRequest = usePrivateRequests(deleteAllStudentsParams);
+
+  const loadStudentsData = async () => {
+    const response = await getStudentsRequest.performRequest();
+    setStudents(transformResponseData(response.data.students));
+  };
+
+  const handleDeleteAllStudents = async () => {
+    const response = await deleteStudentsRequest.performRequest();
+    loadStudentsData();
+  };
+
+  const handleDeleteSingleStudent = async (studentId) => {
+    const response = await deleteStudentRequest.performRequest(
+      DELETE_STUDENT_URL(group.id, studentId)
+    );
+    loadStudentsData();
+  };
+
+  useEffect(() => {
+    if (
+      !getStudentsRequest.isLoading &&
+      getStudentsRequest.responseCode === 200
+    ) {
+      setStudents(
+        transformResponseData(getStudentsRequest.responseData.students)
+      );
+    }
+  }, [getStudentsRequest.isLoading, getStudentsRequest.responseCode]);
 
   return (
     <Card topPadding="1">
@@ -33,7 +91,12 @@ const GroupDetails = ({ group, onClose, onDeleteAllStudents }) => {
             {nameLib.deleteAllStudents}
           </button>
         </div>
-        <StudentList group={group} />
+        <StudentList
+          group={group}
+          students={students}
+          onDeleteAllStudents={handleDeleteAllStudents}
+          onDeleteSingleStudent={handleDeleteSingleStudent}
+        />
       </div>
     </Card>
   );

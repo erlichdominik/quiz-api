@@ -8,7 +8,7 @@ import GroupDetails from "./GroupDetails";
 const DELETE_GROUP_URL = (groupId) => `/teacher/groups/${groupId}`;
 const DELETE_STUDENTS_URL = (groupId) => `/teacher/groups/${groupId}/students`;
 
-const GroupTable = ({ groups }) => {
+const GroupTable = ({ groups, onGroupDelete }) => {
   const { nameLib } = useLanguageContext();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +37,8 @@ const GroupTable = ({ groups }) => {
 
   const handleGroupDelete = async (group) => {
     setSelectedGroup(group);
-    deleteGroupRequest.performRequest(DELETE_GROUP_URL(group.id));
+    await deleteGroupRequest.performRequest(DELETE_GROUP_URL(group.id));
+    onGroupDelete();
   };
 
   const handleGroupInspect = (group) => {
@@ -66,7 +67,6 @@ const GroupTable = ({ groups }) => {
           />
         ))}
       </div>
-
       {modalVisible && (
         <Modal onClose={handleModalClose}>
           <GroupDetails
