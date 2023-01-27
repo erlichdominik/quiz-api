@@ -27,11 +27,11 @@ import java.util.Arrays;
 @Slf4j
 class SecurityController {
     private final AuthenticationManager manager;
-    private final JwtTokenCreator tokenCreator;
+    private final JwtUtils tokenCreator;
     private final RefreshTokenManager refreshTokenManager;
     private final UserService userService;
 
-    SecurityController(AuthenticationManager manager, JwtTokenCreator tokenCreator, RefreshTokenManager refreshTokenManager, UserService userService) {
+    SecurityController(AuthenticationManager manager, JwtUtils tokenCreator, RefreshTokenManager refreshTokenManager, UserService userService) {
         this.manager = manager;
         this.tokenCreator = tokenCreator;
         this.refreshTokenManager = refreshTokenManager;
@@ -55,7 +55,10 @@ class SecurityController {
                             .map(Role::getName)
                             .toList());
 
-            httpServletResponse.addCookie(new Cookie("refreshToken", refreshToken.getToken()));
+            Cookie cookie = new Cookie("test", "test");
+            cookie.setSecure(true);
+            cookie.setPath("/");
+            httpServletResponse.addCookie(cookie);
 
             return ResponseEntity.ok().body(response);
 

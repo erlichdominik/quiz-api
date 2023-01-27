@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private ApplicationUser applicationUser;
 
     @Column(nullable = false)
@@ -36,6 +36,10 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String secondRecoveryAnswer;
+
+    public Optional<ApplicationUser> getApplicationUser() {
+        return Optional.ofNullable(applicationUser);
+    }
 
     @ManyToMany
     @JoinTable(name = "users_roles")

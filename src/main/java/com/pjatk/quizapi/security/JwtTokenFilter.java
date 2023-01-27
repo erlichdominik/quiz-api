@@ -19,9 +19,9 @@ import java.util.List;
 
 @Component
 class JwtTokenFilter extends OncePerRequestFilter {
-    private final JwtTokenCreator tokenCreator;
+    private final JwtUtils tokenCreator;
 
-    JwtTokenFilter(JwtTokenCreator tokenCreator) {
+    JwtTokenFilter(JwtUtils tokenCreator) {
         this.tokenCreator = tokenCreator;
     }
 

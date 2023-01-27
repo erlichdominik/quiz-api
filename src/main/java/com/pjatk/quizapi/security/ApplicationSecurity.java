@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 @SecurityScheme(name = ApplicationSecurity.SECURITY_CONFIG_NAME, in = SecuritySchemeIn.HEADER, type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true, securedEnabled = true,
-prePostEnabled = true)
+        prePostEnabled = true)
 public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
     private final UserRepository userRepository;
     private final JwtTokenFilter jwtTokenFilter;
@@ -73,7 +73,8 @@ public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
                 registry.addMapping("/**")
                         .allowedHeaders("*")
                         .allowedMethods("*")
-                        .allowedOrigins("*");
+                        .allowCredentials(true)
+                        .allowedOrigins("http://localhost:3000/", "https://secure-river-10356.herokuapp.com/");
             }
         };
     }
@@ -82,22 +83,21 @@ public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors()
                 .configurationSource(request -> {
-                    CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-                    corsConfiguration.addAllowedMethod(HttpMethod.GET);
-                    corsConfiguration.addAllowedMethod(HttpMethod.PUT);
-                    corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
-                    corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
-                    corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
-                    corsConfiguration.addAllowedMethod(HttpMethod.POST);
-
+                            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+                            corsConfiguration.addAllowedMethod(HttpMethod.GET);
+                            corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+                            corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+                            corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+                            corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
+                            corsConfiguration.addAllowedMethod(HttpMethod.POST);
+//                            corsConfiguration.setAllowCredentials(true);
                             return corsConfiguration;
                         }
-
                 )
-                        .and()
-                                .logout().deleteCookies("SESSION")
+                .and()
+                .logout().deleteCookies("SESSION")
                 .logoutSuccessHandler((request, response, authentication) -> response.setStatus(200))
-                        .invalidateHttpSession(true);
+                .invalidateHttpSession(true);
 
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

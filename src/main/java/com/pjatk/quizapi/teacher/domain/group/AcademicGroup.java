@@ -23,12 +23,23 @@ public class AcademicGroup extends AbstractEntity {
     private String code;
     private String name;
     private LocalDate deadline;
+    private LocalDate creationDate;
 
     public AcademicGroup(long teacherId, String name, LocalDate deadline) {
+        if (deadline.isBefore(LocalDate.now())) throw new ResponseStatusException(
+                HttpStatus.NOT_ACCEPTABLE,
+                "Group cannot have deadline before now!"
+        );
+        if (name.isBlank() || name.isEmpty()) throw new ResponseStatusException(
+                HttpStatus.NOT_ACCEPTABLE,
+                "Wrong name!"
+        );
+
         this.teacherId = teacherId;
         this.name = name;
         this.deadline = deadline;
         code = UUID.randomUUID().toString();
+        this.creationDate = LocalDate.now();
     }
 
     protected AcademicGroup() {}

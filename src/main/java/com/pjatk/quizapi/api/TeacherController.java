@@ -1,6 +1,7 @@
 package com.pjatk.quizapi.api;
 
 import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelFinder;
+import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelView;
 import com.pjatk.quizapi.security.ApplicationSecurity;
 import com.pjatk.quizapi.security.User;
 import com.pjatk.quizapi.teacher.application.GroupCode;
@@ -41,8 +42,8 @@ class TeacherController {
 
     @RolesAllowed({"TEACHER", "ADMIN"})
     @GetMapping("/groups/{groupId}/excel")
-    void excelEndpoint(@PathVariable long groupId) {
-        studentsForGroupExcelFinder.findView(groupId);
+    StudentsForGroupExcelView excelEndpoint(@PathVariable long groupId) {
+        return studentsForGroupExcelFinder.findView(groupId);
     }
 
     @RolesAllowed({"TEACHER", "ADMIN"})

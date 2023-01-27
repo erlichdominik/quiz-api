@@ -16,12 +16,12 @@ public class RefreshTokenManager {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
-    private final JwtTokenCreator jwtTokenCreator;
+    private final JwtUtils jwtUtils;
 
-    public RefreshTokenManager(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtTokenCreator jwtTokenCreator) {
+    public RefreshTokenManager(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtUtils jwtUtils) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
-        this.jwtTokenCreator = jwtTokenCreator;
+        this.jwtUtils = jwtUtils;
     }
 
 
@@ -54,7 +54,7 @@ public class RefreshTokenManager {
                 .map(this::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String accessToken = jwtTokenCreator.generateAccessToken(user);
+                    String accessToken = jwtUtils.generateAccessToken(user);
                     return new RefreshTokenResponse(accessToken, token);
                 })
                 .orElseThrow(() -> new TokenRefreshException(token, "token not found"));
