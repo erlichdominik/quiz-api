@@ -34,7 +34,7 @@ class JpaUserHistoryFinder implements UserHistoryFinder {
     }
 
     @Override
-    public UserHistoryDto find() {
+    public UserHistoryDto find() { //lastscore
         Set<UserHistory> userHistories = fetchUserHistories();
 
         return userHistories.stream()
@@ -44,9 +44,31 @@ class JpaUserHistoryFinder implements UserHistoryFinder {
                 .orElseThrow();
     }
 
+    @Override
+    public List<UserHistoryDto> fetchUserHistoriesFor(List<Long> studentsIds) {
+        String jpql = """
+                select history
+                from UserHistory history
+                left join fetch history.statistics
+                left join fetch history.applicationUser app_user
+                left join fetch app_user.user user
+                where user in ?1
+                """;
+
+        return entityManager.createQuery(jpql, UserHistory.class)
+                .setParameter(1, studentsIds)
+                .getResultStream()
+                .map(this::map)
+                .toList();
+    }
+
     private Set<UserHistory> fetchUserHistories() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        return getUserHistories(user);
+    }
+
+    private Set<UserHistory> getUserHistories(User user) {
         String selectApplicationUserJpql = "select a from ApplicationUser a where a.user.id = ?1";
 
         TypedQuery<ApplicationUser> selectApplicationUserQuery = entityManager.createQuery(selectApplicationUserJpql, ApplicationUser.class)

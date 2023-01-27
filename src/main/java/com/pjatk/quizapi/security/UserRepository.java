@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByIdIn(List<Long> ids);
 
     @Modifying
-    @Query(value = "truncate table app_user", nativeQuery = true)
-    void removeAll();
+    @Query(value = "DELETE FROM User u where u.id != 1")
+    void removeAllUsersExceptAdmin();
 
     @Modifying
     void removeById(long id);

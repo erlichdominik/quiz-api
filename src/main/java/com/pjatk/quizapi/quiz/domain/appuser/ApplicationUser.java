@@ -15,10 +15,10 @@ import java.util.Set;
 
 @Entity
 public class ApplicationUser extends AbstractEntity {
-    public static final int AMOUNT_OF_EXAM_ATTEMPTS = 1;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public static final int AMOUNT_OF_EXAM_ATTEMPTS = 3;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Walkthrough currentWalkthrough;
-    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
     private Set<UserHistory> userHistories = new HashSet<>();
 

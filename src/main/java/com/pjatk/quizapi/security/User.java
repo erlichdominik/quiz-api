@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER, orphanRemoval = true)
     private ApplicationUser applicationUser;
 
     @Column(nullable = false)

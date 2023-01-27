@@ -1,5 +1,6 @@
 package com.pjatk.quizapi.api;
 
+import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelFinder;
 import com.pjatk.quizapi.security.ApplicationSecurity;
 import com.pjatk.quizapi.security.User;
 import com.pjatk.quizapi.teacher.application.GroupCode;
@@ -23,17 +24,25 @@ class TeacherController {
     private final FindAllGroupsFinder allGroupsFinder;
     private final StudentsForGroupFinder finder;
     private final GroupManagementApplicationService facade;
+    private final StudentsForGroupExcelFinder studentsForGroupExcelFinder;
 
-    TeacherController(FindAllGroupsFinder allGroupsFinder, StudentsForGroupFinder finder, GroupManagementApplicationService facade) {
+    TeacherController(FindAllGroupsFinder allGroupsFinder, StudentsForGroupFinder finder, GroupManagementApplicationService facade, StudentsForGroupExcelFinder studentsForGroupExcelFinder) {
         this.allGroupsFinder = allGroupsFinder;
         this.finder = finder;
         this.facade = facade;
+        this.studentsForGroupExcelFinder = studentsForGroupExcelFinder;
     }
 
-    @RolesAllowed({"TEACHER", "ADMIN" })
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @DeleteMapping("/group/{groupId}/students")
     void removeAllStudentsFromGroup(@PathVariable long groupId) {
         facade.removeAllStudentFromGroup(groupId);
+    }
+
+    @RolesAllowed({"TEACHER", "ADMIN"})
+    @GetMapping("/groups/{groupId}/excel")
+    void excelEndpoint(@PathVariable long groupId) {
+        studentsForGroupExcelFinder.findView(groupId);
     }
 
     @RolesAllowed({"TEACHER", "ADMIN"})
@@ -42,7 +51,7 @@ class TeacherController {
         facade.deleteGroup(groupId);
     }
 
-    @RolesAllowed({ "TEACHER", "ADMIN" })
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @GetMapping("/groups")
     FindAllGroupsView findAll() {
         User user = getUser();
@@ -50,21 +59,21 @@ class TeacherController {
         return allGroupsFinder.findAll(user.getId());
     }
 
-    @RolesAllowed({ "TEACHER", "ADMIN" })
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @GetMapping("/groups/{groupId}")
     StudentsForGroup fetchStudentsForGroupView(@PathVariable long groupId) {
         return finder.findAll(groupId, getUser().getId());
     }
 
-    @RolesAllowed({ "TEACHER", "ADMIN" })
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @PostMapping("/remove/group/{groupId}/student/{studentId}")
     void removeStudentFromGroup(@PathVariable long groupId,
                                 @PathVariable long studentId) {
-       facade.removeStudentFromGroup(studentId, groupId);
+        facade.removeStudentFromGroup(studentId, groupId);
     }
 
 
-    @RolesAllowed({ "TEACHER", "ADMIN" })
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @PostMapping("/create/group")
     GroupCode createNewGroup(@RequestParam String groupName,
                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline) {
