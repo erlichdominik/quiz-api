@@ -7,6 +7,7 @@ import com.pjatk.quizapi.admin.readmodel.AllUsers;
 import com.pjatk.quizapi.admin.readmodel.AllUsersFinder;
 import com.pjatk.quizapi.api.dto.RegisterNewUserRequest;
 import com.pjatk.quizapi.security.ApplicationSecurity;
+import com.pjatk.quizapi.security.RefreshTokenManager;
 import com.pjatk.quizapi.security.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +23,14 @@ class AdminController {
     private final AllUsersFinder allUsersFinder;
     private final AllGroupsByTeacherFinder allGroupsByTeacherFinder;
     private final AdminFacade adminFacade;
+    private final RefreshTokenManager refreshTokenManager;
 
-    AdminController(UserService userService, AllUsersFinder allUsersFinder, AllGroupsByTeacherFinder allGroupsByTeacherFinder, AdminFacade adminFacade) {
+    AdminController(UserService userService, AllUsersFinder allUsersFinder, AllGroupsByTeacherFinder allGroupsByTeacherFinder, AdminFacade adminFacade, RefreshTokenManager refreshTokenManager) {
         this.userService = userService;
         this.allUsersFinder = allUsersFinder;
         this.allGroupsByTeacherFinder = allGroupsByTeacherFinder;
         this.adminFacade = adminFacade;
+        this.refreshTokenManager = refreshTokenManager;
     }
 
     @RolesAllowed({"ADMIN"})
@@ -57,6 +60,7 @@ class AdminController {
     @RolesAllowed({"ADMIN"})
     @DeleteMapping("/{userId}")
     void deleteUser(@PathVariable long userId) {
+        refreshTokenManager.deleteByUserId(userId);
         userService.deleteUser(userId);
     }
 }
