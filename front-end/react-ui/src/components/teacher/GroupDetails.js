@@ -52,9 +52,9 @@ const GroupDetails = ({ group, onClose }) => {
     loadStudentsData();
   };
 
-  const handleDeleteSingleStudent = async (studentId) => {
+  const handleDeleteSingleStudent = async (groupId, studentId) => {
     const response = await deleteStudentRequest.performRequest(
-      DELETE_STUDENT_URL(group.id, studentId)
+      DELETE_STUDENT_URL(groupId, studentId)
     );
     loadStudentsData();
   };
