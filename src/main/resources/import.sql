@@ -13,6 +13,7 @@ insert into app_user(id, email, password, first_recovery_answer, second_recovery
 
 insert into app_user(id, email, password, first_recovery_answer, second_recovery_answer) values (2, 't', '$2a$10$KMmN25KQOMf7H6suM2u7yOTN.yZroj1J7CzrshB.LFge9Imk38tqu', 't', 't')
 
+
 insert into app_user(id, email, password, first_recovery_answer, second_recovery_answer) values (3, 's', '$2a$10$HbaCrvWCLgCtgsKyZD7X1e00bw0LoQZQNXUd88O0APPPd.yTRiBKC', 's', 's')
 
 insert into ROLE(id, name) values (1, 'STUDENT')
