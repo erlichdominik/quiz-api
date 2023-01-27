@@ -84,18 +84,18 @@ export const nameLibPolish = {
   tutorialBasics: "Podstawowe instrukcje:",
   tutorialBasicsCont: `
 Użytkownik nawiguje w aplikacji używając dolnego panelu.
-Oto jego poszczególne funkcje:\n
-Rozpocznij quiz - Rozpoczyna nowy quiz.\n
-Kontynuuj quiz - Umożliwia kontynuacje quizu.(dopiero gdy użytkownik ma rozpoczęty quiz)\n
-Historia quizów - Pokazuje historię quizów, lub informacje, gdy użytkownik nie ukończył jszcze żadnego quizu\n
-Fiszki - Umożliwia korzystanie z fiszek, po kliknięciu jesteśmy skierowani na kategorie fiszek (można scrollować), i po kliknięciu w kategorię przeglądamy fiszki klikając na nie, dopoóki się nie wyczerpią\n
-W tym elemencie pokazują się fukcjonalności w zależności od naszej roli\n
-Student - Zaliczenie - Tutaj można dodać kod grupy do której chcemy dołączyć\n
-Nauczyciel - Panel nauczyciela - Mamy dwie opcje - Grupy oraz Stwórz grupę. Grupy umożliwiają nam zarządzanie grupami, a Stwórz grupę umożliwia nam utworzenie grupy i otrzymanie jej kodu\n
-Admin - Panel Administratora - Mamy trzy opcje - Lista grup, Stwórz nauczyciela, Wszyscy użytkownicy.\n
-\t Lista grup - Administrator ma wgląd do grup na tym samym poziomie co nauczyciel i może zarządzać grupami wszystkich nauczycieli\n
-\t Stwórz nauczyciela - Tutaj możemy stworzyć nauczyciela (nie jest to dostępne z poziomu rejestracji)\n
-\t Wszyscy użytkownicy - Jako administrator mamy wgląd do wszystkich użytkowników i możemy ich usuwać\n
+Oto jego poszczególne funkcje:
+Rozpocznij quiz - Rozpoczyna nowy quiz.
+Kontynuuj quiz - Umożliwia kontynuacje quizu.(dopiero gdy użytkownik ma rozpoczęty quiz)
+Historia quizów - Pokazuje historię quizów, lub informacje, gdy użytkownik nie ukończył jszcze żadnego quizu
+Fiszki - Umożliwia korzystanie z fiszek, po kliknięciu jesteśmy skierowani na kategorie fiszek (można scrollować), i po kliknięciu w kategorię przeglądamy fiszki klikając na nie, dopoóki się nie wyczerpią
+W tym elemencie pokazują się fukcjonalności w zależności od naszej roli
+Student - Zaliczenie - Tutaj można dodać kod grupy do której chcemy dołączyć
+Nauczyciel - Panel nauczyciela - Mamy dwie opcje - Grupy oraz Stwórz grupę. Grupy umożliwiają nam zarządzanie grupami, a Stwórz grupę umożliwia nam utworzenie grupy i otrzymanie jej kodu
+Admin - Panel Administratora - Mamy trzy opcje - Lista grup, Stwórz nauczyciela, Wszyscy użytkownicy.
+\t Lista grup - Administrator ma wgląd do grup na tym samym poziomie co nauczyciel i może zarządzać grupami wszystkich nauczycieli
+\t Stwórz nauczyciela - Tutaj możemy stworzyć nauczyciela (nie jest to dostępne z poziomu rejestracji)
+\t Wszyscy użytkownicy - Jako administrator mamy wgląd do wszystkich użytkowników i możemy ich usuwać
 Wyloguj się - opcja do wylogowywania
   `,
 };
