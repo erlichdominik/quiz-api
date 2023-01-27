@@ -35,11 +35,12 @@ const usePrivateRequests = ({
       setResponseData(response?.data);
       setResponseCode(response?.status);
     } catch (err) {
-      setInfoMessage(err?.reponse?.data?.message);
+      setInfoMessage(err?.response?.data?.message);
       setResponseCode(err?.response?.status);
     } finally {
       setIsLoading(false);
     }
+    return response;
   };
 
   useEffect(() => {

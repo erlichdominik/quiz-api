@@ -1,32 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import User from "./User";
 
 import useLanguageContext from "../../hooks/useLanguageContext";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 import Card from "../ui/Card";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Navbar from "../ui/Navbar";
 import { Link } from "react-router-dom";
 
-const randomInt = () => Math.floor(Math.random() * 99999);
+const transformDataResponse = (responseData) =>
+  responseData.users.map((user) => ({
+    id: user.id,
+    name: user.email,
+    role: user.role,
+  }));
 
-const userData = () => {
-  const userList = [];
-  for (let i = 0; i < 100; i++) {
-    userList.push({
-      id: i,
-      name: `student ${i}`,
-      role: "student",
-    });
-  }
-  return userList;
-};
+const GET_USERS_URL = "/admin/users";
+const DELETE_USERS_URL = "/admin/delete/all";
+const DELETE_USER_URL = (userId) => `/admin/${userId}`;
 
 const AllUsers = ({ group }) => {
   const { nameLib } = useLanguageContext();
+  const [users, setUsers] = useState([]);
 
-  const users = userData();
+  const getUsersParams = {
+    url: GET_USERS_URL,
+  };
+  const getUsersRequest = usePrivateRequests(getUsersParams);
 
-  const handleDeleteAllUsers = () => {};
+  const deleteAllUsersParams = {
+    url: DELETE_USERS_URL,
+    requestType: "POST",
+    loadType: "SELF_LOAD",
+  };
+  const deleteUsersRequest = usePrivateRequests(deleteAllUsersParams);
+
+  const deleteSingleUserParams = {
+    requestType: "DELETE",
+    loadType: "SELF_LOAD",
+  };
+  const deleteUserRequest = usePrivateRequests(deleteSingleUserParams);
+
+  useEffect(() => {
+    if (!getUsersRequest.isLoading && getUsersRequest.responseCode === 200) {
+      console.log(transformDataResponse(getUsersRequest.responseData));
+      setUsers(transformDataResponse(getUsersRequest.responseData));
+    }
+  }, [getUsersRequest.isLoading, getUsersRequest.responseCode]);
+
+  const handleDeleteAllUsers = async () => {
+    const response = await deleteUsersRequest.performRequest();
+    console.log("delete all users response", response);
+  };
+
+  const handleDeleteSingleUser = async (studentId) => {
+    const response = await deleteUserRequest.performRequest(
+      DELETE_USER_URL(studentId)
+    );
+    console.log("delete single user response, ", response);
+  };
 
   return (
     <>
@@ -60,7 +92,7 @@ const AllUsers = ({ group }) => {
                 {nameLib.actions}
               </div>
               {users.map((user) => (
-                <User user={user} />
+                <User user={user} onClickDelete={handleDeleteSingleUser} />
               ))}
             </div>
           </div>
