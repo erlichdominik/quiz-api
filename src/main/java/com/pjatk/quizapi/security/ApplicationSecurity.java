@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -79,7 +80,19 @@ public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .configurationSource(request -> {
+                    CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+                    corsConfiguration.addAllowedMethod(HttpMethod.GET);
+                    corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+                    corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+                    corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+                    corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
+                    corsConfiguration.addAllowedMethod(HttpMethod.POST);
+
+                            return corsConfiguration;
+                        }
+
+                )
                         .and()
                                 .logout().deleteCookies("SESSION")
                 .logoutSuccessHandler((request, response, authentication) -> response.setStatus(200))
