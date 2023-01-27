@@ -65,7 +65,7 @@ const Tutorial = () => {
   const englishDesc = (
     <>
       <h1 className="text-2xl mt-2">Short manual for the user:</h1>
-      <h2>Basic functionalities:</h2>
+      <h2 className="text-xl">Basic functionalities:</h2>
       <div className="text-start text-sm mx-auto w-2/3">
         <p clasName="block text-start">
           <br />

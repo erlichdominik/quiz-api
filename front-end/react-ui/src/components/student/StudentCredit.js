@@ -3,35 +3,38 @@ import Navbar from "../ui/Navbar";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import useLanguageContext from "../../hooks/useLanguageContext";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 
 const STUDENT_GROUP_URL = "/student/group";
 
 const StudentCredit = () => {
   const { nameLib } = useLanguageContext();
 
-  const axiosPrivate = useAxiosPrivate();
-
   const [creditCode, setCreditCode] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
+
+  const creditParams = {
+    url: STUDENT_GROUP_URL,
+    queryParams: {
+      groupCode: creditCode,
+    },
+    requestType: "POST",
+    loadType: "SELF_LOAD",
+  };
+  const creditRequest = usePrivateRequests(creditParams);
 
   const handleCodeInput = (e) => {
     setCreditCode(e.target.value);
     setInfoMessage("");
   };
 
+  // modern
   const handleAddToGroupClick = async () => {
-    try {
-      await axiosPrivate.post(STUDENT_GROUP_URL, null, {
-        params: {
-          groupCode: creditCode,
-        },
-      });
-      setInfoMessage(nameLib.succesfullyAddedToGroup);
-    } catch (err) {
-      if (err.response?.status === 404) {
-        setInfoMessage(nameLib.creditCodeNotFound);
-      }
+    const response = await creditRequest.performRequest();
+    if (response?.status === 200) {
+      setInfoMessage(nameLib.successfullyAddedToGroup);
+    } else {
+      setInfoMessage(creditRequest.infoMessage);
     }
   };
 
