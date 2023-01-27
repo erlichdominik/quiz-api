@@ -72,6 +72,7 @@ public class ApplicationSecurity extends GlobalMethodSecurityConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedHeaders("*")
+                        .allowedMethods("*")
                         .allowedOrigins("*");
             }
         };
