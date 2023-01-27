@@ -43,7 +43,7 @@ class AdminController {
     }
 
     @RolesAllowed({"ADMIN"})
-    @PostMapping("/delete/all")
+    @DeleteMapping("/all")
     void deleteAll() {
         adminFacade.deleteAll();
     }
