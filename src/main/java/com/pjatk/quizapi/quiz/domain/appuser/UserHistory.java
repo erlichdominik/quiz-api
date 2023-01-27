@@ -14,7 +14,7 @@ public class UserHistory extends AbstractEntity {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @OneToMany(mappedBy = "userHistory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userHistory", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Statistic> statistics = new HashSet<>();
 
     private LocalDateTime walkthroughDate;
