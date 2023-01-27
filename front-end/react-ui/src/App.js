@@ -21,6 +21,7 @@ import Groups from "./components/teacher/Groups";
 import CreateTeacher from "./components/admin/CreateTeacher";
 import AdminGroups from "./components/admin/AdminGroups";
 import AllUsers from "./components/admin/AllUsers";
+import Tutorial from "./components/user/Tutorial";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
               path="flashcardCategories"
               element={<FlashcardCategories />}
             />
+            <Route path="tutorial" element={<Tutorial />} />
           </Route>
           <Route
             element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}

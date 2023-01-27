@@ -11,6 +11,7 @@ import FlashcardIcon from "../../assets/flashcards.svg";
 import StudentGroupIcon from "../../assets/student-group.svg";
 import AdminPanelIcon from "../../assets/admin-panel.svg";
 import TeacherPanelIcon from "../../assets/teacher-panel.svg";
+import TutorialPanelIcon from "../../assets/tutorial.svg";
 import useAuth from "../../hooks/useAuth";
 import USER_ROLES from "../../utils/roles/authRoles";
 
@@ -66,6 +67,12 @@ const Navbar = () => {
           label={nameLib.flashcards}
           alt={nameLib.flashcards}
           linkTo="/flashcardCategories"
+        />
+        <NavItem
+          icon={TutorialPanelIcon}
+          label={nameLib.tutorial}
+          alt={nameLib.tutorial}
+          linkTo="/tutorial"
         />
         {hasStudentRole(roles) && (
           <NavItem
