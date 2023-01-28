@@ -14,12 +14,13 @@ public class UserService extends MailValidator {
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
     private final MailValidator mailValidator = new MailValidator();
+    private final RefreshTokenManager refreshTokenManager;
 
-
-    public UserService(UserRepository repository, PasswordEncoder encoder, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, PasswordEncoder encoder, RoleRepository roleRepository, RefreshTokenManager refreshTokenManager) {
         this.repository = repository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
+        this.refreshTokenManager = refreshTokenManager;
     }
 
     public void createNewTeacher(RegisterNewUserRequest request) {
@@ -62,6 +63,7 @@ public class UserService extends MailValidator {
 
     @Transactional
     public void deleteUser(long userId) {
+        refreshTokenManager.deleteByUserId(userId);
         repository.removeById(userId);
     }
 
