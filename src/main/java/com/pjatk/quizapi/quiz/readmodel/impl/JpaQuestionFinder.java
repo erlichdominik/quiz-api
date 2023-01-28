@@ -1,6 +1,5 @@
 package com.pjatk.quizapi.quiz.readmodel.impl;
 
-import com.pjatk.quizapi.sharedkernel.ddd.application.Finder;
 import com.pjatk.quizapi.quiz.application.commands.QuizAlreadyFinishedException;
 import com.pjatk.quizapi.quiz.domain.answer.Answer;
 import com.pjatk.quizapi.quiz.domain.question.Question;
@@ -11,10 +10,15 @@ import com.pjatk.quizapi.quiz.readmodel.QuestionDataResponse;
 import com.pjatk.quizapi.quiz.readmodel.QuestionDataResponse.AnswerDto;
 import com.pjatk.quizapi.quiz.readmodel.QuestionDataResponse.QuestionDto;
 import com.pjatk.quizapi.quiz.readmodel.QuestionFinder;
+import com.pjatk.quizapi.sharedkernel.ddd.application.Finder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Finder
@@ -48,13 +52,24 @@ class JpaQuestionFinder implements QuestionFinder {
 
 
     private QuestionDto map(Question question) {
-       return new QuestionDto(question.getId(), question.getText(), question.getAnswers()
-               .stream().map(this::map).collect(Collectors.toSet()));
+        return new QuestionDto(question.getId(), question.getText(), question.getAnswers()
+                .stream().map(this::map).collect(toShuffledList()));
     }
 
     private AnswerDto map(Answer answer) {
         return new AnswerDto(answer.getId(), answer.getText());
     }
 
+    private static final Collector<?, ?, ?> SHUFFLER = Collectors.collectingAndThen(
+            Collectors.toCollection(ArrayList::new),
+            list -> {
+                Collections.shuffle(list);
+                return list;
+            }
+    );
 
+    @SuppressWarnings("unchecked")
+    public static <T> Collector<T, ?, List<T>> toShuffledList() {
+        return (Collector<T, ?, List<T>>) SHUFFLER;
+    }
 }
