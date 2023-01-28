@@ -5,13 +5,19 @@ import useQuizContext from "../../hooks/useQuizContext";
 import useLanguageContext from "../../hooks/useLanguageContext";
 
 const QuizStarter = () => {
-  const { setIsQuizOver, setIsQuizStarted, disbandQuiz } = useQuizContext();
+  const {
+    setIsQuizOver,
+    setIsQuizStarted,
+    disbandQuiz,
+    setCanQuizBeCompleted,
+  } = useQuizContext();
   const { nameLib } = useLanguageContext();
 
   const startNewQuizHandler = () => {
     disbandQuiz();
     setIsQuizStarted(true);
     setIsQuizOver(false);
+    setCanQuizBeCompleted(true);
   };
 
   return (

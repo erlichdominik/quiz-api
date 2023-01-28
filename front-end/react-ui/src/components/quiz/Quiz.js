@@ -18,6 +18,7 @@ const Quiz = () => {
     setSelectedAnswer,
     isQuizOver,
     finalScore,
+    canQuizBeCompleted,
   } = useQuizContext();
 
   const { nameLib } = useLanguageContext();
@@ -37,7 +38,7 @@ const Quiz = () => {
     <main className="bg-secondaryblue h-screen w-screen ">
       <section className="h-4/5 flex justify-center items-center mx-2">
         <Navbar />
-        {!isQuizOver && quizState !== null && (
+        {!isQuizOver && quizState !== null && canQuizBeCompleted && (
           <section className="text-2xl flex flex-col border bg-white border-primaryblue rounded-lg w-3/5 min-w-fit items-center mx-auto drop-shadow-md">
             <div className="py-3 px-6">
               {quizState.currentQuestion.questionName}
@@ -67,11 +68,15 @@ const Quiz = () => {
               <button
                 className={`w-full pb-1
                 ${
-                  selectedAnswer
-                    ? `rounded-b-md hover:bg-secondaryblue hover:text-white transition`
-                    : `opacity-50`
+                  selectedAnswer === undefined || selectedAnswer === null
+                    ? `opacity-50 cursor-default`
+                    : `rounded-b-md hover:bg-secondaryblue hover:text-white transition`
                 }`}
-                onClick={nextQuestionClickedHandler}
+                onClick={
+                  selectedAnswer === undefined || selectedAnswer === null
+                    ? () => {}
+                    : nextQuestionClickedHandler
+                }
                 disabled={
                   selectedAnswer === "" || selectedAnswer === null
                     ? true
@@ -103,6 +108,18 @@ const Quiz = () => {
             </div>
           )}
         </>
+        {canQuizBeCompleted === false && (
+          <div>
+            <div className="bg-white border border-primaryblue rounded-lg shadow p-3 w-1/2 mx-auto">
+              <h3 className="block text-center text-3xl ">
+                {nameLib.attemptsOver}
+              </h3>
+              <h3 className="block text-center text-2xl ">
+                {nameLib.attemptsExplanation}
+              </h3>
+            </div>
+          </div>
+        )}
       </section>
     </main>
   );

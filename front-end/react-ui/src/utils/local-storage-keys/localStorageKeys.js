@@ -5,6 +5,7 @@ const localKeys = {
   IS_QUIZ_OVER_KEY: "isQuizOver",
   SELECTED_ANSWER_KEY: "selectedAnswer",
   FINAL_SCORE: "finalScore",
+  CAN_QUIZ_BE_COMPLETED: "canQuizBeCompleted",
 };
 
 export default localKeys;

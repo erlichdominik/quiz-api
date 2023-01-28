@@ -88,6 +88,10 @@ export const nameLibPolish = {
   areYouSure: "Na pewno?",
   no: "Nie",
   yes: "Tak",
+  attemptsOver:
+    "Wyczerpano limit podejść do quizu (można kontynować podejścia, ale nie zapiszą się w historii)",
+  attemptsOverExplanation:
+    "(można kontynować podejścia, ale nie zapiszą się w historii)",
 };
 
 export const nameLibEnglish = {
@@ -179,6 +183,10 @@ export const nameLibEnglish = {
   areYouSure: "Are you sure?",
   no: "No",
   yes: "Yes",
+  attemptsOver:
+    "You have reached the limit of quiz attempts (you may continue solving the quiz but it won't be saved to history)",
+  attemptsOverExplanation:
+    "(you may continue solving the quiz but it won't be saved to history)",
 };
 
 export const LANGUAGE_CONFIG = {

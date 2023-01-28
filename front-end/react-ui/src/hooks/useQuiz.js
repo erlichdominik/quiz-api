@@ -1,3 +1,4 @@
+import { useState } from "react";
 import localKeys from "../utils/local-storage-keys/localStorageKeys";
 import useCookieState from "./useCookieState";
 import useAxiosPrivate from "./useAxiosPrivate";
@@ -20,6 +21,8 @@ const useQuiz = (quizOptions) => {
     false,
     localKeys.IS_QUIZ_OVER_KEY
   );
+
+  const [canQuizBeCompleted, setCanQuizBeCompleted] = useState(true);
 
   const [isQuizStarted, setIsQuizStarted] = useCookieState(
     false,
@@ -51,12 +54,15 @@ const useQuiz = (quizOptions) => {
         `${quizOptions.QUIZ_SUBMIT_URL}?walkthroughId=${quizState.walkthroughId}&answerId=${selectedAnswer}`
       );
       if (response.data.isQuizOver === true) {
-        console.log("inside submit quiz is over statement");
         setIsQuizOver(true);
       }
+      setSelectedAnswer(null);
       return response.data.isQuizOver;
     } catch (err) {
-      console.error(err);
+      if (err?.response?.status === 406) {
+        console.log("inside quiz attempts finished statement");
+        setCanQuizBeCompleted(false);
+      }
     }
   };
 
@@ -66,6 +72,10 @@ const useQuiz = (quizOptions) => {
 
       if (quizFinished) {
         await loadQuizFinalScore();
+        return;
+      }
+
+      if (!canQuizBeCompleted) {
         return;
       }
 
@@ -106,6 +116,8 @@ const useQuiz = (quizOptions) => {
     selectedAnswer,
     setSelectedAnswer,
     finalScore,
+    canQuizBeCompleted,
+    setCanQuizBeCompleted,
   ];
 };
 

@@ -17,6 +17,8 @@ export const QuizProvider = ({ children }) => {
     selectedAnswer,
     setSelectedAnswer,
     finalScore,
+    canQuizBeCompleted,
+    setCanQuizBeCompleted,
   ] = useQuiz(QUIZ_OPTIONS);
 
   return (
@@ -33,6 +35,8 @@ export const QuizProvider = ({ children }) => {
         selectedAnswer,
         setSelectedAnswer,
         finalScore,
+        canQuizBeCompleted,
+        setCanQuizBeCompleted,
       }}
     >
       {children}
