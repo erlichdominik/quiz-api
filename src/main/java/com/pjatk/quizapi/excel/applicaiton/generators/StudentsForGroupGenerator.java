@@ -7,7 +7,10 @@ import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelView.Group;
 import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelView.Statistic;
 import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelView.Student;
 import com.pjatk.quizapi.excel.readmodel.StudentsForGroupExcelView.UserHistory;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
@@ -93,7 +96,7 @@ class StudentsForGroupGenerator implements ExcelGenerator<StudentsForGroupExcelG
                 row = sheet.getRow(firstHistoryDataIndex) == null ? sheet.createRow(firstHistoryDataIndex) : sheet.getRow(firstHistoryDataIndex);
                 UserHistory userHistory = historiesPerUser.get(j);
                 cell = row.createCell(1);
-                cell.setCellValue(userHistory.date().toString());
+                cell.setCellValue(userHistory.date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
                 cell = row.createCell(2);
                 cell.setCellValue(true);
