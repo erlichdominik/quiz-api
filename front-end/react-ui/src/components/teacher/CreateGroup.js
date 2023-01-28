@@ -49,7 +49,7 @@ const CreateGroup = () => {
     setGroupCode(responseData?.value);
     if (responseCode === 200) {
       setInfo("Group created succesfully");
-    } else if (infoMessage) {
+    } else {
       setInfo(infoMessage);
     }
   }, [responseData, responseCode, infoMessage]);
@@ -57,7 +57,7 @@ const CreateGroup = () => {
     <>
       <BackgroundWrapper>
         <Card>
-          <div className=" w-[20rem] sm:w-[26rem] bg-white rounded-lg border border-primaryblue shadow">
+          <div className=" w-[20rem] sm:w-[32rem] bg-white rounded-lg border border-primaryblue shadow">
             <div className="text-sm w-full h-10 hover:bg-secondaryblue hover:text-white">
               <Link to="/teacherPanel">
                 <button className="w-full h-full">
@@ -104,7 +104,14 @@ const CreateGroup = () => {
                 </div>
                 <div>
                   {groupCode && (
-                    <p className="text-center text-xl">{nameLib.groupCode}:</p>
+                    <p
+                      className="text-center text-xl"
+                      onClick={() => {
+                        navigator.clipboard.writeText(this.state.textToCopy);
+                      }}
+                    >
+                      {nameLib.groupCode}:
+                    </p>
                   )}
                   <span className="text-xl select-all cursor-copy">
                     {groupCode}

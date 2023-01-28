@@ -49,9 +49,6 @@ const App = () => {
             }
           >
             <Route path="/" element={<Home />} />
-            <Route path="quiz" element={<Quiz />} />
-            <Route path="quizStart" element={<QuizStarter />} />
-            <Route path="quizHistory" element={<QuizHistory />} />
             <Route
               path="flashcardCategories"
               element={<FlashcardCategories />}
@@ -62,6 +59,17 @@ const App = () => {
             element={<RequireAuth allowedRoles={[USER_ROLES.regularUser]} />}
           >
             <Route path="studentCredit" element={<StudentCredit />}></Route>
+          </Route>
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[USER_ROLES.regularUser, USER_ROLES.teacherUser]}
+              />
+            }
+          >
+            <Route path="quiz" element={<Quiz />} />
+            <Route path="quizStart" element={<QuizStarter />} />
+            <Route path="quizHistory" element={<QuizHistory />} />
           </Route>
           <Route
             element={<RequireAuth allowedRoles={[USER_ROLES.teacherUser]} />}

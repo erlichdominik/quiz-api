@@ -7,20 +7,6 @@ import useLanguageContext from "../../hooks/useLanguageContext";
 import GroupTable from "./GroupTable";
 import usePrivateRequests from "../../hooks/usePrivateRequests";
 
-const randomInt = () => Math.floor(Math.random() * 99999);
-
-const groupData = () => {
-  const groupList = [];
-  for (let i = 0; i < 100; i++) {
-    groupList.push({
-      id: i,
-      name: `group ${i}`,
-      groupCode: randomInt(),
-    });
-  }
-  return groupList;
-};
-
 const transformResponseData = (responseData) =>
   responseData.map((group) => ({
     id: group.id,

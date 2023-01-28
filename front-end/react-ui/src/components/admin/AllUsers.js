@@ -87,7 +87,7 @@ const AllUsers = ({ group }) => {
                 {nameLib.deleteAllUsers}
               </button>
             </div>
-            <div className="bg-white border border-primaryblue w-11/12 h-[20rem] mt-3 mx-auto grid auto-rows-max grid-cols-3 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
+            <div className="bg-white border border-primaryblue w-11/12 min-h-[60%] mt-3 mx-auto grid auto-rows-max grid-cols-3 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
               <div className="m-1  sticky top-0 bg-white text-center col-span-1 z-0">
                 {nameLib.usernames}
               </div>

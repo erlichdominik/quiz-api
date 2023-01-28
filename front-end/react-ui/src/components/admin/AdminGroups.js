@@ -1,31 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import useLanguageContext from "../../hooks/useLanguageContext";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
 import AdminGroupTable from "./AdminGroupTable";
 
-const randomInt = () => Math.floor(Math.random() * 99999);
+const transformResponseData = (responseData) =>
+  responseData.map((group) => ({
+    id: group.id,
+    groupCode: group.groupCode,
+    name: group.groupName,
+    //teacherName: group.teacherName
+  }));
+// group:
+// name:
+// groupCode
+// teacherName
 
-const adminGroupData = () => {
-  const groupList = [];
-  for (let i = 0; i < 100; i++) {
-    groupList.push({
-      id: i,
-      name: `group ${i}`,
-      groupCode: randomInt(),
-      teacherName: `teacher ${i}`,
-    });
-  }
-  return groupList;
-};
-
+const GET_ADMIN_GROUPS_URL = "/admin/groupsbyteacher";
 const AdminGroups = () => {
   const { nameLib } = useLanguageContext();
+  const [groups, setGroups] = useState([]);
 
-  const groups = adminGroupData();
+  const { isLoading, responseData, infoMessage, performRequest } =
+    usePrivateRequests({
+      url: GET_ADMIN_GROUPS_URL,
+    });
+
+  const refreshGroupData = async () => {
+    const response = await performRequest();
+    setGroups(transformResponseData(response.data.groups));
+  };
+
+  const handleGroupDelete = () => {
+    refreshGroupData();
+  };
+
+  useEffect(() => {
+    if (!isLoading) {
+      setGroups(transformResponseData(responseData.groups));
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -41,7 +59,10 @@ const AdminGroups = () => {
             </div>
             <h1 className="pt-2 text-2xl text-center">{nameLib.groups}</h1>
             <div className="w-full h-3/4 mx-auto pt-2">
-              <AdminGroupTable groups={groups} />
+              <AdminGroupTable
+                groups={groups}
+                onGroupDelete={handleGroupDelete}
+              />
             </div>
           </div>
         </Card>

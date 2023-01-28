@@ -14,7 +14,7 @@ const Tutorial = () => {
         Krótka instrukcja obsługiwania dla użytkownika:
       </h1>
       <h2 className="text-xl"> Podstawowe instrukcje:</h2>
-      <div className="text-start text-sm mx-auto w-2/3">
+      <div className="text-start text-sm mx-auto w-2/3 overflow-auto">
         <p clasName="block text-start">
           <br />
           Użytkownik nawiguje w aplikacji używając dolnego panelu.

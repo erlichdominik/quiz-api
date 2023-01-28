@@ -47,7 +47,7 @@ export const nameLibPolish = {
   groups: "Grupy",
   createGroup: "Stwórz grupę",
   groupName: "Nazwa grupy",
-  createGroupDate: "Data utworzenia grupy",
+  createGroupDate: "Ustaw termin końcowy zaliczenia",
   backToTeacherPanel: "Powrót do panelu nauczyciela",
   groupCode: "Kod grupy",
   actions: "Akcje",
@@ -82,6 +82,8 @@ export const nameLibPolish = {
   tutorial: "Tutorial",
   tutorialHeader: "Krótka instrukcja obsługiwania dla użytkownika:",
   tutorialBasics: "Podstawowe instrukcje:",
+  loading: "Wczytywanie...",
+  teacherCreated: "Utworzono nauczyciela",
 };
 
 export const nameLibEnglish = {
@@ -134,7 +136,7 @@ export const nameLibEnglish = {
   groups: "Groups",
   createGroup: "Create group",
   groupName: "Group name",
-  createGroupDate: "Group creation date",
+  createGroupDate: "Set deadline for credit",
   backToTeacherPanel: "Back to teacher panel",
   groupCode: "Group code",
   actions: "Actions",
@@ -167,6 +169,8 @@ export const nameLibEnglish = {
   groupsEmpty: "Looks like there are no created groups yet...",
   tutorial: "Tutorial",
   tutorialHeader: "A short manual for the user:",
+  loading: "Loading...",
+  teacherCreated: "Teacher created",
 };
 
 export const LANGUAGE_CONFIG = {

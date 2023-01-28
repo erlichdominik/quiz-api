@@ -5,7 +5,7 @@ const AdminGroup = ({ group, onClickDelete, onClickInspect }) => {
   const { nameLib } = useLanguageContext();
 
   const handleGroupDelete = () => {
-    onClickDelete();
+    onClickDelete(group);
   };
 
   const handleGroupInspect = () => {

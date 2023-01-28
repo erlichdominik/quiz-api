@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../ui/Navbar";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
@@ -28,20 +28,22 @@ const StudentCredit = () => {
     setInfoMessage("");
   };
 
-  // modern
   const handleAddToGroupClick = async () => {
-    const response = await creditRequest.performRequest();
-    if (response?.status === 200) {
+    await creditRequest.performRequest();
+  };
+
+  useEffect(() => {
+    if (creditRequest.responseCode === 200) {
       setInfoMessage(nameLib.successfullyAddedToGroup);
     } else {
       setInfoMessage(creditRequest.infoMessage);
     }
-  };
+  }, [creditRequest.infoMessage, creditRequest.responseCode]);
 
   return (
     <BackgroundWrapper>
       <Card>
-        <div className="h-2/3 w-[20rem] bg-white border border-primaryblue rounded-lg shadow flex flex-col items-center justify-around space-y-2 my-2">
+        <div className="h-2/3 w-[20rem] sm:w-[32rem] bg-white border border-primaryblue rounded-lg shadow flex flex-col items-center justify-around space-y-2 my-2">
           <div>
             <h1 className="text-center text-2xl ">{nameLib.enterCreditCode}</h1>
           </div>
@@ -55,7 +57,7 @@ const StudentCredit = () => {
             <input
               type="text"
               id="studentCredit"
-              className="block w-4/5 border border-darkcl rounded-xl pl-2 h-8 mx-auto my-auto text-center"
+              className="block w-full border border-darkcl rounded-xl pl-2 h-8 mx-auto my-auto text-center"
               onChange={handleCodeInput}
             />
           </div>

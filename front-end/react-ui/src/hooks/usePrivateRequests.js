@@ -37,6 +37,7 @@ const usePrivateRequests = ({
     } catch (err) {
       setInfoMessage(err?.response?.data?.message);
       setResponseCode(err?.response?.status);
+      return err;
     } finally {
       setIsLoading(false);
     }

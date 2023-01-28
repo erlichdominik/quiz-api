@@ -42,26 +42,32 @@ const Navbar = () => {
   return (
     <nav className="fixed bottom-0 inset-x-0 ">
       <div className="flex justify-between bg-white">
-        <NavItem
-          icon={StartQuizIcon}
-          label={nameLib.startQuiz}
-          alt={nameLib.startQuiz}
-          linkTo="/quizStart"
-        />
-        {isQuizStarted && !isQuizOver && (
-          <NavItem
-            icon={ContinueQuizIcon}
-            label={nameLib.continueQuiz}
-            alt={nameLib.continueQuiz}
-            linkTo="/quiz"
-          />
+        {hasStudentRole(roles) || hasTeacherRole(roles) ? (
+          <>
+            <NavItem
+              icon={StartQuizIcon}
+              label={nameLib.startQuiz}
+              alt={nameLib.startQuiz}
+              linkTo="/quizStart"
+            />
+            {isQuizStarted && !isQuizOver && (
+              <NavItem
+                icon={ContinueQuizIcon}
+                label={nameLib.continueQuiz}
+                alt={nameLib.continueQuiz}
+                linkTo="/quiz"
+              />
+            )}
+            <NavItem
+              icon={QuizHistoryIcon}
+              label={nameLib.quizHistory}
+              alt={nameLib.quizHistory}
+              linkTo="/quizHistory"
+            />
+          </>
+        ) : (
+          <></>
         )}
-        <NavItem
-          icon={QuizHistoryIcon}
-          label={nameLib.quizHistory}
-          alt={nameLib.quizHistory}
-          linkTo="/quizHistory"
-        />
         <NavItem
           icon={FlashcardIcon}
           label={nameLib.flashcards}

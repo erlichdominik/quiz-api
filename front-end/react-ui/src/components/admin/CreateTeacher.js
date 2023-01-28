@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
@@ -33,11 +33,24 @@ const CreateTeacher = () => {
     e.preventDefault();
     if (login && password && firstAnswerRecovery && secondAnswerRecovery) {
       console.log("creating teacher... ", createTeacherParams.body);
-      const response = await createTeacherRequest.performRequest();
-      console.log(createTeacherRequest);
-      setInfoMessage(createTeacherRequest.infoMessage);
+      await createTeacherRequest.performRequest();
     }
   };
+
+  useEffect(() => {
+    if (createTeacherRequest.isLoading) {
+      setInfoMessage(nameLib.loading);
+    }
+    if (createTeacherRequest.responseCode === 200) {
+      setInfoMessage(nameLib.teacherCreated);
+    } else {
+      setInfoMessage(createTeacherRequest.infoMessage);
+    }
+  }, [
+    createTeacherRequest.responseCode,
+    createTeacherRequest.isLoading,
+    createTeacherRequest.infoMessage,
+  ]);
 
   return (
     <>
@@ -56,7 +69,7 @@ const CreateTeacher = () => {
             </h1>
             <form onSubmit={handleSubmit}>
               <div className="w-full h-1/2 min-h-max flex flex-col items-center justify-center space-y-3 py-3">
-                <div className="w-3/4 mx-auto">
+                <div className="w-3/4 ">
                   <label className="block" htmlFor="teacherLogin">
                     {nameLib.teacherLogin}
                   </label>
@@ -68,7 +81,7 @@ const CreateTeacher = () => {
                     onChange={(e) => setLogin(e.target.value)}
                   />
                 </div>
-                <div className="w-3/4 mx-auto">
+                <div className="w-3/4 ">
                   <label className="block" htmlFor="teacherPassword">
                     {nameLib.teacherPassword}
                   </label>
@@ -80,7 +93,7 @@ const CreateTeacher = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="w-3/4 mx-auto">
+                <div className="w-3/4 ">
                   <label className="block" htmlFor="phraseOne">
                     {nameLib.teacherPhraseOne}
                   </label>
@@ -92,7 +105,7 @@ const CreateTeacher = () => {
                     onChange={(e) => setFirstAnswerRecovery(e.target.value)}
                   />
                 </div>
-                <div className="w-3/4 mx-auto">
+                <div className="w-3/4 ">
                   <label className="block" htmlFor="phraseTwo">
                     {nameLib.teacherPhraseTwo}
                   </label>
@@ -104,13 +117,13 @@ const CreateTeacher = () => {
                     onChange={(e) => setSecondAnswerRecovery(e.target.value)}
                   />
                 </div>
-                <div className="w-1/4 mx-auto pt-2 text-center">
+                <div>
                   <button className="border border-darkcl w-max px-4 py-2 rounded-xl shadow hover:bg-secondaryblue hover:text-white transition">
                     {nameLib.createTeacher}
                   </button>
                 </div>
                 <div>
-                  <p className="text-xs">{infoMessage}</p>
+                  <p className="text-base">{infoMessage}</p>
                 </div>
               </div>
             </form>
