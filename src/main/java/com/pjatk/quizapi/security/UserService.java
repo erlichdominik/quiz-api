@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Service
-public class UserService extends MailValidator {
+public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
@@ -59,10 +59,6 @@ public class UserService extends MailValidator {
             repository.save(user);
         }
 
-    }
-
-    public void requireCorrectMail(String username, String suffix) {
-        mailValidator.requireCorrectMail(username, suffix);
     }
 
     @Transactional
