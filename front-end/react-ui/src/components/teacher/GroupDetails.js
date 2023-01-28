@@ -7,6 +7,7 @@ import usePrivateRequests from "../../hooks/usePrivateRequests";
 import ConfirmationPopup from "../ui/ConfirmationPopup";
 import Modal from "../ui/Modal";
 import useConfirmationControls from "../../hooks/useConfirmationControls";
+import useExcelDownloader from "../../hooks/useExcelDownloader";
 
 const GET_STUDENTS_URL = (groupId) => `/teacher/groups/${groupId}`;
 
@@ -14,6 +15,8 @@ const DELETE_STUDENT_URL = (groupId, studentId) =>
   `/teacher/remove/group/${groupId}/student/${studentId}`;
 
 const DELETE_STUDENTS_URL = (groupId) => `/teacher/group/${groupId}/students`;
+
+const GET_EXCEL_URL = (groupId) => `/teacher/groups/${groupId}/excel`;
 
 const transformResponseData = (responseData) =>
   responseData.map((student) => ({
@@ -23,6 +26,8 @@ const transformResponseData = (responseData) =>
 
 const GroupDetails = ({ group, onClose }) => {
   const { nameLib } = useLanguageContext();
+
+  const { loadExcelFile } = useExcelDownloader();
 
   const [students, setStudents] = useState([]);
 
@@ -75,6 +80,10 @@ const GroupDetails = ({ group, onClose }) => {
     );
   };
 
+  const handleDownloadGroupScore = () => {
+    loadExcelFile(GET_EXCEL_URL(group.id), `Group ${group.name}`);
+  };
+
   useEffect(() => {
     if (
       !getStudentsRequest.isLoading &&
@@ -98,7 +107,10 @@ const GroupDetails = ({ group, onClose }) => {
           </div>
           <h1 className="text-2xl text-center ">{`${group.name} ${nameLib.details}`}</h1>
           <div className="flex justify-center mx-2 space-x-2 pt-2 ">
-            <button className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-secondaryblue hover:text-white transition">
+            <button
+              className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-secondaryblue hover:text-white transition"
+              onClick={handleDownloadGroupScore}
+            >
               {nameLib.downloadGroupScore}
             </button>
             <button

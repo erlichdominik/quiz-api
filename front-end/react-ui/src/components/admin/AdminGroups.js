@@ -14,12 +14,8 @@ const transformResponseData = (responseData) =>
     id: group.id,
     groupCode: group.groupCode,
     name: group.groupName,
-    //teacherName: group.teacherName
+    teacherName: group.teacherName,
   }));
-// group:
-// name:
-// groupCode
-// teacherName
 
 const GET_ADMIN_GROUPS_URL = "/admin/groupsbyteacher";
 const AdminGroups = () => {
