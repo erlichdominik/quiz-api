@@ -39,7 +39,7 @@ public class AcademicGroup extends AbstractEntity {
         this.name = name;
         this.deadline = deadline;
         String longCode = UUID.randomUUID().toString();
-        code = longCode.substring(longCode.length() / 2);
+        code = longCode.substring(longCode.length() / 2).replace("-", "");
         this.creationDate = LocalDate.now();
     }
 
