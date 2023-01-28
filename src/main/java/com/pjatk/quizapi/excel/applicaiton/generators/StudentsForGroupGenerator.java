@@ -98,9 +98,6 @@ class StudentsForGroupGenerator implements ExcelGenerator<StudentsForGroupExcelG
                 cell = row.createCell(1);
                 cell.setCellValue(userHistory.date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-                cell = row.createCell(2);
-                cell.setCellValue(true);
-
                 List<Statistic> statistics = userHistory.statistics();
 
                 int statisticCounter = 3;
@@ -112,6 +109,10 @@ class StudentsForGroupGenerator implements ExcelGenerator<StudentsForGroupExcelG
 
                     statisticCounter++;
                 }
+
+                cell = row.createCell(2);
+                boolean isPathPassed = statistics.stream().allMatch(it -> it.completedPercentage() > 0.6);
+                cell.setCellValue(isPathPassed);
 
                 firstHistoryDataIndex++;
 
