@@ -32,7 +32,19 @@ public class GroupManagementApplicationService {
     public void addStudentToGroup(User student, String groupCode) {
         AcademicGroup group = repository.findByCode(groupCode)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Code: %s was not found".formatted(groupCode)));
+                        "Group with code: %s was not found".formatted(groupCode)));
+
+        if (group.isStudentAlreadyInGroup(student.getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+                    "You can't join same group again!");
+        }
+
+        boolean isUserAlreadyInExam = student.getAccountState() == User.AccountState.EXAM;
+
+        if (isUserAlreadyInExam) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+                    "You can't join group if you are already in quiz!");
+        }
 
         group.addStudentToGroup(student.getId());
 

@@ -43,6 +43,10 @@ public class AcademicGroup extends AbstractEntity {
         this.creationDate = LocalDate.now();
     }
 
+    public boolean isStudentAlreadyInGroup(long studentId) {
+        return studentIds.stream().anyMatch(id -> id == studentId);
+    }
+
     protected AcademicGroup() {}
 
     public void addStudentToGroup(long studentId) {
