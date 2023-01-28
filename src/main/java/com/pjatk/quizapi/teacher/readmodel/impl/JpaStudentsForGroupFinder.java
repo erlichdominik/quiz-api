@@ -16,7 +16,7 @@ class JpaStudentsForGroupFinder implements StudentsForGroupFinder {
     private EntityManager entityManager;
 
     @Override
-    public StudentsForGroup findAll(long groupId, long teacherId) {
+    public StudentsForGroup findAll(long groupId) {
         String sql = """
                 SELECT a
                 FROM AcademicGroup a

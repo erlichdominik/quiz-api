@@ -26,6 +26,5 @@ class StudentController {
     @PostMapping("/group")
     void addStudentToGroup(@RequestParam String groupCode) {
         facade.addStudentToGroup(userContext.getUser(), groupCode);
-        // TODO: 23/01/2023 enter into quiz mode
     }
 }

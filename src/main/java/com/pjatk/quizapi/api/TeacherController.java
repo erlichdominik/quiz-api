@@ -75,7 +75,7 @@ class TeacherController {
     @RolesAllowed({"TEACHER", "ADMIN"})
     @GetMapping("/groups/{groupId}")
     StudentsForGroup fetchStudentsForGroupView(@PathVariable long groupId) {
-        return finder.findAll(groupId, getUser().getId());
+        return finder.findAll(groupId);
     }
 
     @RolesAllowed({"TEACHER", "ADMIN"})
