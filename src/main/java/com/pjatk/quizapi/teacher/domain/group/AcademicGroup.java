@@ -38,7 +38,8 @@ public class AcademicGroup extends AbstractEntity {
         this.teacherId = teacherId;
         this.name = name;
         this.deadline = deadline;
-        code = UUID.randomUUID().toString();
+        String longCode = UUID.randomUUID().toString();
+        code = longCode.substring(longCode.length() / 2);
         this.creationDate = LocalDate.now();
     }
 
