@@ -29,15 +29,17 @@ public class GroupManagementApplicationService {
         return new GroupCode(repository.save(group).getCode());
     }
 
-    public void addStudentToGroup(User student, String groupCode) {
+    public void addStudentToGroup(User user, String groupCode) {
         AcademicGroup group = repository.findByCode(groupCode)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Group with code: %s was not found".formatted(groupCode)));
 
-        if (group.isStudentAlreadyInGroup(student.getId())) {
+        if (group.isStudentAlreadyInGroup(user.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
                     "You can't join same group again!");
         }
+
+        User student = userRepository.findById(user.getId()).orElseThrow(RuntimeException::new);
 
         boolean isUserAlreadyInExam = student.getAccountState() == User.AccountState.EXAM;
 
@@ -48,11 +50,11 @@ public class GroupManagementApplicationService {
 
         group.addStudentToGroup(student.getId());
 
-        User user = fetchUserBy(student.getId());
+        User fetchedUser = fetchUserBy(student.getId());
 
-        user.startExam();
+        fetchedUser.startExam();
 
-        userRepository.save(user);
+        userRepository.save(fetchedUser);
         repository.save(group);
     }
 
