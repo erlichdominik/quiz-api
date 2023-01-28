@@ -79,6 +79,9 @@ export const nameLibPolish = {
   creditCodeNotFound: "Nie znaleziono grupy z danym kodem",
   groupCreated: "Grupa została utworzona! kod grupy:",
   groupsEmpty: "Wygląda na to że nie ma utworzonych grup...",
+  tutorial: "Tutorial",
+  tutorialHeader: "Krótka instrukcja obsługiwania dla użytkownika:",
+  tutorialBasics: "Podstawowe instrukcje:",
 };
 
 export const nameLibEnglish = {
@@ -162,6 +165,8 @@ export const nameLibEnglish = {
   successfullyAddedToGroup: "Succesfully added to group",
   creditCodeNotFound: "Could not find group with the given code",
   groupsEmpty: "Looks like there are no created groups yet...",
+  tutorial: "Tutorial",
+  tutorialHeader: "A short manual for the user:",
 };
 
 export const LANGUAGE_CONFIG = {
