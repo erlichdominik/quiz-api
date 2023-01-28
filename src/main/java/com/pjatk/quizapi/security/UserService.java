@@ -3,10 +3,14 @@ package com.pjatk.quizapi.security;
 import com.pjatk.quizapi.api.dto.RecoverPasswordRequest;
 import com.pjatk.quizapi.api.dto.RegisterNewUserRequest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 public class UserService extends MailValidator {
@@ -64,6 +68,15 @@ public class UserService extends MailValidator {
     @Transactional
     public void deleteUser(long userId) {
         refreshTokenManager.deleteByUserId(userId);
+        Optional<Role> admin = repository.findById(userId)
+                .flatMap(it -> it.getRoles().stream()
+                        .filter(role -> role.getName().equals("ADMIN"))
+                        .findFirst());
+
+        if (admin.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        }
+
         repository.removeById(userId);
     }
 
