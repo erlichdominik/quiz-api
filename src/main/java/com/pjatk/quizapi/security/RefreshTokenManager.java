@@ -33,6 +33,10 @@ public class RefreshTokenManager {
         return refreshTokenRepository.save(refreshToken);
     }
 
+    public void deleteAllRefreshTokens() {
+        refreshTokenRepository.deleteAll();
+    }
+
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(token);
