@@ -12,7 +12,7 @@ const StudentList = ({
   const { nameLib } = useLanguageContext();
 
   return (
-    <div className="bg-white border border-primaryblue w-11/12 h-[20rem] mt-3 mx-auto grid auto-rows-max grid-cols-2 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
+    <div className="bg-white border border-primaryblue w-11/12 h-[55%] mt-3 mx-auto grid auto-rows-max grid-cols-2 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
       <div className="m-1  sticky top-0 bg-white text-center col-span-1 z-0">
         {nameLib.students}
       </div>

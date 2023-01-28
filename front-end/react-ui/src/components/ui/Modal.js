@@ -17,10 +17,10 @@ const ModalOverlay = ({ children }) => {
   );
 };
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ children, onClose, shouldCloseOnBackgroundClick = true }) => {
   return (
     <>
-      <Backdrop onClose={onClose} />
+      <Backdrop onClose={shouldCloseOnBackgroundClick ? onClose : () => {}} />
       <ModalOverlay>{children}</ModalOverlay>
     </>
   );

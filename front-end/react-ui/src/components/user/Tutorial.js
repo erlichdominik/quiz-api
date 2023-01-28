@@ -6,7 +6,7 @@ import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
 
 const Tutorial = () => {
-  const { language, nameLib } = useLanguageContext();
+  const { language } = useLanguageContext();
 
   const polishDesc = (
     <>
@@ -66,7 +66,7 @@ const Tutorial = () => {
     <>
       <h1 className="text-2xl mt-2">Short manual for the user:</h1>
       <h2 className="text-xl">Basic functionalities:</h2>
-      <div className="text-start text-sm mx-auto w-2/3">
+      <div className="text-start text-sm mx-auto w-2/3 overflow-auto">
         <p clasName="block text-start">
           <br />
           User navigates through the application via the bottom panel

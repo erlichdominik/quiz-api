@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useConfirmationControls from "../../hooks/useConfirmationControls";
 
 import useLanguageContext from "../../hooks/useLanguageContext";
 import usePrivateRequests from "../../hooks/usePrivateRequests";
@@ -57,6 +58,11 @@ const AdminGroups = () => {
                 </button>
               </Link>
             </div>
+            {isLoading && (
+              <div className="text-center">
+                <p>{nameLib.loading}</p>
+              </div>
+            )}
             <h1 className="pt-2 text-2xl text-center">{nameLib.groups}</h1>
             <div className="w-full h-3/4 mx-auto pt-2">
               <AdminGroupTable

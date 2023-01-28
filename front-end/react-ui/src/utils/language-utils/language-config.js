@@ -84,6 +84,10 @@ export const nameLibPolish = {
   tutorialBasics: "Podstawowe instrukcje:",
   loading: "Wczytywanie...",
   teacherCreated: "Utworzono nauczyciela",
+  disableActionConfirmation: "Wyłączyć zatwierdzanie akcji?",
+  areYouSure: "Na pewno?",
+  no: "Nie",
+  yes: "Tak",
 };
 
 export const nameLibEnglish = {
@@ -171,6 +175,10 @@ export const nameLibEnglish = {
   tutorialHeader: "A short manual for the user:",
   loading: "Loading...",
   teacherCreated: "Teacher created",
+  disableActionConfirmation: "Disable action confirmation?",
+  areYouSure: "Are you sure?",
+  no: "No",
+  yes: "Yes",
 };
 
 export const LANGUAGE_CONFIG = {
