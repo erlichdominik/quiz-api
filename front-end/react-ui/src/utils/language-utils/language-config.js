@@ -1,6 +1,6 @@
 export const nameLibPolish = {
   signIn: "Zaloguj się",
-  username: "Nazwa użytkownika",
+  username: "Email studenta WUM",
   password: "Hasło",
   dontHaveAccount: "Nie masz konta?",
   alreadyHaveAccount: "Masz już konto?",
@@ -85,18 +85,22 @@ export const nameLibPolish = {
   loading: "Wczytywanie...",
   teacherCreated: "Utworzono nauczyciela",
   disableActionConfirmation: "Wyłączyć zatwierdzanie akcji?",
-  areYouSure: "Na pewno?",
+  areYouSure: "Czy potwierdzasz, że chcesz usunąć dane?",
   no: "Nie",
   yes: "Tak",
   attemptsOver:
     "Wyczerpano limit podejść do quizu (można kontynować podejścia, ale nie zapiszą się w historii)",
   attemptsOverExplanation:
     "(można kontynować podejścia, ale nie zapiszą się w historii)",
+  passwordInfo:
+    "Haslo co najmniej 8 znakow i maksymalnie 20 1 cyfra 1 duza litera 1 mala litera",
+  registrationSuccessfull: "Rejestracja przebiegła pomyślnie",
+  recoverySuccessfull: "Wprowadzono nowe hasło",
 };
 
 export const nameLibEnglish = {
   signIn: "Sign in",
-  username: "Username",
+  username: "Username is a WUM student's mail",
   password: "Password",
   dontHaveAccount: "Don't have an account?",
   alreadyHaveAccount: "Already have an account?",
@@ -180,13 +184,17 @@ export const nameLibEnglish = {
   loading: "Loading...",
   teacherCreated: "Teacher created",
   disableActionConfirmation: "Disable action confirmation?",
-  areYouSure: "Are you sure?",
+  areYouSure: "Do you confirm you want to delete the data?",
   no: "No",
   yes: "Yes",
   attemptsOver:
     "You have reached the limit of quiz attempts (you may continue solving the quiz but it won't be saved to history)",
   attemptsOverExplanation:
     "(you may continue solving the quiz but it won't be saved to history)",
+  passwordInfo:
+    " Password is at least 8 characters and maximum of 20, 1 number 1 uppercase 1 lowercase",
+  registrationSuccessfull: "Registration successfull",
+  recoverySuccessfull: "New password is entered",
 };
 
 export const LANGUAGE_CONFIG = {

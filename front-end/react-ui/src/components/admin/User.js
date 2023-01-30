@@ -11,7 +11,10 @@ const User = ({ user, onClickDelete }) => {
 
   return (
     <>
-      <div className="self-center text-center col-span-1">{user.name}</div>
+      {/* TODO: fix username overlfow*/}
+      <div className="self-center text-center col-span-1 px-2 ">
+        {user.name}
+      </div>
       <div className="self-center text-center col-span-1">{user.role}</div>
       <div className="self-center text-center flex justify-center gap-x-2 col-span-1 px-2">
         <button

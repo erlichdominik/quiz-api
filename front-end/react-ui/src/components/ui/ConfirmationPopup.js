@@ -18,7 +18,7 @@ const ConfirmationPopup = ({ delegatedAction, onRefreshData, onClose }) => {
   return (
     <Card topPadding="1">
       <div className="w-full h-4/5 flex flex-col justify-around items-center">
-        <div className="text-2xl">{nameLib.areYouSure}</div>
+        <div className="text-2xl px-2 text-center">{nameLib.areYouSure}</div>
         <div className="flex justify-evenly w-1/2 space-x-5">
           <div>
             <button
