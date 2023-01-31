@@ -39,6 +39,10 @@ public class ApplicationUser extends AbstractEntity {
         userHistory.assignApplicationUser(this);
     }
 
+    public void addExamUserHistory(UserHistory userHistory) {
+
+    }
+
     public void setWalkthrough(Walkthrough walkthrough) {
         currentWalkthrough = walkthrough;
         walkthrough.setAppUser(this);
@@ -46,6 +50,10 @@ public class ApplicationUser extends AbstractEntity {
 
     public Optional<Walkthrough> getCurrentWalkthrough() {
         return Optional.ofNullable(currentWalkthrough);
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void clearCounter() {

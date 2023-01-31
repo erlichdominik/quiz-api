@@ -1,5 +1,6 @@
 package com.pjatk.quizapi.quiz.application.engine.impl;
 
+import com.pjatk.quizapi.security.User;
 import com.pjatk.quizapi.sharedkernel.ddd.application.ApplicationPolicy;
 import com.pjatk.quizapi.quiz.application.HistoryManager;
 import com.pjatk.quizapi.quiz.domain.appuser.ApplicationUser;
@@ -47,13 +48,14 @@ class ExamHistoryManager implements HistoryManager {
         Map<Long, List<Stat>> statsPerPathwayId = stats.stream()
                 .collect(groupingBy(Stat::getPathwayId));
 
-        var userHistory = new UserHistory(quiz);
 
         List<Statistic> statistics = getStatisticsForPathways(statsPerPathwayId);
 
-        statistics.forEach(userHistory::addStatistic);
-
         ApplicationUser appUser = walkthrough.getAppUser();
+
+        var userHistory = new UserHistory(quiz, appUser.getUser().getAccountState() == User.AccountState.EXAM);
+
+        statistics.forEach(userHistory::addStatistic);
 
         appUser.addUserHistory(userHistory);
 

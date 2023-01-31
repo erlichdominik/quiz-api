@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class AcademicGroup extends AbstractEntity {
     private String code;
     private String name;
     private LocalDate deadline;
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     public AcademicGroup(long teacherId, String name, LocalDate deadline) {
         if (deadline.isBefore(LocalDate.now())) throw new ResponseStatusException(
@@ -40,7 +41,7 @@ public class AcademicGroup extends AbstractEntity {
         this.deadline = deadline;
         String longCode = UUID.randomUUID().toString();
         code = longCode.substring(longCode.length() / 2).replace("-", "");
-        this.creationDate = LocalDate.now();
+        this.creationDate = LocalDateTime.now();
     }
 
     public boolean isStudentAlreadyInGroup(long studentId) {

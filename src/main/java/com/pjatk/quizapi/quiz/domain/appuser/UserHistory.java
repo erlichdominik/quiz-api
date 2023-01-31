@@ -18,14 +18,16 @@ public class UserHistory extends AbstractEntity {
     private Set<Statistic> statistics = new HashSet<>();
 
     private LocalDateTime walkthroughDate;
+    private boolean wasInExam;
 
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private ApplicationUser applicationUser;
 
-    public UserHistory(Quiz quiz) {
+    public UserHistory(Quiz quiz, boolean wasInExam) {
         this.quiz = quiz;
         walkthroughDate = LocalDateTime.now();
+        this.wasInExam = wasInExam;
     }
 
     public void addStatistic(Statistic statistic) {

@@ -48,7 +48,8 @@ class JpaStudentsForGroupExcelViewFinder implements StudentsForGroupExcelFinder 
                 left join fetch app_user.userHistories user_hist
                 left join fetch user_hist.statistics stats
                 where user.id in ?1
-                and DATE(user_hist.walkthroughDate) >= ?2
+                and user_hist.walkthroughDate >= ?2
+                and user_hist.wasInExam = true
                 """;
 
         List<User> usersInGroup = entityManager.createQuery(jpql, User.class)

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record StudentsForGroupExcelView(Group group) {
-    public record Group(String name, LocalDate deadline, LocalDate creationOfGroupDate, List<Student> students) {
+    public record Group(String name, LocalDate deadline, LocalDateTime creationOfGroupDate, List<Student> students) {
     }
 
     public record Student(String username, List<UserHistory> history) {
