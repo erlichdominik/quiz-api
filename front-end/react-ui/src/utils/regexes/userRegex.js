@@ -3,5 +3,5 @@ export const USERNAME_REGEX = new RegExp(
 );
 
 export const PASSWORD_REGEX = new RegExp(
-  "^(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,20}$"
+  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$"
 );

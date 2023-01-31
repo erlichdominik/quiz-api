@@ -1,6 +1,6 @@
 export const nameLibPolish = {
   signIn: "Zaloguj się",
-  username: "Email studenta WUM",
+  username: "Nazwa użytkownika",
   password: "Hasło",
   dontHaveAccount: "Nie masz konta?",
   alreadyHaveAccount: "Masz już konto?",
@@ -96,11 +96,13 @@ export const nameLibPolish = {
     "Haslo co najmniej 8 znakow i maksymalnie 20 1 cyfra 1 duza litera 1 mala litera",
   registrationSuccessfull: "Rejestracja przebiegła pomyślnie",
   recoverySuccessfull: "Wprowadzono nowe hasło",
+  usernameRegister: "Nazwa użytkownika to email studenta WUM",
+  invalidPassword: "Nieprawidłowy format hasła",
 };
 
 export const nameLibEnglish = {
   signIn: "Sign in",
-  username: "Username is a WUM student's mail",
+  username: "Username",
   password: "Password",
   dontHaveAccount: "Don't have an account?",
   alreadyHaveAccount: "Already have an account?",
@@ -195,6 +197,8 @@ export const nameLibEnglish = {
     " Password is at least 8 characters and maximum of 20, 1 number 1 uppercase 1 lowercase",
   registrationSuccessfull: "Registration successfull",
   recoverySuccessfull: "New password is entered",
+  usernameRegister: "Username is a WUM student's mail",
+  invalidPassword: "Invalid password format",
 };
 
 export const LANGUAGE_CONFIG = {

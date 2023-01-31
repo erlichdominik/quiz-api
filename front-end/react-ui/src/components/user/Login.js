@@ -8,6 +8,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import USER_ROLES from "../../utils/roles/authRoles";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
+import QuizTitle from "../ui/QuizTitle";
 
 const LOGIN_URL = "/auth/login";
 
@@ -76,7 +77,8 @@ const Login = () => {
 
   return (
     <BackgroundWrapper>
-      <Card>
+      <QuizTitle />
+      <Card topPadding="0">
         <form onSubmit={handleSubmit} className="pt-6">
           <div className="flex flex-col space-y-3 border border-primaryblue rounded-lg w-[24rem] sm:w-[34rem] mx-auto shadow bg-white ">
             <div className="text-center">

@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import useLanguageContext from "../../hooks/useLanguageContext";
 
-import { USERNAME_REGEX, PASSWORD_REGEX } from "../../utils/regexes/userRegex";
+import { PASSWORD_REGEX } from "../../utils/regexes/userRegex";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
+import QuizTitle from "../ui/QuizTitle";
 
 const REGISTER_URL = "/auth/register";
 
@@ -29,6 +30,11 @@ const Registration = () => {
       secondAnswerRecovery: secondAnswerRecovery,
     });
 
+    if (!isPasswordValid) {
+      setErrorMessage(nameLib.invalidPassword);
+      return;
+    }
+
     try {
       await axios.post(REGISTER_URL, postObj, {
         headers: {
@@ -41,9 +47,14 @@ const Registration = () => {
     }
   };
 
+  useEffect(() => {
+    setIsPasswordValid(PASSWORD_REGEX.test(password));
+  }, [password]);
+
   return (
     <BackgroundWrapper>
-      <Card>
+      <QuizTitle />
+      <Card topPadding="0">
         <form
           onSubmit={handleSubmit}
           className="my-auto w-[24rem] sm:w-[34rem] rounded-lg shadow border border-primaryblue "
@@ -54,7 +65,7 @@ const Registration = () => {
             </div>
             <div className="w-10/12 mx-auto">
               <label className="block" htmlFor="username">
-                {nameLib.username}
+                {nameLib.usernameRegister}
               </label>
               <input
                 className="rounded-xl pl-2 border shadow w-full h-8"
@@ -73,7 +84,13 @@ const Registration = () => {
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
-              <p className="text-xs ">{nameLib.passwordInfo}</p>
+              <p
+                className={`text-xs ${
+                  isPasswordValid ? `text-correct` : `text-danger`
+                }`}
+              >
+                {nameLib.passwordInfo}
+              </p>
             </div>
             <div className="w-10/12 mx-auto text-center">
               <p className="text-xs">({nameLib.passwordRecoveryQuestion})</p>

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import useLanguageContext from "../../hooks/useLanguageContext";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
+import QuizTitle from "../ui/QuizTitle";
+import { PASSWORD_REGEX } from "../../utils/regexes/userRegex";
 
 const PASSWORD_RECOVERY_URL = "/auth/password/recover";
 
@@ -15,6 +17,7 @@ const PasswordRecovery = () => {
   const [secondAnswerRecovery, setSecondAnswerRecovery] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +28,11 @@ const PasswordRecovery = () => {
       secondAnswerRecovery: secondAnswerRecovery,
       newPassword: newPassword,
     });
+
+    if (!isPasswordValid) {
+      setInfoMessage(nameLib.invalidPassword);
+      return;
+    }
 
     try {
       await axios.post(PASSWORD_RECOVERY_URL, postObj, {
@@ -38,9 +46,14 @@ const PasswordRecovery = () => {
     }
   };
 
+  useEffect(() => {
+    setIsPasswordValid(PASSWORD_REGEX.test(newPassword));
+  }, [newPassword]);
+
   return (
     <BackgroundWrapper>
-      <Card>
+      <QuizTitle />
+      <Card topPadding="0">
         <form
           onSubmit={handleSubmit}
           className="my-auto w-[24rem] sm:w-[34rem] rounded-lg shadow border border-primaryblue "
@@ -70,7 +83,13 @@ const PasswordRecovery = () => {
                 id="newPassword"
                 onChange={(e) => setNewPassword(e.target.value)}
               ></input>
-              <p className="text-xs">{nameLib.passwordInfo}</p>
+              <p
+                className={`text-xs ${
+                  isPasswordValid ? `text-correct` : `text-danger`
+                }`}
+              >
+                {nameLib.passwordInfo}
+              </p>
             </div>
             <div className="w-10/12 mx-auto ">
               <label className="block" htmlFor="rePassword">

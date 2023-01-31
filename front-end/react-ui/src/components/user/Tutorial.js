@@ -33,6 +33,10 @@ const Tutorial = () => {
           <strong> Quiz -</strong> Wybór ikony „Rozpocznij Quiz” rozpoczyna
           test, w trakcie którego losowo zostaną wybrane ścieżki.
           <br />
+          Jeżeli jako student jesteś zapisany do zaliczenia, przysługuje ci 5
+          prób podejścia do Quizu. Po wykorzystaniu wszystkich prób wciąż możesz
+          podchodzić do Quizu, ale twoje wyniki nie będą zapisane u nauczyciela
+          <br />
           Jeżeli odpowiesz nieprawidłowo na pytanie, wówczas otrzymujesz zestaw
           pytań z kolejnej ścieżki. Na końcu gry zobaczysz wyniki osobno dla
           każdej ze ścieżek. Test musisz przejść zawsze do końca.
@@ -81,6 +85,10 @@ const Tutorial = () => {
           the test, during which pathways will be randomly selected. If you
           answer a question incorrectly, you will be given a set of questions
           from the following path.
+          <br />
+          When you are assigned to a credit (group) you have 5 attempts at the
+          Quiz. After completing those 5 attempts you may still solve the Quiz,
+          but your score will not be sent to the teacher
           <br />
           At the end of the game, you will see the results for each path
           separately. You must always pass the test to the end.
