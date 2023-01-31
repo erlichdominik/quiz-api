@@ -20,6 +20,7 @@ insert into QUIZ(id, name) values (1, 'default')
 insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (1, 1, 2, 'pathway1', 1 )
 -- insert into pathway (id, pathway_number, next_pathway_number, pathway_name, quiz_id) values (3, 3, null, 'final pathway', 1)
 
+-- pathway 1
 insert into question(id, comment, text, pathway_id, subpathway_id) values (1, 'lorem', 'Mięśnie gładkie większości naczyć unerwiane są przez', 1, null)
 
 insert into answer(id, text, is_true, question_id) values(1, 'Wyłącznie układ współczulny', true, 1)
