@@ -13,6 +13,7 @@ module.exports = {
       darkclLighter: "#737B82",
       white: "#ffffff",
       danger: "#ff3333",
+      correct: "#5ae717",
     },
     extend: {
       fontFamily: {
