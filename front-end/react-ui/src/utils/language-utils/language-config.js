@@ -6,6 +6,7 @@ export const nameLibPolish = {
   alreadyHaveAccount: "Masz już konto?",
   register: "Rejestracja",
   signUp: "Zarejestruj się",
+  downloadManual: "Pobierz dłuższą instrukcję",
   forgotYourPasswordOrWantToChangeIt:
     "Zapomniałeś hasła lub chcesz je zresetować?",
   recoverPassword: "Odzyskaj hasło",
@@ -108,6 +109,7 @@ export const nameLibEnglish = {
   alreadyHaveAccount: "Already have an account?",
   register: "Register",
   signUp: "Sign up",
+  downloadManual: "Download longer manual",
   forgotYourPasswordOrWantToChangeIt:
     "Forgot your password or want to change it?",
   recoverPassword: "Recover password",

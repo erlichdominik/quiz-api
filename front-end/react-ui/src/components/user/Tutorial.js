@@ -6,6 +6,8 @@ import Card from "../ui/Card";
 import Navbar from "../ui/Navbar";
 import USER_ROLES from "../../utils/roles/authRoles";
 import useAuth from "../../hooks/useAuth";
+import usePdfDownloader from "../../hooks/usePdfDownloader";
+import {nameLibPolish as nameLib} from "../../utils/language-utils/language-config";
 
 const hasStudentRole = (roles) => roles.includes(USER_ROLES.regularUser);
 
@@ -13,10 +15,17 @@ const hasTeacherRole = (roles) => roles.includes(USER_ROLES.teacherUser);
 
 const hasAdminRole = (roles) => roles.includes(USER_ROLES.adminUser);
 
+const GET_PDF_URL = () => `/teacher/manual`;
+
 const Tutorial = () => {
   const { language } = useLanguageContext();
   const { auth } = useAuth();
   const roles = auth.roles;
+  const { loadPdfFile } = usePdfDownloader();
+
+  const handleDownloadManual = () => {
+    loadPdfFile(GET_PDF_URL());
+  }
 
   const studentPolishDesc = (
     <>
@@ -168,6 +177,12 @@ const Tutorial = () => {
           <strong>Wyloguj się - </strong>opcja do wylogowywania
           <br />
         </p>
+        <button
+              className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-secondaryblue hover:text-white transition"
+              onClick={handleDownloadManual}
+            >
+              {nameLib.downloadManual}
+            </button>
       </div>
     </>
   );
@@ -222,6 +237,12 @@ const Tutorial = () => {
           <strong>Logout -</strong> A logout option
           <br />
         </p>
+        <button
+            className="border border-darkcl px-3 py-1 rounded-xl text-sm w-[12rem] hover:bg-secondaryblue hover:text-white transition"
+            onClick={handleDownloadManual}
+        >
+          {nameLib.downloadManual}
+        </button>
       </div>
     </>
   );
