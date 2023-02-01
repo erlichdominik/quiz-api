@@ -14,12 +14,17 @@ import com.pjatk.quizapi.teacher.readmodel.FindAllGroupsView;
 import com.pjatk.quizapi.teacher.readmodel.StudentsForGroup;
 import com.pjatk.quizapi.teacher.readmodel.StudentsForGroupFinder;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -59,10 +64,23 @@ class TeacherController {
     }
 
     @RolesAllowed({"TEACHER", "ADMIN"})
+    @GetMapping("/manual")
+    ResponseEntity<Resource> manualEndpoint() throws IOException {
+        Resource resource = new FileSystemResource("src/main/resources/UserManual.pdf");
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + resource.getFilename() + "\"")
+                .contentLength(resource.contentLength())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }
+
+    @RolesAllowed({"TEACHER", "ADMIN"})
     @DeleteMapping("/groups/{groupId}")
     void deleteGroup(@PathVariable long groupId) {
         facade.deleteGroup(groupId);
     }
+
 
     @RolesAllowed({"TEACHER", "ADMIN"})
     @GetMapping("/groups")
