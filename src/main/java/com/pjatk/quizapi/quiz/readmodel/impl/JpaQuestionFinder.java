@@ -69,7 +69,7 @@ class JpaQuestionFinder implements QuestionFinder {
     );
 
     @SuppressWarnings("unchecked")
-    public static <T> Collector<T, ?, List<T>> toShuffledList() {
+    private static <T> Collector<T, ?, List<T>> toShuffledList() {
         return (Collector<T, ?, List<T>>) SHUFFLER;
     }
 }

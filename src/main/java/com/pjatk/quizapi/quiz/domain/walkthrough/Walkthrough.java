@@ -12,32 +12,23 @@ import java.util.*;
 
 @Entity
 public class Walkthrough extends AbstractEntity {
-    public enum State {
+    private enum State {
         INIT, IN_GAME, FINISHED
     }
-
-    protected Walkthrough() {
-    }
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "walkthrough")
-    private List<QuestionsIndex> questionsIndices = new ArrayList<>();
-
     private int currentIndex = 0;
     private int currentQuestionIndex = 0;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "walkthrough")
+    private List<QuestionsIndex> questionsIndices = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     @Getter
     private Set<Stat> stats = new HashSet<>();
-
     @Getter
     @Enumerated(value = EnumType.STRING)
     private State state;
-
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "quiz_id"))
     @Getter
     private QuizId quizId;
-
     @OneToOne
     @Setter
     @JoinColumn(name = "user_id")
@@ -49,11 +40,6 @@ public class Walkthrough extends AbstractEntity {
         this.questionsIndices = new ArrayList<>(questionsIndices);
         this.questionsIndices.forEach(it -> it.setWalkthrough(this));
         this.quizId = quizId;
-    }
-
-    void createNewStatistic(boolean isAnswerCorrect) {
-        var statistic = new Stat(getCurrentQuestionId().questionId(), isAnswerCorrect, this, questionsIndices.get(currentIndex).getPathwayId());
-        stats.add(statistic);
     }
 
     public QuestionId getCurrentQuestionId() {
@@ -72,6 +58,14 @@ public class Walkthrough extends AbstractEntity {
     public void next(boolean isAnswerCorrect) {
         if (isAnswerCorrect) nextQuestion();
         else nextQuestionSet();
+    }
+
+    void createNewStatistic(boolean isAnswerCorrect) {
+        var statistic = new Stat(getCurrentQuestionId().questionId(), isAnswerCorrect, this, questionsIndices.get(currentIndex).getPathwayId());
+        stats.add(statistic);
+    }
+
+    protected Walkthrough() {
     }
 
     private boolean hasNextQuestion() {
