@@ -4,6 +4,7 @@ import Navbar from "../ui/Navbar";
 import FlashcardCategoriesTable from "./FlashcardCategoriesTable";
 import Flashcards from "./Flashcards";
 import useLanguageContext from "../../hooks/useLanguageContext";
+import usePrivateRequests from "../../hooks/usePrivateRequests";
 
 const FLASHCARD_CATEGORY_URL = "/flashcards";
 
@@ -17,8 +18,22 @@ const FlashcardCategories = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isCategorySelected, setIsCategorySelected] = useState(false);
 
+  const languageReq = language === "POLISH" ? "PL" : "EN";
+  const getCategoryParams = {
+    url: FLASHCARD_CATEGORY_URL,
+    queryParams: { locale: languageReq },
+  };
+  const flashcardCategoryRequest = usePrivateRequests(getCategoryParams);
+  const { isLoading, responseCode, responseData, performRequest } =
+    flashcardCategoryRequest;
+
+  useEffect(() => {
+    if (!isLoading && responseCode === 200) {
+      setFlashcardCategories(responseData);
+    }
+  }, [isLoading, responseCode]);
+
   const getFlashcardCategoryData = async () => {
-    // na koncu language
     const languageReq = language === "POLISH" ? "PL" : "EN";
     const response = await axiosPrivate.get(FLASHCARD_CATEGORY_URL, {
       params: { locale: languageReq },
@@ -27,7 +42,6 @@ const FlashcardCategories = () => {
   };
 
   const getFlashcardsData = async (categoryId) => {
-    console.log("Getting flashcards with id: ", categoryId);
     const response = await axiosPrivate.get(
       `${FLASHCARD_CATEGORY_URL}/${categoryId}`
     );
@@ -35,7 +49,6 @@ const FlashcardCategories = () => {
   };
 
   const handleCategoryClick = (categoryId) => {
-    console.log("Handling category click with category ", categoryId);
     setSelectedCategory(categoryId);
     setIsCategorySelected(true);
     getFlashcardsData(categoryId);
@@ -46,7 +59,10 @@ const FlashcardCategories = () => {
   };
 
   useEffect(() => {
-    getFlashcardCategoryData();
+    performRequest();
+    if (!isLoading && responseCode === 200) {
+      setFlashcardCategories(responseData);
+    }
   }, [language]);
 
   useEffect(() => {
@@ -71,6 +87,7 @@ const FlashcardCategories = () => {
             }
           </h2>
         )}
+        <p className="text-white text-center">{isLoading && nameLib.loading}</p>
         <section className="h-4/5 flex justify-center items-center mx-2">
           {!isCategorySelected ? (
             <div className="flex justify-center items-center w-full h-5/6">

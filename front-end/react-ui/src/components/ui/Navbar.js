@@ -31,7 +31,6 @@ const Navbar = () => {
 
   const logoutClickedHandler = async () => {
     try {
-      console.log("Logout clicked");
       disbandQuiz();
       await axiosPrivate.get("/logout");
     } catch (err) {

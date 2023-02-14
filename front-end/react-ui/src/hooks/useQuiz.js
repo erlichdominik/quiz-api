@@ -60,7 +60,6 @@ const useQuiz = (quizOptions) => {
       return response.data.isQuizOver;
     } catch (err) {
       if (err?.response?.status === 406) {
-        console.log("inside quiz attempts finished statement");
         setCanQuizBeCompleted(false);
       }
     }

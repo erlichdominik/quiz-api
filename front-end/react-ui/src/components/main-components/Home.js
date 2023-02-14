@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
-import Navbar from '../ui/Navbar';
+import BackgroundWrapper from "../ui/BackgroundWrapper";
+import Navbar from "../ui/Navbar";
 
 const Home = () => {
   return (
     <section>
-      <Navbar />
+      <BackgroundWrapper>
+        <Navbar />
+      </BackgroundWrapper>
     </section>
   );
 };

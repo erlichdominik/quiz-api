@@ -6,11 +6,9 @@ const Flashcards = ({ flashcards, onReturnClick }) => {
   const { nameLib } = useLanguageContext();
   const [flashcardCounter, setFlashcardCounter] = useState(0);
   const [isFlashcardFinished, setIsFlashcardFinished] = useState(false);
-  console.log("flashcards", flashcards);
 
   const handleFlashcardClick = () => {
     if (flashcardCounter < flashcards.length - 1) {
-      console.log("flashcard clicked");
       setFlashcardCounter((prev) => prev + 1);
     } else {
       setIsFlashcardFinished(true);

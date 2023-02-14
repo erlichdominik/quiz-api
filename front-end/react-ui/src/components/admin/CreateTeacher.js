@@ -32,7 +32,6 @@ const CreateTeacher = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (login && password && firstAnswerRecovery && secondAnswerRecovery) {
-      console.log("creating teacher... ", createTeacherParams.body);
       await createTeacherRequest.performRequest();
     }
   };

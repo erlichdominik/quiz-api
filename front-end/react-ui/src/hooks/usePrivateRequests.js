@@ -24,6 +24,7 @@ const usePrivateRequests = ({
 
   const performRequest = async (customUrl = url) => {
     let response = null;
+    setIsLoading(true);
     try {
       if (requestType === "GET") {
         response = await axiosPrivate.get(customUrl, options);

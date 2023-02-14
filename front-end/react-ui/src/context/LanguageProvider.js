@@ -8,8 +8,6 @@ export const LanguageProvider = ({ children }) => {
   const { language, setLanguage, nameLib } = useLanguageSwitch(LANGUAGE_CONFIG);
   const [canChangeLocale, setCanChangeLocale] = useState(true);
 
-  console.log("language: ", nameLib);
-
   return (
     <LanguageContext.Provider
       value={{
