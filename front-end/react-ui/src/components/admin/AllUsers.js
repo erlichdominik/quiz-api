@@ -59,7 +59,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     loadUserData();
-  }, [getUsersRequest.isLoading, getUsersRequest.responseCode]);
+  }, []);
 
   const handleDeleteAllUsers = async () => {
     processAction(
@@ -79,7 +79,7 @@ const AllUsers = () => {
     <>
       <BackgroundWrapper>
         <Card>
-          <div className="w-[24rem] sm:w-1/2 bg-white rounded-lg border border-primaryblue shadow">
+          <div className="w-[24rem] sm:w-2/3 bg-white rounded-lg border border-primaryblue shadow">
             <div className="text-sm w-full h-10 hover:bg-secondaryblue hover:text-white">
               <Link to="/adminPanel">
                 <button className="w-full h-full">
@@ -107,7 +107,12 @@ const AllUsers = () => {
                 onClick={() => setDisableConfirmation((prev) => !prev)}
               />
             </div>
-            <div className="bg-white border border-primaryblue w-11/12 min-h-[55%] mt-3 mx-auto grid auto-rows-max grid-cols-3 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
+            <div className="bg-white border border-primaryblue w-11/12 min-h-[60%] mt-3 mx-auto grid auto-rows-max grid-cols-3 gap-y-1 rounded-lg  overflow-y-scroll scroll-smooth">
+              <div className="m-1 sticky top-0 bg-white text-center col-span-3">
+                {getUsersRequest.isLoading && (
+                  <p className="text-lg text-center ">{nameLib.loading}</p>
+                )}
+              </div>
               <div className="m-1  sticky top-0 bg-white text-center col-span-1 z-0">
                 {nameLib.usernames}
               </div>

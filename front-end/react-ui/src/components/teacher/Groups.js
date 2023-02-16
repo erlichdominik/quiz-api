@@ -59,7 +59,7 @@ const Groups = () => {
               ) : (
                 <>
                   <p className="text-xl text-center pt-10">
-                    {nameLib.groupsEmpty}
+                    {isLoading ? nameLib.loading : nameLib.groupsEmpty}
                   </p>
                 </>
               )}

@@ -46,7 +46,7 @@ const AdminGroups = () => {
     <>
       <BackgroundWrapper>
         <Card>
-          <div className="w-[24rem] sm:w-1/2 bg-white rounded-lg border border-primaryblue shadow">
+          <div className="w-[24rem] sm:w-2/3 bg-white rounded-lg border border-primaryblue shadow">
             <div className="text-sm w-full h-10 hover:bg-secondaryblue hover:text-white">
               <Link to="/adminPanel">
                 <button className="w-full h-full">

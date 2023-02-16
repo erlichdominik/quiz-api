@@ -5,7 +5,6 @@ import useAuth from "../../hooks/useAuth";
 import useLanguageContext from "../../hooks/useLanguageContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import USER_ROLES from "../../utils/roles/authRoles";
 import BackgroundWrapper from "../ui/BackgroundWrapper";
 import Card from "../ui/Card";
 import QuizTitle from "../ui/QuizTitle";
@@ -31,14 +30,6 @@ const Login = () => {
   useEffect(() => {
     setErrorMessage("");
   }, [username, password]);
-
-  const mockHandleSubmit = () => {
-    const accessToken = "TEST123";
-    const refreshToken = "TEST123";
-    const roles = ["ADMIN"];
-    setAuth({ username, password, roles, accessToken, refreshToken });
-    navigate(from, { replace: true });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

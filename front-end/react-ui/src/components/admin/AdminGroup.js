@@ -14,11 +14,13 @@ const AdminGroup = ({ group, onClickDelete, onClickInspect }) => {
 
   return (
     <>
-      <div className="self-center text-center col-span-1">{group.name}</div>
-      <div className="self-center text-center col-span-1">
+      <div className="self-center text-center col-span-1 break-words">
+        {group.name}
+      </div>
+      <div className="self-center text-center col-span-1 break-words">
         {group.groupCode}
       </div>
-      <div className="self-center text-center col-span-1">
+      <div className="self-center text-center col-span-1 break-words">
         {group.teacherName}
       </div>
       <div className="self-center text-center flex justify-center gap-x-2 col-span-2 px-2">

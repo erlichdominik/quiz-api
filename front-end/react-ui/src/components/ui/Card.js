@@ -14,7 +14,9 @@ const Card = ({ children, topPadding, customHeight = "medium" }) => {
   }
 
   return (
-    <section className={`flex  justify-center ${topPaddingCustom} ${height} `}>
+    <section
+      className={`flex  justify-center ${topPaddingCustom} ${height} mx-auto`}
+    >
       {children}
     </section>
   );
