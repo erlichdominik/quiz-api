@@ -17,6 +17,7 @@ const FlashcardCategories = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isCategorySelected, setIsCategorySelected] = useState(false);
+  const [categoryContentsLoading, setCategoryContentsLoading] = useState(false);
 
   const languageReq = language === "POLISH" ? "PL" : "EN";
   const getCategoryParams = {
@@ -33,19 +34,18 @@ const FlashcardCategories = () => {
     }
   }, [isLoading, responseCode]);
 
-  const getFlashcardCategoryData = async () => {
-    const languageReq = language === "POLISH" ? "PL" : "EN";
-    const response = await axiosPrivate.get(FLASHCARD_CATEGORY_URL, {
-      params: { locale: languageReq },
-    });
-    setFlashcardCategories(response.data);
-  };
-
   const getFlashcardsData = async (categoryId) => {
-    const response = await axiosPrivate.get(
-      `${FLASHCARD_CATEGORY_URL}/${categoryId}`
-    );
-    setFlashcards(response.data);
+    try {
+      setCategoryContentsLoading(true);
+      const response = await axiosPrivate.get(
+        `${FLASHCARD_CATEGORY_URL}/${categoryId}`
+      );
+      setFlashcards(response.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setCategoryContentsLoading(false);
+    }
   };
 
   const handleCategoryClick = (categoryId) => {
@@ -100,6 +100,7 @@ const FlashcardCategories = () => {
             <Flashcards
               flashcards={flashcards}
               onReturnClick={handleReturnClick}
+              isLoading={categoryContentsLoading}
             />
           )}
         </section>

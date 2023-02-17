@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Flashcard from "./Flashcard";
 import useLanguageContext from "../../hooks/useLanguageContext";
 
-const Flashcards = ({ flashcards, onReturnClick }) => {
+const Flashcards = ({ flashcards, onReturnClick, isLoading }) => {
   const { nameLib } = useLanguageContext();
   const [flashcardCounter, setFlashcardCounter] = useState(0);
   const [isFlashcardFinished, setIsFlashcardFinished] = useState(false);
@@ -28,8 +28,13 @@ const Flashcards = ({ flashcards, onReturnClick }) => {
       >
         {nameLib.goBackToCatSelection}
       </button>
-      {flashcards.length === 0 ? (
-        <p>{nameLib.flashcardCategoryEmpty}</p>
+      {isLoading && (
+        <p className="text-lg text-center text-white">{nameLib.loading}</p>
+      )}
+      {flashcards.length === 0 && !isLoading ? (
+        <p className="text-lg text-center text-white">
+          {nameLib.flashcardCategoryEmpty}
+        </p>
       ) : (
         <Flashcard
           text={flashcards[flashcardCounter]?.text}
